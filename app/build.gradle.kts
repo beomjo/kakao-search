@@ -1,6 +1,7 @@
 plugins {
     android
     `kotlin-android`
+    `detekt-setting`
 }
 
 val version = Project.Version.value

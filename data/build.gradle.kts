@@ -1,5 +1,6 @@
 plugins {
     `android-library`
+    `detekt-setting`
 }
 
 dependencies {
