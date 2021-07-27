@@ -43,6 +43,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     implementation(Dependency.Kotlin.SDK)
     implementation(Dependency.KTX.CORE)
     implementation(Dependency.AndroidX.APP_COMPAT)

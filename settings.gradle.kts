@@ -1,4 +1,6 @@
 rootProject.name = "Kakao Search"
-include(":app")
-
-
+include(
+    ":app",
+    ":domain",
+    ":data"
+)
