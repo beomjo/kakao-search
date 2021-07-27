@@ -51,7 +51,10 @@ dependencies {
     implementation(Dependency.KTX.CORE)
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.MATERIAL)
+    implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.CONSTRAINT_LAYOUT)
+
+    implementation(Dependency.Google.MATERIAL)
 
     testImplementation(Dependency.Test.JUNIT)
 
