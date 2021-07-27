@@ -1,6 +1,7 @@
 plugins {
     android
     `kotlin-android`
+    `kotlin-kapt`
     `detekt-setting`
 }
 
@@ -56,8 +57,10 @@ dependencies {
 
     implementation(Dependency.Google.MATERIAL)
 
-    testImplementation(Dependency.Test.JUNIT)
+    implementation(Dependency.Hilt.CORE)
+    kapt(Dependency.Hilt.APT)
 
+    testImplementation(Dependency.Test.JUNIT)
     androidTestImplementation(Dependency.AndroidTest.TEST_RUNNER)
     androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 }
