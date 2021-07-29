@@ -78,7 +78,12 @@ object Dependency {
     }
 
     object Paging3 {
-        const val RUNTIME= "androidx.paging:paging-runtime:3.0.0"
+        const val RUNTIME = "androidx.paging:paging-runtime:3.0.0"
+    }
+
+    object Navigation {
+        const val FRAGMENT = "androidx.navigation:navigation-fragment-ktx:2.3.5"
+        const val UI = "androidx.navigation:navigation-ui-ktx:2.3.5"
     }
 
     // Etc

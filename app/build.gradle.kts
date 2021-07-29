@@ -78,6 +78,9 @@ dependencies {
 
     implementation(Dependency.Paging3.RUNTIME)
 
+    implementation(Dependency.Navigation.FRAGMENT)
+    implementation(Dependency.Navigation.UI)
+
     testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)
     testImplementation(TestDependency.COROUTINE_TEST)
