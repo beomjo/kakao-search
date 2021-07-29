@@ -47,20 +47,6 @@ object Dependency {
 
     }
 
-    object Test {
-        const val JUNIT = "junit:junit:4.13.2"
-        const val ARCH_CORE = "androidx.arch.core:core-testing:2.1.0"
-        const val ANDROIDX_TEST_CORE = "androidx.test:core:1.4.0-beta02"
-        const val COROUTINE_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
-        const val ANDROID_JUNIT_RUNNER = "AndroidJUnitRunner"
-        const val MOCKK = "io.mockk:mockk:1.12.0"
-    }
-
-    object AndroidTest {
-        const val TEST_RUNNER = "androidx.test:runner:1.4.0"
-        const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.4.0"
-    }
-
     object OkHttp {
         const val CORE = "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
         const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"

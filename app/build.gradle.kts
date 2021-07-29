@@ -19,7 +19,7 @@ android {
         versionCode = version.code
         versionName = version.name
 
-        testInstrumentationRunner = Dependency.Test.ANDROID_JUNIT_RUNNER
+        testInstrumentationRunner = TestDependency.ANDROID_JUNIT_RUNNER
     }
 
     buildTypes {
@@ -73,9 +73,9 @@ dependencies {
     implementation(Dependency.Hilt.CORE)
     kapt(Dependency.Hilt.APT)
 
-    testImplementation(Dependency.Test.JUNIT)
-    testImplementation(Dependency.Test.MOCKK)
-    testImplementation(Dependency.Test.COROUTINE_TEST)
-    androidTestImplementation(Dependency.AndroidTest.TEST_RUNNER)
-    androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
+    testImplementation(TestDependency.JUNIT)
+    testImplementation(TestDependency.MOCKK)
+    testImplementation(TestDependency.COROUTINE_TEST)
+    androidTestImplementation(AndroidTestDependency.TEST_RUNNER)
+    androidTestImplementation(AndroidTestDependency.ESPRESSO_CORE)
 }

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidEnv.Config.ANDROID_COMPILE)
+    compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
 
     defaultConfig {
-        minSdkVersion(AndroidEnv.Config.ANDROID_MIN)
-        targetSdkVersion(AndroidEnv.Config.ANDROID_TARGET)
+        minSdkVersion(AndroidEnv.ANDROID_MIN)
+        targetSdkVersion(AndroidEnv.ANDROID_TARGET)
     }
 }
 
