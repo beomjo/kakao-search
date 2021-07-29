@@ -46,6 +46,14 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+
+    }
+
+    kapt {
+        javacOptions {
+            option("-Adagger.fastInit=ENABLED")
+            option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+        }
     }
 }
 
