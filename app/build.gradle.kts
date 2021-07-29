@@ -73,6 +73,9 @@ dependencies {
     implementation(Dependency.Hilt.CORE)
     kapt(Dependency.Hilt.APT)
 
+    implementation(Dependency.Room.RUNTIME)
+    kapt(Dependency.Room.APT)
+
     testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)
     testImplementation(TestDependency.COROUTINE_TEST)

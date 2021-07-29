@@ -4,7 +4,8 @@ object Dependency {
         const val SDK = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21"
         const val COROUTINE_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
         const val COROUTINE_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
-        const val COROUTINE_PLAY_SERVICE = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1"
+        const val COROUTINE_PLAY_SERVICE =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1"
         const val REFLECTION = "org.jetbrains.kotlin:kotlin-reflect:1.5.21"
     }
 
@@ -71,8 +72,13 @@ object Dependency {
         const val APT = "com.google.dagger:hilt-android-compiler:2.37"
     }
 
+    object Room {
+        const val RUNTIME = "androidx.room:room-runtime:2.3.0"
+        const val APT = "androidx.room:room-compiler:2.3.0"
+    }
+
     // Etc
     const val SHIMMER = "com.facebook.shimmer:shimmer:0.5.0"
     const val BINDABLES = "com.github.skydoves:bindables:1.0.8"
-    const val GOOGLE_BUTTON ="com.shobhitpuri.custombuttons:google-signin:1.0.0"
+    const val GOOGLE_BUTTON = "com.shobhitpuri.custombuttons:google-signin:1.0.0"
 }
