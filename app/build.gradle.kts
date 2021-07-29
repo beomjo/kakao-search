@@ -8,7 +8,7 @@ plugins {
 }
 
 val version: Version.Property = Version.getVersionProperty()
-val restKey: String = gradleLocalProperties(rootDir).getProperty(REST_KEY)
+val restKey: String? = gradleLocalProperties(rootDir).getProperty(REST_KEY)
 
 android {
     compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
