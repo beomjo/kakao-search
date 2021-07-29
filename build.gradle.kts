@@ -1,3 +1,7 @@
+plugins {
+    `dependency-check`
+}
+
 subprojects {
     repositories {
         google()

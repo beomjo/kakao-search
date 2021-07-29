@@ -4,12 +4,13 @@ object Dependency {
         const val SDK = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21"
         const val COROUTINE_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
         const val COROUTINE_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
-        const val COROUTINE_PLAY_SERVICE = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1"
+        const val COROUTINE_PLAY_SERVICE =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1"
         const val REFLECTION = "org.jetbrains.kotlin:kotlin-reflect:1.5.21"
     }
 
     object AndroidX {
-        const val MATERIAL = "androidx.compose.material:material:1.0.0-rc02"
+        const val MATERIAL = "androidx.compose.material:material:1.0.0"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.0-rc01"
         const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.1"
         const val SWIPE_REFRESH_LAYOUT = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -20,7 +21,7 @@ object Dependency {
         const val CORE = "androidx.core:core-ktx:1.7.0-alpha01"
         const val LIFECYCLE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
         const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
-        const val ACTIVITY = "androidx.activity:activity-ktx:1.3.0-rc02"
+        const val ACTIVITY = "androidx.activity:activity-ktx:1.3.0"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.6"
     }
 
@@ -47,20 +48,6 @@ object Dependency {
 
     }
 
-    object Test {
-        const val JUNIT = "junit:junit:4.13.2"
-        const val ARCH_CORE = "androidx.arch.core:core-testing:2.1.0"
-        const val ANDROIDX_TEST_CORE = "androidx.test:core:1.4.0-beta02"
-        const val COROUTINE_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
-        const val ANDROID_JUNIT_RUNNER = "AndroidJUnitRunner"
-        const val MOCKK = "io.mockk:mockk:1.12.0"
-    }
-
-    object AndroidTest {
-        const val TEST_RUNNER = "androidx.test:runner:1.4.0"
-        const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.4.0"
-    }
-
     object OkHttp {
         const val CORE = "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
         const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
@@ -81,12 +68,26 @@ object Dependency {
     }
 
     object Hilt {
-        const val CORE = "com.google.dagger:hilt-android:2.37"
-        const val APT = "com.google.dagger:hilt-android-compiler:2.37"
+        const val CORE = "com.google.dagger:hilt-android:2.38.1"
+        const val APT = "com.google.dagger:hilt-android-compiler:2.38.1"
+    }
+
+    object Room {
+        const val RUNTIME = "androidx.room:room-runtime:2.3.0"
+        const val APT = "androidx.room:room-compiler:2.3.0"
+    }
+
+    object Paging3 {
+        const val RUNTIME = "androidx.paging:paging-runtime:3.0.1"
+    }
+
+    object Navigation {
+        const val FRAGMENT = "androidx.navigation:navigation-fragment-ktx:2.3.5"
+        const val UI = "androidx.navigation:navigation-ui-ktx:2.3.5"
     }
 
     // Etc
     const val SHIMMER = "com.facebook.shimmer:shimmer:0.5.0"
     const val BINDABLES = "com.github.skydoves:bindables:1.0.8"
-    const val GOOGLE_BUTTON ="com.shobhitpuri.custombuttons:google-signin:1.0.0"
+    const val GOOGLE_BUTTON = "com.shobhitpuri.custombuttons:google-signin:1.0.0"
 }

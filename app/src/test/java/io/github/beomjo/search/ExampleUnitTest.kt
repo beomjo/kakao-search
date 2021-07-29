@@ -1,4 +1,4 @@
-package io.beomjo.kakao.search
+package io.github.beomjo.search
 
 import org.junit.Test
 
