@@ -5,7 +5,7 @@ plugins {
     `detekt-setting`
 }
 
-val version = Version.getVersionProperty()
+val version: Version.Property = Version.getVersionProperty()
 
 android {
     compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
