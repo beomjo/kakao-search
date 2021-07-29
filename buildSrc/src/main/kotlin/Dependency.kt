@@ -10,7 +10,7 @@ object Dependency {
     }
 
     object AndroidX {
-        const val MATERIAL = "androidx.compose.material:material:1.0.0-rc02"
+        const val MATERIAL = "androidx.compose.material:material:1.0.0"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.0-rc01"
         const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.1"
         const val SWIPE_REFRESH_LAYOUT = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -21,7 +21,7 @@ object Dependency {
         const val CORE = "androidx.core:core-ktx:1.7.0-alpha01"
         const val LIFECYCLE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
         const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
-        const val ACTIVITY = "androidx.activity:activity-ktx:1.3.0-rc02"
+        const val ACTIVITY = "androidx.activity:activity-ktx:1.3.0"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.6"
     }
 
@@ -68,8 +68,8 @@ object Dependency {
     }
 
     object Hilt {
-        const val CORE = "com.google.dagger:hilt-android:2.37"
-        const val APT = "com.google.dagger:hilt-android-compiler:2.37"
+        const val CORE = "com.google.dagger:hilt-android:2.38.1"
+        const val APT = "com.google.dagger:hilt-android-compiler:2.38.1"
     }
 
     object Room {
@@ -78,7 +78,7 @@ object Dependency {
     }
 
     object Paging3 {
-        const val RUNTIME = "androidx.paging:paging-runtime:3.0.0"
+        const val RUNTIME = "androidx.paging:paging-runtime:3.0.1"
     }
 
     object Navigation {

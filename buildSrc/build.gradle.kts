@@ -12,7 +12,7 @@ object PluginVersion {
     const val GRADLE = "4.2.2"
     const val KOTLIN = "1.5.21"
     const val DETEKT = "1.17.1"
-    const val HILT = "2.38"
+    const val HILT = "2.38.1"
     const val DEPENDENCY_CHECKER = "0.39.0"
 }
 
