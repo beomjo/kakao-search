@@ -5,16 +5,16 @@ plugins {
     `detekt-setting`
 }
 
-val version = Project.Version.value
+val version = Version.getVersionProperty()
 
 android {
-    compileSdkVersion(Project.Config.ANDROID_COMPILE)
-    buildToolsVersion = Project.Config.BUILD_TOOL
+    compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
+    buildToolsVersion = AndroidEnv.BUILD_TOOL
 
     defaultConfig {
-        applicationId = "io.beomjo.kakao.search"
-        minSdkVersion(Project.Config.ANDROID_MIN)
-        targetSdkVersion(Project.Config.ANDROID_TARGET)
+        applicationId = AndroidEnv.APPLICATION_ID
+        minSdkVersion(AndroidEnv.ANDROID_MIN)
+        targetSdkVersion(AndroidEnv.ANDROID_TARGET)
         vectorDrawables.useSupportLibrary = true
         versionCode = version.code
         versionName = version.name
@@ -49,18 +49,33 @@ dependencies {
     implementation(project(":data"))
 
     implementation(Dependency.Kotlin.SDK)
-    implementation(Dependency.KTX.CORE)
+    implementation(Dependency.Kotlin.COROUTINE_CORE)
+    implementation(Dependency.Kotlin.COROUTINE_ANDROID)
+
+
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.MATERIAL)
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.CONSTRAINT_LAYOUT)
 
+    implementation(Dependency.KTX.CORE)
+    implementation(Dependency.KTX.LIFECYCLE_LIVEDATA)
+    implementation(Dependency.KTX.LIFECYCLE_VIEWMODEL)
+    implementation(Dependency.KTX.ACTIVITY)
+    implementation(Dependency.KTX.FRAGMENT)
+
     implementation(Dependency.Google.MATERIAL)
+    implementation(Dependency.Google.GSON)
+
+    implementation(Dependency.Glide.CORE)
+    kapt(Dependency.Glide.APT)
 
     implementation(Dependency.Hilt.CORE)
     kapt(Dependency.Hilt.APT)
 
     testImplementation(Dependency.Test.JUNIT)
+    testImplementation(Dependency.Test.MOCKK)
+    testImplementation(Dependency.Test.COROUTINE_TEST)
     androidTestImplementation(Dependency.AndroidTest.TEST_RUNNER)
     androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 }
