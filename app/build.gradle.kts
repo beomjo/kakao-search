@@ -76,6 +76,8 @@ dependencies {
     implementation(Dependency.Room.RUNTIME)
     kapt(Dependency.Room.APT)
 
+    implementation(Dependency.Paging3.RUNTIME)
+
     testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)
     testImplementation(TestDependency.COROUTINE_TEST)

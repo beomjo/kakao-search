@@ -77,6 +77,10 @@ object Dependency {
         const val APT = "androidx.room:room-compiler:2.3.0"
     }
 
+    object Paging3 {
+        const val RUNTIME= "androidx.paging:paging-runtime:3.0.0"
+    }
+
     // Etc
     const val SHIMMER = "com.facebook.shimmer:shimmer:0.5.0"
     const val BINDABLES = "com.github.skydoves:bindables:1.0.8"
