@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     android
     `kotlin-android`
@@ -6,6 +8,7 @@ plugins {
 }
 
 val version: Version.Property = Version.getVersionProperty()
+val restKey: String = gradleLocalProperties(rootDir).getProperty(REST_KEY)
 
 android {
     compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
@@ -20,6 +23,8 @@ android {
         versionName = version.name
 
         testInstrumentationRunner = TestDependency.ANDROID_JUNIT_RUNNER
+
+        buildConfigField("String", REST_KEY, "\"$restKey\"")
     }
 
     buildTypes {
