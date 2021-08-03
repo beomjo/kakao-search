@@ -12,13 +12,13 @@ val version: Version.Property = Version.getVersionProperty()
 val restKey: String? = gradleLocalProperties(rootDir).getProperty(REST_KEY)
 
 android {
-    compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
+    compileSdk = AndroidEnv.ANDROID_COMPILE
     buildToolsVersion = AndroidEnv.BUILD_TOOL
 
     defaultConfig {
         applicationId = AndroidEnv.APPLICATION_ID
-        minSdkVersion(AndroidEnv.ANDROID_MIN)
-        targetSdkVersion(AndroidEnv.ANDROID_TARGET)
+        minSdk = AndroidEnv.ANDROID_MIN
+        targetSdk = AndroidEnv.ANDROID_TARGET
         vectorDrawables.useSupportLibrary = true
         versionCode = version.code
         versionName = version.name
@@ -70,7 +70,6 @@ dependencies {
     implementation(Dependency.Kotlin.SDK)
     implementation(Dependency.Kotlin.COROUTINE_CORE)
     implementation(Dependency.Kotlin.COROUTINE_ANDROID)
-
 
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.MATERIAL)
