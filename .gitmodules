@@ -1,4 +1,4 @@
 [submodule "android-compilation"]
 	path = android-compilation
-	url = git@github.com:beomjo/android-compilation.git
+	url = https://github.com/beomjo/android-compilation.git
 	branch = main
