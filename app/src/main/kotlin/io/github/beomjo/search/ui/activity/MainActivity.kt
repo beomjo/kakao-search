@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search
+package io.github.beomjo.search.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +26,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import io.github.beomjo.search.R
 import io.github.beomjo.search.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

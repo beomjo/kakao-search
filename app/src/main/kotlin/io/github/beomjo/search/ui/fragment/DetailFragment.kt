@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.ui
+package io.github.beomjo.search.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

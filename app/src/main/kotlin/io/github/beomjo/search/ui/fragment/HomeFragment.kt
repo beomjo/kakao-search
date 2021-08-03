@@ -14,21 +14,32 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.ui
+package io.github.beomjo.search.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.github.beomjo.search.R
+import androidx.navigation.fragment.findNavController
+import io.github.beomjo.search.databinding.FragmentHomeBinding
 
-class SearchFragment : Fragment() {
+class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        val binding = FragmentHomeBinding.inflate(layoutInflater)
+        setView(binding)
+        return binding.root
+    }
+
+    private fun setView(binding: FragmentHomeBinding) {
+        binding.text.setOnClickListener {
+            HomeFragmentDirections.actionHomeDestToDetailDest().let {
+                findNavController().navigate(it)
+            }
+        }
     }
 }
