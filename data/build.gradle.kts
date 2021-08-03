@@ -20,15 +20,20 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidEnv.ANDROID_COMPILE)
+    compileSdk = AndroidEnv.ANDROID_COMPILE
 
     defaultConfig {
-        minSdkVersion(AndroidEnv.ANDROID_MIN)
-        targetSdkVersion(AndroidEnv.ANDROID_TARGET)
+        minSdk = AndroidEnv.ANDROID_MIN
+        targetSdk = AndroidEnv.ANDROID_TARGET
     }
 }
 
 
 dependencies {
     implementation(project(":domain"))
+
+    implementation(Dependency.Google.GSON)
+
+    implementation(Dependency.Retrofit.CORE)
+    implementation(Dependency.Retrofit.CONVERT_GSON)
 }
