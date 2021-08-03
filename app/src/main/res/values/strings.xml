@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">kakao-search</string>
-    <string name="cafe_and_blog_fragment_title">Cafe and Blog Fragment</string>
+    <string name="home_fragment_title">Home Fragment</string>
     <string name="detail_fragment_title">Detail Fragment</string>
 </resources>
