@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/home_dest"
-        android:name="io.github.beomjo.search.ui.HomeFragment"
+        android:name="io.github.beomjo.search.ui.fragment.HomeFragment"
         android:label="@string/home_fragment_title"
         tools:layout="@layout/fragment_home">
 
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/search_dest"
-        android:name="io.github.beomjo.search.ui.SearchFragment"
+        android:name="io.github.beomjo.search.ui.fragment.SearchFragment"
         android:label="@string/search_fragment_title"
         tools:layout="@layout/fragment_search">
         <action
@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/detail_dest"
-        android:name="io.github.beomjo.search.ui.DetailFragment"
+        android:name="io.github.beomjo.search.ui.fragment.DetailFragment"
         android:label="@string/detail_fragment_title"
         tools:layout="@layout/fragment_detail" />
 

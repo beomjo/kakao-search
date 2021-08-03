@@ -21,7 +21,7 @@
 
         <variable
             name="activity"
-            type="io.github.beomjo.search.MainActivity" />
+            type="io.github.beomjo.search.ui.activity.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
