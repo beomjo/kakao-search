@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="activity"
             type="io.github.beomjo.search.MainActivity" />
@@ -13,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_container_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
