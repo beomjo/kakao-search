@@ -5,6 +5,7 @@ plugins {
     `kotlin-android`
     `kotlin-kapt`
     `detekt-setting`
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 val version: Version.Property = Version.getVersionProperty()
