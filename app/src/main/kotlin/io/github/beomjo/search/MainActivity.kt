@@ -57,14 +57,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment) as NavHostFragment
 
     private fun setAppBarConfiguration() {
-        appBarConfiguration = if (binding.drawerLayout != null) {
-            AppBarConfiguration(
-                setOf(R.id.home_dest, R.id.search_dest),
-                binding.drawerLayout
-            )
-        } else {
-            AppBarConfiguration(navController.graph)
-        }
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.home_dest, R.id.search_dest),
+            binding.drawerLayout
+        )
     }
 
     private fun setupActionBar() {
