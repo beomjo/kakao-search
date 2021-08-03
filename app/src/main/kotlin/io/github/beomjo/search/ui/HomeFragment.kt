@@ -21,7 +21,7 @@ class HomeFragment : Fragment() {
 
     private fun setView(binding: FragmentHomeBinding) {
         binding.text.setOnClickListener {
-            HomeFragmentDirections.actionCafeAndBlogDestToDetailFragment().let {
+            HomeFragmentDirections.actionHomeDestToDetailDest().let {
                 findNavController().navigate(it)
             }
         }

@@ -11,14 +11,30 @@
         android:label="@string/home_fragment_title"
         tools:layout="@layout/fragment_home">
 
+
         <action
-            android:id="@+id/action_cafe_and_blog_dest_to_detailFragment"
+            android:id="@+id/action_home_dest_to_detail_dest"
+            app:destination="@id/detail_dest" />
+
+        <action
+            android:id="@+id/action_home_dest_to_search_dest"
+            app:destination="@id/search_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/search_dest"
+        android:name="io.github.beomjo.search.ui.SearchFragment"
+        android:label="@string/search_fragment_title"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_dest_to_detail_dest"
             app:destination="@id/detail_dest" />
     </fragment>
+
     <fragment
         android:id="@+id/detail_dest"
         android:name="io.github.beomjo.search.ui.DetailFragment"
-        android:label="DetailFragment"
-        tools:layout="@layout/fragment_detail"/>
+        android:label="@string/detail_fragment_title"
+        tools:layout="@layout/fragment_detail" />
 
 </navigation>
