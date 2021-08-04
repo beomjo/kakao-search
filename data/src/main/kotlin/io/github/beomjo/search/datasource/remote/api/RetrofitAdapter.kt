@@ -1,4 +1,4 @@
-package io.github.beomjo.search.network.api
+package io.github.beomjo.search.datasource.remote.api
 
 import io.github.beomjo.search.data.BuildConfig
 import okhttp3.OkHttpClient
