@@ -36,4 +36,8 @@ dependencies {
 
     implementation(Dependency.Retrofit.CORE)
     implementation(Dependency.Retrofit.CONVERT_GSON)
+
+    implementation(Dependency.OkHttp.CORE)
+    implementation(Dependency.OkHttp.CONNECTION)
+    implementation(Dependency.OkHttp.LOGGING_INTERCEPTOR)
 }
