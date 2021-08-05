@@ -16,5 +16,32 @@
 
 package io.github.beomjo.search
 
-class DataModule {
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
+import io.github.beomjo.search.datasource.remote.api.Urls
+import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
+import io.github.beomjo.search.repository.DocumentRepository
+import io.github.beomjo.search.repository.DocumentRepositoryImpl
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+internal object DataModule {
+
+    @Singleton
+    @Provides
+    fun provideDocumentApi(
+        @ApiKey apiKey: String
+    ): DocumentsApi {
+        return RetrofitAdapter.getInstance(Urls.baseUrl)
+            .create(DocumentsApi::class.java)
+    }
+
+    @Provides
+    fun provideDocumentRepository(documentsApi: DocumentsApi): DocumentRepository {
+        return DocumentRepositoryImpl(documentsApi)
+    }
 }
