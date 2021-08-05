@@ -19,9 +19,13 @@ package io.github.beomjo.search.mapper
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentList
 import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.model.*
+import io.github.beomjo.search.model.ModelBlog
+import io.github.beomjo.search.model.ModelBook
+import io.github.beomjo.search.model.ModelCafe
+import io.github.beomjo.search.model.ModelDocumentList
+import io.github.beomjo.search.model.ModelImage
+import io.github.beomjo.search.model.ModelVideo
 import java.lang.IllegalStateException
-
 
 internal fun <T> ModelDocumentList<T>.toEntity(): DocumentList {
     return DocumentList(
@@ -33,7 +37,7 @@ internal fun <T> ModelDocumentList<T>.toEntity(): DocumentList {
                 is ModelImage -> it.toEntity()
                 is ModelVideo -> it.toEntity()
                 is ModelBook -> it.toEntity()
-                else -> throw IllegalStateException()
+                else -> throw IllegalStateException("Not Exist Model Receive")
             }
         }.toList()
     )
@@ -80,6 +84,6 @@ internal fun ModelBook.toEntity(): Document = Document(
     url = url,
     thumbnail = thumbnail,
     title = title,
-    content = "${authors.joinToString(",")}\n${translators.joinToString(",")}\n${publisher}\n${price}",
+    content = "${authors.joinToString(",")}\n${translators.joinToString(",")}\n${publisher}\n$price",
     date = datetime,
 )

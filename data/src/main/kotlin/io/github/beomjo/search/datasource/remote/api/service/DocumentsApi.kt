@@ -16,7 +16,12 @@
 
 package io.github.beomjo.search.datasource.remote.api.service
 
-import io.github.beomjo.search.model.*
+import io.github.beomjo.search.model.ModelBlog
+import io.github.beomjo.search.model.ModelBook
+import io.github.beomjo.search.model.ModelCafe
+import io.github.beomjo.search.model.ModelDocumentList
+import io.github.beomjo.search.model.ModelImage
+import io.github.beomjo.search.model.ModelVideo
 import retrofit2.http.GET
 
 internal interface DocumentsApi {

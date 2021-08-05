@@ -24,7 +24,7 @@ internal data class ModelVideo(
     @SerializedName("datetime")
     val datetime: String,
     @SerializedName("play_time")
-    val play_time: Int,
+    val playTime: Int,
     @SerializedName("thumbnail")
     val thumbnail: String,
     @SerializedName("title")

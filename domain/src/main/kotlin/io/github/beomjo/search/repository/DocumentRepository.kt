@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package io.github.beomjo.search.repository
 
 import io.github.beomjo.search.entity.DocumentList
