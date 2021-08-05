@@ -36,7 +36,7 @@ internal object DataModule {
     fun provideDocumentApi(
         @ApiKey apiKey: String
     ): DocumentsApi {
-        return RetrofitAdapter.getInstance(Urls.baseUrl)
+        return RetrofitAdapter.getInstance(Urls.baseUrl, apiKey)
             .create(DocumentsApi::class.java)
     }
 

@@ -17,8 +17,10 @@
 package io.github.beomjo.search.datasource.remote.api
 
 import io.github.beomjo.search.data.BuildConfig
-import okhttp3.OkHttpClient
+import okhttp3.Interceptor
 import okhttp3.JavaNetCookieJar
+import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,21 +31,22 @@ import java.util.concurrent.TimeUnit
 object RetrofitAdapter {
     private const val TIMEOUT: Long = 20
 
-    fun getInstance(baseUrl: String): Retrofit {
+    fun getInstance(baseUrl: String, apiKey: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(getOkHttpClient())
+            .client(getOkHttpClient(apiKey))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    private fun getOkHttpClient(): OkHttpClient {
+    private fun getOkHttpClient(apiKey: String): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .cookieJar(JavaNetCookieJar(getCookieManager()))
-            .addInterceptor(httpLoggingInterceptor())
+            .addInterceptor(getHttpLoggingInterceptor())
+            .addInterceptor { getRequestInterceptor(it, apiKey) }
             .build()
     }
 
@@ -53,13 +56,23 @@ object RetrofitAdapter {
         }
     }
 
-    private fun httpLoggingInterceptor(): HttpLoggingInterceptor {
+    private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
             } else {
                 HttpLoggingInterceptor.Level.NONE
             }
+        }
+    }
+
+    private fun getRequestInterceptor(chain: Interceptor.Chain, apiKey: String): Response {
+        return chain.request().let { originRequest ->
+            chain.proceed(
+                originRequest.newBuilder()
+                    .addHeader("Authorization", "KakaoAK $apiKey")
+                    .build()
+            )
         }
     }
 }
