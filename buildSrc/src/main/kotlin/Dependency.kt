@@ -66,6 +66,7 @@ object Dependency {
 
     object OkHttp {
         const val CORE = "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
+        const val CONNECTION = "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
         const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
     }
 
