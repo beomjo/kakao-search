@@ -27,7 +27,7 @@ import retrofit2.http.Query
 
 internal interface DocumentsApi {
     @GET("search/blog")
-    fun fetchBlog(
+    suspend fun fetchBlog(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
