@@ -19,4 +19,11 @@ package io.github.beomjo.search.entity
 data class DocumentList(
     val hasMore: Boolean,
     val documents: List<Document>
-)
+) {
+    operator fun plus(other: DocumentList): DocumentList {
+        return DocumentList(
+            hasMore = this.hasMore || other.hasMore,
+            documents = this.documents + other.documents
+        )
+    }
+}
