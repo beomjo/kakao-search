@@ -34,6 +34,9 @@ android {
 dependencies {
     implementation(project(":domain"))
 
+    implementation(Dependency.Kotlin.COROUTINE_CORE)
+    implementation(Dependency.Kotlin.COROUTINE_ANDROID)
+
     implementation(Dependency.Hilt.CORE)
     kapt(Dependency.Hilt.APT)
 
