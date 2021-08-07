@@ -16,7 +16,7 @@ class GetDocumentList @Inject constructor(
         sortType: SortType,
         query: String,
         sort: Sort = Sort.ACCURACY,
-        page: Int,
+        page: Int? = null,
     ): DocumentList {
         val documentList = when (documentType) {
             DocumentType.ALL -> {
