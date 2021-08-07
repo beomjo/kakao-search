@@ -26,7 +26,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 internal interface DocumentsApi {
-    @GET("search/blog")
+    @GET("v2/search/blog")
     suspend fun fetchBlog(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
@@ -34,7 +34,7 @@ internal interface DocumentsApi {
         @Query(SIZE) size: Int?,
     ): ModelDocumentList<ModelBlog>
 
-    @GET("search/cafe")
+    @GET("v2/search/cafe")
     suspend fun fetchCafe(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
@@ -42,7 +42,7 @@ internal interface DocumentsApi {
         @Query(SIZE) size: Int?,
     ): ModelDocumentList<ModelCafe>
 
-    @GET("search/image")
+    @GET("v2/search/image")
     suspend fun fetchImages(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
@@ -50,7 +50,7 @@ internal interface DocumentsApi {
         @Query(SIZE) size: Int?,
     ): ModelDocumentList<ModelImage>
 
-    @GET("search/vclip")
+    @GET("v2/search/vclip")
     suspend fun fetchVideo(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
@@ -58,7 +58,7 @@ internal interface DocumentsApi {
         @Query(SIZE) size: Int?,
     ): ModelDocumentList<ModelVideo>
 
-    @GET("search/book")
+    @GET("v3/search/book")
     suspend fun fetchBook(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
