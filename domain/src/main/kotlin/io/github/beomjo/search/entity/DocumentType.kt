@@ -17,6 +17,7 @@
 package io.github.beomjo.search.entity
 
 enum class DocumentType {
+    ALL,
     BLOG,
     CAFE,
     VIDEO,

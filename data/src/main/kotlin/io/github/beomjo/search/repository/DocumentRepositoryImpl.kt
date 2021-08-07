@@ -18,6 +18,7 @@ package io.github.beomjo.search.repository
 
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.entity.DocumentList
+import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.mapper.toEntity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,23 +27,74 @@ import javax.inject.Singleton
 internal class DocumentRepositoryImpl @Inject constructor(
     private val documentsApi: DocumentsApi
 ) : DocumentRepository {
-    override suspend fun fetchBlog(): DocumentList {
-        return documentsApi.fetchBlog().toEntity()
+
+    override suspend fun fetchBlog(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList {
+        return documentsApi.fetchBlog(
+            query = query,
+            sort = sort.value,
+            page = page,
+            size = size,
+        ).toEntity()
     }
 
-    override suspend fun fetchCafe(): DocumentList {
-        return documentsApi.fetchCafe().toEntity()
+    override suspend fun fetchCafe(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList {
+        return documentsApi.fetchCafe(
+            query = query,
+            sort = sort.value,
+            page = page,
+            size = size,
+        ).toEntity()
     }
 
-    override suspend fun fetchImages(): DocumentList {
-        return documentsApi.fetchImages().toEntity()
+    override suspend fun fetchImages(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList {
+        return documentsApi.fetchImages(
+            query = query,
+            sort = sort.value,
+            page = page,
+            size = size,
+        ).toEntity()
     }
 
-    override suspend fun fetchVideo(): DocumentList {
-        return documentsApi.fetchVideo().toEntity()
+    override suspend fun fetchVideo(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList {
+        return documentsApi.fetchVideo(
+            query = query,
+            sort = sort.value,
+            page = page,
+            size = size,
+        ).toEntity()
     }
 
-    override suspend fun fetchBook(): DocumentList {
-        return documentsApi.fetchBook().toEntity()
+    override suspend fun fetchBook(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList {
+        return documentsApi.fetchBook(
+            query = query,
+            sort = sort.value,
+            page = page,
+            size = size,
+        ).toEntity()
     }
 }

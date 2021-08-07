@@ -17,15 +17,41 @@
 package io.github.beomjo.search.repository
 
 import io.github.beomjo.search.entity.DocumentList
+import io.github.beomjo.search.entity.Sort
 
 interface DocumentRepository {
-    suspend fun fetchBlog(): DocumentList
+    suspend fun fetchBlog(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList
 
-    suspend fun fetchCafe(): DocumentList
+    suspend fun fetchCafe(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList
 
-    suspend fun fetchImages(): DocumentList
+    suspend fun fetchImages(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList
 
-    suspend fun fetchVideo(): DocumentList
+    suspend fun fetchVideo(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList
 
-    suspend fun fetchBook(): DocumentList
+    suspend fun fetchBook(
+        query: String,
+        sort: Sort,
+        page: Int?,
+        size: Int?,
+    ): DocumentList
 }
