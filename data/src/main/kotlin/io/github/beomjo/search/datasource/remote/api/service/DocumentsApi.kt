@@ -23,20 +23,53 @@ import io.github.beomjo.search.model.ModelDocumentList
 import io.github.beomjo.search.model.ModelImage
 import io.github.beomjo.search.model.ModelVideo
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 internal interface DocumentsApi {
     @GET("search/blog")
-    suspend fun fetchBlog(): ModelDocumentList<ModelBlog>
+    fun fetchBlog(
+        @Query(QUERY) query: String,
+        @Query(SORT) sort: String,
+        @Query(PAGE) page: Int?,
+        @Query(SIZE) size: Int?,
+    ): ModelDocumentList<ModelBlog>
 
     @GET("search/cafe")
-    suspend fun fetchCafe(): ModelDocumentList<ModelCafe>
+    suspend fun fetchCafe(
+        @Query(QUERY) query: String,
+        @Query(SORT) sort: String,
+        @Query(PAGE) page: Int?,
+        @Query(SIZE) size: Int?,
+    ): ModelDocumentList<ModelCafe>
 
     @GET("search/image")
-    suspend fun fetchImages(): ModelDocumentList<ModelImage>
+    suspend fun fetchImages(
+        @Query(QUERY) query: String,
+        @Query(SORT) sort: String,
+        @Query(PAGE) page: Int?,
+        @Query(SIZE) size: Int?,
+    ): ModelDocumentList<ModelImage>
 
     @GET("search/vclip")
-    suspend fun fetchVideo(): ModelDocumentList<ModelVideo>
+    suspend fun fetchVideo(
+        @Query(QUERY) query: String,
+        @Query(SORT) sort: String,
+        @Query(PAGE) page: Int?,
+        @Query(SIZE) size: Int?,
+    ): ModelDocumentList<ModelVideo>
 
     @GET("search/book")
-    suspend fun fetchBook(): ModelDocumentList<ModelBook>
+    suspend fun fetchBook(
+        @Query(QUERY) query: String,
+        @Query(SORT) sort: String,
+        @Query(PAGE) page: Int?,
+        @Query(SIZE) size: Int?,
+    ): ModelDocumentList<ModelBook>
+
+    companion object {
+        const val QUERY = "query"
+        const val SORT = "sort"
+        const val PAGE = "page"
+        const val SIZE = "size"
+    }
 }
