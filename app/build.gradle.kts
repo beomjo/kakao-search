@@ -22,6 +22,7 @@ plugins {
     `kotlin-kapt`
     `detekt-setting`
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
 }
 
 val version: Version.Property = Version.getVersionProperty()
