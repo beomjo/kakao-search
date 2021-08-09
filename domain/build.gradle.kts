@@ -15,8 +15,18 @@
  */
 
 plugins {
-    kotlin
+    `android-library`
+    `kotlin-android`
     `detekt-setting`
+}
+
+android {
+    compileSdk = AndroidEnv.ANDROID_COMPILE
+
+    defaultConfig {
+        minSdk = AndroidEnv.ANDROID_MIN
+        targetSdk = AndroidEnv.ANDROID_TARGET
+    }
 }
 
 dependencies {
