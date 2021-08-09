@@ -3,18 +3,19 @@ package io.github.beomjo.search.datasource.remote.api.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.mapper.toEntity
+import io.github.beomjo.search.usecase.SearchPagingParam
 import retrofit2.HttpException
 import java.io.IOException
 
 internal class SearchPagingSource @AssistedInject constructor(
-    @Assisted private val option: Option,
+    @Assisted private val requestParam: SearchPagingParam,
     private val documentApi: DocumentsApi,
 ) : PagingSource<SearchPagingSource.PagingParam, Document>() {
 
@@ -22,7 +23,7 @@ internal class SearchPagingSource @AssistedInject constructor(
         val param = params.key
         val pagePosition = param?.getPagePosition() ?: STARTING_POSITION
         return try {
-            val documentList = when (option.documentType) {
+            val documentList = when (requestParam.documentType) {
                 DocumentType.ALL -> {
                     val blogDocumentList = fetchBlogList(pagePosition, 5)
                     val cafeDocumentList = fetchCafeList(pagePosition, 5)
@@ -40,12 +41,12 @@ internal class SearchPagingSource @AssistedInject constructor(
             }
 
             return LoadResult.Page(
-                when (option.sortType) {
+                when (requestParam.sortType) {
                     SortType.TITLE -> documentList.documents.sortedBy { it.title }
                     else -> documentList.documents.sortedByDescending { it.date }
                 },
                 prevKey = param?.prevPage(),
-                nextKey = param?.nextPage(option.documentType)
+                nextKey = param?.nextPage(requestParam.documentType)
             )
         } catch (e: IOException) {
             LoadResult.Error(e)
@@ -62,16 +63,16 @@ internal class SearchPagingSource @AssistedInject constructor(
 
     private suspend fun fetchBlogList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchBlog(
-            query = option.query,
-            sort = option.sort.value,
+            query = requestParam.query,
+            sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
 
     private suspend fun fetchCafeList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchCafe(
-            query = option.query,
-            sort = option.sort.value,
+            query = requestParam.query,
+            sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
@@ -79,24 +80,24 @@ internal class SearchPagingSource @AssistedInject constructor(
 
     private suspend fun fetchVideoList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchVideo(
-            query = option.query,
-            sort = option.sort.value,
+            query = requestParam.query,
+            sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
 
     private suspend fun fetchImageList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchImages(
-            query = option.query,
-            sort = option.sort.value,
+            query = requestParam.query,
+            sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
 
     private suspend fun fetchBookList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchBook(
-            query = option.query,
-            sort = option.sort.value,
+            query = requestParam.query,
+            sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
@@ -154,14 +155,15 @@ internal class SearchPagingSource @AssistedInject constructor(
         }
     }
 
-    data class Option(
-        val query: String,
-        val documentType: DocumentType,
-        val sortType: SortType,
-        val sort: Sort,
-    )
-
     companion object {
         const val STARTING_POSITION = 1
+        const val PER_PAGE_SIZE = 25
     }
 }
+
+@AssistedFactory
+internal interface SearchPagingSourceFactory {
+    fun create(requestParam: SearchPagingParam): SearchPagingSource
+}
+
+
