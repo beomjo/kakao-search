@@ -44,7 +44,7 @@ object Dependency {
     object Google {
         const val MATERIAL = "com.google.android.material:material:1.3.0"
         const val GSON = "com.google.code.gson:gson:2.8.7"
-        const val OSS_LISENCE = "com.google.android.gms:play-services-oss-licenses:17.0.0"
+        const val OSS_LICENSE = "com.google.android.gms:play-services-oss-licenses:17.0.0"
     }
 
     object Firebase {
@@ -96,6 +96,7 @@ object Dependency {
 
     object Paging3 {
         const val RUNTIME = "androidx.paging:paging-runtime:3.0.1"
+        const val COMMON = "androidx.paging:paging-common-ktx:3.0.1"
     }
 
     object Navigation {
