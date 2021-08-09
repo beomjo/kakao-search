@@ -16,85 +16,31 @@
 
 package io.github.beomjo.search.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSource
+import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSourceFactory
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
+import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentList
 import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.mapper.toEntity
+import io.github.beomjo.search.usecase.SearchPagingParam
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 internal class DocumentRepositoryImpl @Inject constructor(
-    private val documentsApi: DocumentsApi
+    private val searchPagingDataSourceFactory: SearchPagingSourceFactory
 ) : DocumentRepository {
-
-    override suspend fun fetchBlog(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList {
-        return documentsApi.fetchBlog(
-            query = query,
-            sort = sort.value,
-            page = page,
-            size = size,
-        ).toEntity()
-    }
-
-    override suspend fun fetchCafe(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList {
-        return documentsApi.fetchCafe(
-            query = query,
-            sort = sort.value,
-            page = page,
-            size = size,
-        ).toEntity()
-    }
-
-    override suspend fun fetchImages(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList {
-        return documentsApi.fetchImages(
-            query = query,
-            sort = sort.value,
-            page = page,
-            size = size,
-        ).toEntity()
-    }
-
-    override suspend fun fetchVideo(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList {
-        return documentsApi.fetchVideo(
-            query = query,
-            sort = sort.value,
-            page = page,
-            size = size,
-        ).toEntity()
-    }
-
-    override suspend fun fetchBook(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList {
-        return documentsApi.fetchBook(
-            query = query,
-            sort = sort.value,
-            page = page,
-            size = size,
-        ).toEntity()
+    override fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = SearchPagingSource.PER_PAGE_SIZE,
+            ),
+            pagingSourceFactory = { searchPagingDataSourceFactory.create(param) }
+        ).flow
     }
 }

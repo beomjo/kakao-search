@@ -16,42 +16,11 @@
 
 package io.github.beomjo.search.repository
 
-import io.github.beomjo.search.entity.DocumentList
-import io.github.beomjo.search.entity.Sort
+import androidx.paging.PagingData
+import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.usecase.SearchPagingParam
+import kotlinx.coroutines.flow.Flow
 
 interface DocumentRepository {
-    suspend fun fetchBlog(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList
-
-    suspend fun fetchCafe(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList
-
-    suspend fun fetchImages(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList
-
-    suspend fun fetchVideo(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList
-
-    suspend fun fetchBook(
-        query: String,
-        sort: Sort,
-        page: Int?,
-        size: Int?,
-    ): DocumentList
+    fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
 }
