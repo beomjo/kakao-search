@@ -20,17 +20,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelStoreOwner
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
+import io.github.beomjo.search.base.BaseFragment
+import io.github.beomjo.search.databinding.FragmentSearchBinding
+import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+
+    val searchViewModel: SearchViewModel by viewModels()
+
+    override val viewModelProvideOwner: ViewModelStoreOwner
+        get() = this
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 }
