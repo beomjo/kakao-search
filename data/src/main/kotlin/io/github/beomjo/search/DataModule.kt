@@ -16,20 +16,22 @@
 
 package io.github.beomjo.search
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
 import io.github.beomjo.search.datasource.remote.api.Urls
+import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSource
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.repository.DocumentRepository
 import io.github.beomjo.search.repository.DocumentRepositoryImpl
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [DataModule.DataBindModule::class])
 @InstallIn(SingletonComponent::class)
-internal object DataModule {
+internal abstract class DataModule {
 
     @Singleton
     @Provides
@@ -40,8 +42,10 @@ internal object DataModule {
             .create(DocumentsApi::class.java)
     }
 
-    @Provides
-    fun provideDocumentRepository(documentsApi: DocumentsApi): DocumentRepository {
-        return DocumentRepositoryImpl(documentsApi)
+    @Module
+    @InstallIn(SingletonComponent::class)
+    abstract class DataBindModule {
+        @Binds
+        abstract fun provideDocumentRepository(repository: DocumentRepositoryImpl): DocumentRepository
     }
 }
