@@ -20,6 +20,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.beomjo.search.base.BaseViewModel
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SortType
@@ -30,7 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     val getSearchPagingData: GetSearchPagingData
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _documentType = MutableLiveData(DEFAULT_DOCUMENT_TYPE)
     val documentType: LiveData<DocumentType> get() = _documentType
