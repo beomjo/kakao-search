@@ -31,7 +31,7 @@ import javax.inject.Singleton
 
 @Module(includes = [DataModule.DataBindModule::class])
 @InstallIn(SingletonComponent::class)
-internal abstract class DataModule {
+internal object DataModule {
 
     @Singleton
     @Provides
