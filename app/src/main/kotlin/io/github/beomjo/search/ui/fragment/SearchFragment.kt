@@ -22,6 +22,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
@@ -38,14 +40,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private val searchPagingAdapter: SearchPagingAdapter by lazy { SearchPagingAdapter() }
 
     override val viewModelProvideOwner: ViewModelStoreOwner
-        get() = this
+        get() = this.requireActivity()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindLayout()
+        observeViewModel()
+    }
+
+    private fun bindLayout() {
         binding.apply {
             viewModel = searchViewModel
             adapter = searchPagingAdapter
         }
+    }
+
+    private fun observeViewModel() {
         searchViewModel.pager.observe(viewLifecycleOwner, {
             lifecycleScope.launch {
                 searchPagingAdapter.submitData(it)
