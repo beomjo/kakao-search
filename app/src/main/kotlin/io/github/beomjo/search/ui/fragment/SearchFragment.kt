@@ -20,28 +20,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentSearchBinding
+import io.github.beomjo.search.ui.adapter.SearchPagingAdapter
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    val searchViewModel: SearchViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by getViewModel()
+
+    private val searchPagingAdapter: SearchPagingAdapter by lazy { SearchPagingAdapter() }
 
     override val viewModelProvideOwner: ViewModelStoreOwner
         get() = this
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            viewModel = searchViewModel.apply { search("아이유") }
+            adapter = searchPagingAdapter
+        }
+        searchViewModel.pager.observe(viewLifecycleOwner, {
+            lifecycleScope.launch {
+                searchPagingAdapter.submitData(it)
+            }
+        })
     }
 }

@@ -36,8 +36,8 @@ internal class SearchPagingSource @AssistedInject constructor(
 ) : PagingSource<SearchPagingSource.PagingParam, Document>() {
 
     override suspend fun load(params: LoadParams<PagingParam>): LoadResult<PagingParam, Document> {
-        val param = params.key
-        val pagePosition = param?.getPagePosition() ?: STARTING_POSITION
+        val param = params.key ?: getDefaultPagingParam(requestParam.documentType)
+        val pagePosition = param.getPagePosition()
         return try {
             val documentList = when (requestParam.documentType) {
                 DocumentType.ALL -> {
@@ -61,8 +61,8 @@ internal class SearchPagingSource @AssistedInject constructor(
                     SortType.TITLE -> documentList.documents.sortedBy { it.title }
                     else -> documentList.documents.sortedByDescending { it.date }
                 },
-                prevKey = param?.prevPage(),
-                nextKey = param?.nextPage(requestParam.documentType)
+                prevKey = param.prevPage(),
+                nextKey = param.nextPage(requestParam.documentType)
             )
         } catch (e: IOException) {
             LoadResult.Error(e)
@@ -118,6 +118,20 @@ internal class SearchPagingSource @AssistedInject constructor(
             size = pageSize
         ).toEntity()
 
+    private fun getDefaultPagingParam(documentType: DocumentType) = when (documentType) {
+        DocumentType.ALL -> PagingParam(
+            PagingParam.Key(position = STARTING_POSITION, hasMore = true),
+            PagingParam.Key(position = STARTING_POSITION, hasMore = true),
+            PagingParam.Key(position = STARTING_POSITION, hasMore = true),
+            PagingParam.Key(position = STARTING_POSITION, hasMore = true),
+            PagingParam.Key(position = STARTING_POSITION, hasMore = true)
+        )
+        DocumentType.BLOG -> PagingParam(blogKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
+        DocumentType.CAFE -> PagingParam(cafeKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
+        DocumentType.VIDEO -> PagingParam(videoKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
+        DocumentType.IMAGE -> PagingParam(imageKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
+        DocumentType.BOOK -> PagingParam(bookKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
+    }
 
     data class PagingParam(
         val blogKey: Key = Key(),
@@ -128,7 +142,7 @@ internal class SearchPagingSource @AssistedInject constructor(
     ) {
 
         data class Key(
-            val position: Int = 1,
+            val position: Int = 0,
             val hasMore: Boolean = false
         ) {
             fun next(): Key = copy(position = position + 1)
@@ -162,11 +176,11 @@ internal class SearchPagingSource @AssistedInject constructor(
         fun prevPage(): PagingParam? {
             if (getPagePosition() == STARTING_POSITION) return null
             return PagingParam(
-                blogKey = if (blogKey.hasMore) blogKey.prev() else blogKey,
-                cafeKey = if (cafeKey.hasMore) cafeKey.prev() else cafeKey,
-                videoKey = if (videoKey.hasMore) videoKey.prev() else videoKey,
-                imageKey = if (imageKey.hasMore) imageKey.prev() else imageKey,
-                bookKey = if (bookKey.hasMore) bookKey.prev() else bookKey,
+                blogKey = if (blogKey.hasMore) blogKey else blogKey.prev(),
+                cafeKey = if (cafeKey.hasMore) cafeKey else cafeKey.prev(),
+                videoKey = if (videoKey.hasMore) videoKey else videoKey.prev(),
+                imageKey = if (imageKey.hasMore) imageKey else imageKey.prev(),
+                bookKey = if (bookKey.hasMore) bookKey else bookKey.prev(),
             )
         }
     }

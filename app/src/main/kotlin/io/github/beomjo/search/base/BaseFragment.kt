@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.skydoves.bindables.BindingFragment
 
 abstract class BaseFragment<T : ViewDataBinding>(
     @LayoutRes contentLayoutId: Int,
-) : BindingFragment<T>(contentLayoutId){
+) : BindingFragment<T>(contentLayoutId) {
 
     abstract val viewModelProvideOwner: ViewModelStoreOwner
 
