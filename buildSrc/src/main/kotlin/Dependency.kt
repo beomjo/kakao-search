@@ -100,8 +100,8 @@ object Dependency {
     }
 
     object Navigation {
-        const val FRAGMENT = "androidx.navigation:navigation-fragment-ktx:2.3.5"
-        const val UI = "androidx.navigation:navigation-ui-ktx:2.3.5"
+        const val FRAGMENT = "androidx.navigation:navigation-fragment-ktx:2.4.0-alpha06"
+        const val UI = "androidx.navigation:navigation-ui-ktx:2.4.0-alpha06"
     }
 
     // Etc
