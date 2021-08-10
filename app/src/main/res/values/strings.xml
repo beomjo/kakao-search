@@ -20,4 +20,5 @@
     <string name="detail_fragment_title">Detail Fragment</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
+    <string name="search_hint">Input Search Keyword</string>
 </resources>

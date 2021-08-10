@@ -43,7 +43,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = searchViewModel.apply { search("아이유") }
+            viewModel = searchViewModel
             adapter = searchPagingAdapter
         }
         searchViewModel.pager.observe(viewLifecycleOwner, {
