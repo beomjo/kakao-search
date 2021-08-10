@@ -25,7 +25,7 @@
 
         <variable
             name="adapter"
-            type="io.github.beomjo.search.ui.adapter.SearchPagingAdapter" />
+            type="androidx.recyclerview.widget.ConcatAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

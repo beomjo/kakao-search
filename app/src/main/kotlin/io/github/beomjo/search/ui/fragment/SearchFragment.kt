@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
@@ -29,6 +30,7 @@ import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentSearchBinding
 import io.github.beomjo.search.ui.adapter.SearchPagingAdapter
+import io.github.beomjo.search.ui.adapter.SearchPagingLoadStateAdapter
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 import kotlinx.coroutines.launch
 
@@ -49,9 +51,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     }
 
     private fun bindLayout() {
-        binding.apply {
+        binding {
             viewModel = searchViewModel
-            adapter = searchPagingAdapter
+            adapter = searchPagingAdapter.withLoadStateFooter(
+                SearchPagingLoadStateAdapter {
+                    searchPagingAdapter.retry()
+                }
+            )
+
+            editSearch.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchViewModel.search()
+                    true
+                } else false
+            }
+
         }
     }
 

@@ -45,7 +45,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Tomato" />
+                tools:text="title" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/name"
@@ -61,7 +61,7 @@
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toEndOf="@id/type"
                 app:layout_constraintTop_toTopOf="@id/type"
-                tools:text="Tomato" />
+                tools:text="name" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/title"
@@ -89,7 +89,7 @@
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
-                tools:text="2016년 12월 30일" />
+                tools:text="2021년 12월 30일" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
