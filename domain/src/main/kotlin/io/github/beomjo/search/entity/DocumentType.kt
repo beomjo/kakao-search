@@ -20,7 +20,7 @@ enum class DocumentType {
     ALL,
     BLOG,
     CAFE,
-    VIDEO,
+    WEB,
     IMAGE,
     BOOK,
 }

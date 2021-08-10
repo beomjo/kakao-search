@@ -18,15 +18,11 @@ package io.github.beomjo.search.model
 
 import com.google.gson.annotations.SerializedName
 
-internal data class ModelVideo(
-    @SerializedName("author")
-    val author: String,
+internal data class ModelWeb(
     @SerializedName("datetime")
     val datetime: String,
-    @SerializedName("play_time")
-    val playTime: Int,
-    @SerializedName("thumbnail")
-    val thumbnail: String,
+    @SerializedName("contents")
+    val contents: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("url")

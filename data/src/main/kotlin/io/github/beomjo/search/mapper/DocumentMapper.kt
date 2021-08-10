@@ -24,7 +24,7 @@ import io.github.beomjo.search.model.ModelBook
 import io.github.beomjo.search.model.ModelCafe
 import io.github.beomjo.search.model.ModelDocumentList
 import io.github.beomjo.search.model.ModelImage
-import io.github.beomjo.search.model.ModelVideo
+import io.github.beomjo.search.model.ModelWeb
 import java.lang.IllegalStateException
 
 internal fun <T> ModelDocumentList<T>.toEntity(): DocumentList {
@@ -35,7 +35,7 @@ internal fun <T> ModelDocumentList<T>.toEntity(): DocumentList {
                 is ModelBlog -> it.toEntity()
                 is ModelCafe -> it.toEntity()
                 is ModelImage -> it.toEntity()
-                is ModelVideo -> it.toEntity()
+                is ModelWeb -> it.toEntity()
                 is ModelBook -> it.toEntity()
                 else -> throw IllegalStateException("Not Exist Model Receive")
             }
@@ -70,12 +70,12 @@ internal fun ModelImage.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun ModelVideo.toEntity(): Document = Document(
-    type = DocumentType.VIDEO,
+internal fun ModelWeb.toEntity(): Document = Document(
+    type = DocumentType.WEB,
     url = url,
-    thumbnail = thumbnail,
+    thumbnail = "",
     title = title,
-    content = author,
+    content = contents,
     date = datetime,
 )
 

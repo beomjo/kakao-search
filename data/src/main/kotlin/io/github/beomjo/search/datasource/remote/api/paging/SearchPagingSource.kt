@@ -43,15 +43,15 @@ internal class SearchPagingSource @AssistedInject constructor(
                 DocumentType.ALL -> {
                     val blogDocumentList = fetchBlogList(pagePosition, 5)
                     val cafeDocumentList = fetchCafeList(pagePosition, 5)
-                    val videoDocumentList = fetchVideoList(pagePosition, 5)
+                    val webDocumentList = fetchWebList(pagePosition, 5)
                     val imageDocumentList = fetchImageList(pagePosition, 5)
                     val bookDocumentList = fetchBookList(pagePosition, 5)
 
-                    blogDocumentList + cafeDocumentList + videoDocumentList + imageDocumentList + bookDocumentList
+                    blogDocumentList + cafeDocumentList + webDocumentList + imageDocumentList + bookDocumentList
                 }
                 DocumentType.BLOG -> fetchBlogList(pagePosition, 25)
                 DocumentType.CAFE -> fetchCafeList(pagePosition, 25)
-                DocumentType.VIDEO -> fetchVideoList(pagePosition, 25)
+                DocumentType.WEB -> fetchWebList(pagePosition, 25)
                 DocumentType.IMAGE -> fetchImageList(pagePosition, 25)
                 DocumentType.BOOK -> fetchBookList(pagePosition, 25)
             }
@@ -94,8 +94,8 @@ internal class SearchPagingSource @AssistedInject constructor(
         ).toEntity()
 
 
-    private suspend fun fetchVideoList(pagePosition: Int, pageSize: Int) =
-        documentApi.fetchVideo(
+    private suspend fun fetchWebList(pagePosition: Int, pageSize: Int) =
+        documentApi.fetchWeb(
             query = requestParam.query,
             sort = requestParam.sort.value,
             page = pagePosition,
@@ -126,17 +126,42 @@ internal class SearchPagingSource @AssistedInject constructor(
             PagingParam.Key(position = STARTING_POSITION, hasMore = true),
             PagingParam.Key(position = STARTING_POSITION, hasMore = true)
         )
-        DocumentType.BLOG -> PagingParam(blogKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
-        DocumentType.CAFE -> PagingParam(cafeKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
-        DocumentType.VIDEO -> PagingParam(videoKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
-        DocumentType.IMAGE -> PagingParam(imageKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
-        DocumentType.BOOK -> PagingParam(bookKey = PagingParam.Key(position = STARTING_POSITION, hasMore = true))
+        DocumentType.BLOG -> PagingParam(
+            blogKey = PagingParam.Key(
+                position = STARTING_POSITION,
+                hasMore = true
+            )
+        )
+        DocumentType.CAFE -> PagingParam(
+            cafeKey = PagingParam.Key(
+                position = STARTING_POSITION,
+                hasMore = true
+            )
+        )
+        DocumentType.WEB -> PagingParam(
+            webKey = PagingParam.Key(
+                position = STARTING_POSITION,
+                hasMore = true
+            )
+        )
+        DocumentType.IMAGE -> PagingParam(
+            imageKey = PagingParam.Key(
+                position = STARTING_POSITION,
+                hasMore = true
+            )
+        )
+        DocumentType.BOOK -> PagingParam(
+            bookKey = PagingParam.Key(
+                position = STARTING_POSITION,
+                hasMore = true
+            )
+        )
     }
 
     data class PagingParam(
         val blogKey: Key = Key(),
         val cafeKey: Key = Key(),
-        val videoKey: Key = Key(),
+        val webKey: Key = Key(),
         val imageKey: Key = Key(),
         val bookKey: Key = Key(),
     ) {
@@ -153,7 +178,7 @@ internal class SearchPagingSource @AssistedInject constructor(
         fun getPagePosition(): Int = maxOf(
             blogKey.position,
             cafeKey.position,
-            videoKey.position,
+            webKey.position,
             imageKey.position,
             bookKey.position
         )
@@ -162,25 +187,26 @@ internal class SearchPagingSource @AssistedInject constructor(
             DocumentType.ALL -> copy(
                 blogKey = if (blogKey.hasMore) blogKey.next() else blogKey,
                 cafeKey = if (cafeKey.hasMore) cafeKey.next() else cafeKey,
-                videoKey = if (videoKey.hasMore) videoKey.next() else videoKey,
+                webKey = if (webKey.hasMore) webKey.next() else webKey,
                 imageKey = if (imageKey.hasMore) imageKey.next() else imageKey,
                 bookKey = if (bookKey.hasMore) bookKey.next() else bookKey,
             )
             DocumentType.BLOG -> copy(blogKey = if (blogKey.hasMore) blogKey.next() else blogKey)
             DocumentType.CAFE -> copy(cafeKey = if (cafeKey.hasMore) cafeKey.next() else cafeKey)
-            DocumentType.VIDEO -> copy(videoKey = if (videoKey.hasMore) videoKey.next() else videoKey)
+            DocumentType.WEB -> copy(webKey = if (webKey.hasMore) webKey.next() else webKey)
             DocumentType.IMAGE -> copy(imageKey = if (imageKey.hasMore) imageKey.next() else imageKey)
             DocumentType.BOOK -> copy(bookKey = if (bookKey.hasMore) bookKey.next() else bookKey)
         }
 
         fun prevPage(): PagingParam? {
-            if (getPagePosition() == STARTING_POSITION) return null
+            val position = getPagePosition()
+            if (position == STARTING_POSITION) return null
             return PagingParam(
-                blogKey = if (blogKey.hasMore) blogKey else blogKey.prev(),
-                cafeKey = if (cafeKey.hasMore) cafeKey else cafeKey.prev(),
-                videoKey = if (videoKey.hasMore) videoKey else videoKey.prev(),
-                imageKey = if (imageKey.hasMore) imageKey else imageKey.prev(),
-                bookKey = if (bookKey.hasMore) bookKey else bookKey.prev(),
+                blogKey = if (blogKey.position != position) blogKey else blogKey.prev(),
+                cafeKey = if (cafeKey.position != position) cafeKey else cafeKey.prev(),
+                webKey = if (webKey.position != position) webKey else webKey.prev(),
+                imageKey = if (imageKey.position != position) imageKey else imageKey.prev(),
+                bookKey = if (bookKey.position != position) bookKey else bookKey.prev(),
             )
         }
     }

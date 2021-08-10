@@ -21,7 +21,7 @@ import io.github.beomjo.search.model.ModelBook
 import io.github.beomjo.search.model.ModelCafe
 import io.github.beomjo.search.model.ModelDocumentList
 import io.github.beomjo.search.model.ModelImage
-import io.github.beomjo.search.model.ModelVideo
+import io.github.beomjo.search.model.ModelWeb
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -50,13 +50,13 @@ internal interface DocumentsApi {
         @Query(SIZE) size: Int?,
     ): ModelDocumentList<ModelImage>
 
-    @GET("v2/search/vclip")
-    suspend fun fetchVideo(
+    @GET("v2/search/web")
+    suspend fun fetchWeb(
         @Query(QUERY) query: String,
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
         @Query(SIZE) size: Int?,
-    ): ModelDocumentList<ModelVideo>
+    ): ModelDocumentList<ModelWeb>
 
     @GET("v3/search/book")
     suspend fun fetchBook(
