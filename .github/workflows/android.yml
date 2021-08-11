@@ -22,6 +22,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Clone Submodule
+        run: git clone https://github.com/beomjo/android-compilation.git
+
       - name: Run Android Lint
         run: ./gradlew lintRelease
 
@@ -52,6 +55,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Clone Submodule
+        run: git clone https://github.com/beomjo/android-compilation.git
 
       - name: Run detekt
         run: ./gradlew detekt
@@ -84,6 +90,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Clone Submodule
+        run: git clone https://github.com/beomjo/android-compilation.git
 
       - name: Unit Test
         run: ./gradlew testDebugUnitTest
@@ -123,6 +132,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Clone Submodule
+        run: git clone https://github.com/beomjo/android-compilation.git
 
       - name: Clean Project
         run: ./gradlew clean --stacktrace
