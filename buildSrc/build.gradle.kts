@@ -30,7 +30,7 @@ object PluginVersion {
     const val DETEKT = "1.17.1"
     const val HILT = "2.38.1"
     const val DEPENDENCY_CHECKER = "0.39.0"
-    const val SAFE_ARGS = "2.3.5"
+    const val SAFE_ARGS = "2.4.0-alpha06"
 }
 
 dependencies {

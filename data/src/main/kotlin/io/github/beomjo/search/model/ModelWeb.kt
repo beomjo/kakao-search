@@ -14,25 +14,17 @@
  * limitations under the License.
  */
 
-plugins {
-    `android-library`
-    `kotlin-android`
-    `detekt-setting`
-}
+package io.github.beomjo.search.model
 
-android {
-    compileSdk = AndroidEnv.ANDROID_COMPILE
+import com.google.gson.annotations.SerializedName
 
-    defaultConfig {
-        minSdk = AndroidEnv.ANDROID_MIN
-        targetSdk = AndroidEnv.ANDROID_TARGET
-    }
-}
-
-dependencies {
-    implementation(group = "javax.inject", name = "javax.inject", version = "1")
-    implementation(Dependency.Kotlin.COROUTINE_CORE)
-    implementation(Dependency.Kotlin.COROUTINE_ANDROID)
-    implementation(Dependency.Paging3.RUNTIME)
-    implementation(Dependency.Paging3.COMMON)
-}
+internal data class ModelWeb(
+    @SerializedName("datetime")
+    val datetime: String,
+    @SerializedName("contents")
+    val contents: String,
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("url")
+    val url: String
+)

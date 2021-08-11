@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.model
+package io.github.beomjo.search.usecase.base
 
-import com.google.gson.annotations.SerializedName
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 
-internal data class ModelVideo(
-    @SerializedName("author")
-    val author: String,
-    @SerializedName("datetime")
-    val datetime: String,
-    @SerializedName("play_time")
-    val playTime: Int,
-    @SerializedName("thumbnail")
-    val thumbnail: String,
-    @SerializedName("title")
-    val title: String,
-    @SerializedName("url")
-    val url: String
-)
+abstract class PagingUseCase<in P, R : Any> {
+
+    operator fun invoke(parameters: P): Flow<PagingData<R>> {
+        return execute(parameters)
+    }
+
+    protected abstract fun execute(parameters: P): Flow<PagingData<R>>
+}

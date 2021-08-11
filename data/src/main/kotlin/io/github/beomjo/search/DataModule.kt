@@ -16,6 +16,7 @@
 
 package io.github.beomjo.search
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,7 @@ import io.github.beomjo.search.repository.DocumentRepository
 import io.github.beomjo.search.repository.DocumentRepositoryImpl
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [DataModule.DataBindModule::class])
 @InstallIn(SingletonComponent::class)
 internal object DataModule {
 
@@ -40,8 +41,10 @@ internal object DataModule {
             .create(DocumentsApi::class.java)
     }
 
-    @Provides
-    fun provideDocumentRepository(documentsApi: DocumentsApi): DocumentRepository {
-        return DocumentRepositoryImpl(documentsApi)
+    @Module
+    @InstallIn(SingletonComponent::class)
+    abstract class DataBindModule {
+        @Binds
+        abstract fun provideDocumentRepository(repository: DocumentRepositoryImpl): DocumentRepository
     }
 }

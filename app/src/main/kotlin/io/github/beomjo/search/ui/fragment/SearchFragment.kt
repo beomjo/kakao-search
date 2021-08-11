@@ -17,18 +17,70 @@
 package io.github.beomjo.search.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
+import io.github.beomjo.search.base.BaseFragment
+import io.github.beomjo.search.databinding.FragmentSearchBinding
+import io.github.beomjo.search.ui.adapter.SearchControlMenuAdapter
+import io.github.beomjo.search.ui.adapter.SearchPagingAdapter
+import io.github.beomjo.search.ui.adapter.SearchPagingLoadStateAdapter
+import io.github.beomjo.search.ui.viewmodels.SearchViewModel
+import kotlinx.coroutines.launch
 
-class SearchFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+@AndroidEntryPoint
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+
+    private val searchViewModel: SearchViewModel by getViewModel()
+
+    private val searchPagingAdapter: SearchPagingAdapter by lazy { SearchPagingAdapter() }
+
+    override val viewModelProvideOwner: ViewModelStoreOwner
+        get() = this.requireActivity()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindLayout()
+        observeViewModel()
+    }
+
+    private fun bindLayout() {
+        binding {
+            viewModel = searchViewModel
+            adapter = ConcatAdapter(
+                SearchControlMenuAdapter(
+                    onFilterSelected = {
+                        searchViewModel.searchFilter = it
+                        searchViewModel.search()
+                    },
+                    onSortSelected = {
+                        searchViewModel.sort = it
+                    },
+                ),
+                searchPagingAdapter.withLoadStateFooter(
+                    SearchPagingLoadStateAdapter {
+                        searchPagingAdapter.retry()
+                    }
+                ))
+
+            editSearch.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchViewModel.search()
+                    true
+                } else false
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        searchViewModel.pager.observe(viewLifecycleOwner, {
+            lifecycleScope.launch {
+                searchPagingAdapter.submitData(it)
+            }
+        })
     }
 }

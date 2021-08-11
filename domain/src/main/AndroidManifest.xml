@@ -1,5 +1,4 @@
-<resources>
-    <!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Designed and developed by 2021 beomjo
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +13,4 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     -->
-    <string name="app_name">kakao-search</string>
-    <string name="home_fragment_title">Home Fragment</string>
-    <string name="search_fragment_title">Search Fragment</string>
-    <string name="detail_fragment_title">Detail Fragment</string>
-    <string name="home">Home</string>
-    <string name="search">Search</string>
-    <string name="search_hint">Input Search Keyword</string>
-    <string name="retry">RETRY</string>
-    <string name="sort">SORT</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-</resources>
+<manifest package="io.github.beomjo.search.domain" />

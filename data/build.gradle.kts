@@ -37,6 +37,8 @@ dependencies {
     implementation(Dependency.Kotlin.COROUTINE_CORE)
     implementation(Dependency.Kotlin.COROUTINE_ANDROID)
 
+    implementation(Dependency.Paging3.RUNTIME)
+
     implementation(Dependency.Hilt.CORE)
     kapt(Dependency.Hilt.APT)
 

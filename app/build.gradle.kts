@@ -73,6 +73,7 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":android-compilation"))
 
     implementation(Dependency.Kotlin.SDK)
     implementation(Dependency.Kotlin.COROUTINE_CORE)
@@ -105,6 +106,8 @@ dependencies {
 
     implementation(Dependency.Navigation.FRAGMENT)
     implementation(Dependency.Navigation.UI)
+
+    implementation(Dependency.BINDABLES)
 
     testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)

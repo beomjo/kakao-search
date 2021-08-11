@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.repository
+package io.github.beomjo.search.ui.adapter
 
-import androidx.paging.PagingData
+import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.usecase.SearchPagingParam
-import kotlinx.coroutines.flow.Flow
+import io.github.beomjo.search.ui.adapter.diff.AlwaysFailDiff
+import io.github.beomjo.search.ui.adapter.viewholders.DocumentViewHolder
 
-interface DocumentRepository {
-    fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
+class SearchPagingAdapter : PagingDataAdapter<Document, DocumentViewHolder>(AlwaysFailDiff()) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocumentViewHolder {
+        return DocumentViewHolder.create(parent)
+    }
+
+    override fun onBindViewHolder(holder: DocumentViewHolder, position: Int) {
+        getItem(position)?.let {
+            holder.bind(it)
+        }
+    }
 }

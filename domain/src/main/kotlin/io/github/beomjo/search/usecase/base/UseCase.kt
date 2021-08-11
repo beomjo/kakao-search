@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-plugins {
-    `android-library`
-    `kotlin-android`
-    `detekt-setting`
-}
+package io.github.beomjo.search.usecase.base
 
-android {
-    compileSdk = AndroidEnv.ANDROID_COMPILE
+abstract class UseCase<in P, R : Any> {
 
-    defaultConfig {
-        minSdk = AndroidEnv.ANDROID_MIN
-        targetSdk = AndroidEnv.ANDROID_TARGET
+    operator fun invoke(parameters: P): R {
+        return execute(parameters)
     }
-}
 
-dependencies {
-    implementation(group = "javax.inject", name = "javax.inject", version = "1")
-    implementation(Dependency.Kotlin.COROUTINE_CORE)
-    implementation(Dependency.Kotlin.COROUTINE_ANDROID)
-    implementation(Dependency.Paging3.RUNTIME)
-    implementation(Dependency.Paging3.COMMON)
+    protected abstract fun execute(parameters: P): R
 }
