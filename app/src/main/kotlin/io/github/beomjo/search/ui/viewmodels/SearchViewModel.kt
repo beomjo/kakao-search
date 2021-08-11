@@ -16,7 +16,11 @@
 
 package io.github.beomjo.search.ui.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel

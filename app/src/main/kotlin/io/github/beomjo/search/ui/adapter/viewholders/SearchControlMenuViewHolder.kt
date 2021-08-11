@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.R
-import io.github.beomjo.search.databinding.DocumentListFooterItemBinding
 import io.github.beomjo.search.databinding.SearchControlMenuItemBinding
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SortType
