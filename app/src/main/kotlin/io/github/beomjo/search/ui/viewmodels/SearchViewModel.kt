@@ -35,13 +35,9 @@ class SearchViewModel @Inject constructor(
 
     val query = MutableLiveData<String>()
 
-    private val defaultDocumentType = DocumentType.ALL
-    private val _documentType = MutableLiveData(defaultDocumentType)
-    val documentType: LiveData<DocumentType> get() = _documentType
+    var searchFilter: DocumentType = DocumentType.ALL
 
-    private val defaultSortType = SortType.TITLE
-    private val _sortType = MutableLiveData(defaultSortType)
-    val sortType: LiveData<SortType> get() = _sortType
+    var sort: SortType = SortType.TITLE
 
     private val _pager = MutableLiveData<SearchPagingParam>()
     val pager: LiveData<PagingData<Document>> = _pager.switchMap(::getPager)
@@ -54,8 +50,8 @@ class SearchViewModel @Inject constructor(
 
     private fun getSearchPagingParam(query: String): SearchPagingParam {
         return SearchPagingParam(
-            documentType = documentType.value ?: defaultDocumentType,
-            sortType = sortType.value ?: defaultSortType,
+            documentType = searchFilter,
+            sortType = sort,
             query = query
         )
     }

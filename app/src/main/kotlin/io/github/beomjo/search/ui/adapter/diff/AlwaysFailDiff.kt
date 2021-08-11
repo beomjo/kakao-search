@@ -1,4 +1,4 @@
-package io.github.beomjo.search.ui.adapter
+package io.github.beomjo.search.ui.adapter.diff
 
 import androidx.recyclerview.widget.DiffUtil
 

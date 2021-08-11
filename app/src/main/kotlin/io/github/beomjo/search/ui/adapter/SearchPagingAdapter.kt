@@ -19,6 +19,7 @@ package io.github.beomjo.search.ui.adapter
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.ui.adapter.diff.AlwaysFailDiff
 import io.github.beomjo.search.ui.adapter.viewholders.DocumentViewHolder
 
 class SearchPagingAdapter : PagingDataAdapter<Document, DocumentViewHolder>(AlwaysFailDiff()) {

@@ -22,4 +22,7 @@
     <string name="search">Search</string>
     <string name="search_hint">Input Search Keyword</string>
     <string name="retry">RETRY</string>
+    <string name="sort">SORT</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
