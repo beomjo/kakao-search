@@ -21,11 +21,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSource
 import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSourceFactory
-import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.entity.DocumentList
-import io.github.beomjo.search.entity.Sort
-import io.github.beomjo.search.mapper.toEntity
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

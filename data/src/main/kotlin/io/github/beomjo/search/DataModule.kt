@@ -23,7 +23,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
 import io.github.beomjo.search.datasource.remote.api.Urls
-import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSource
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.repository.DocumentRepository
 import io.github.beomjo.search.repository.DocumentRepositoryImpl

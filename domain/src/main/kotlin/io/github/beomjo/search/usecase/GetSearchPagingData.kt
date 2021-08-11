@@ -17,7 +17,10 @@
 package io.github.beomjo.search.usecase
 
 import androidx.paging.PagingData
-import io.github.beomjo.search.entity.*
+import io.github.beomjo.search.entity.DocumentType
+import io.github.beomjo.search.entity.SortType
+import io.github.beomjo.search.entity.Sort
+import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.repository.DocumentRepository
 import io.github.beomjo.search.usecase.base.PagingUseCase
 import kotlinx.coroutines.flow.Flow

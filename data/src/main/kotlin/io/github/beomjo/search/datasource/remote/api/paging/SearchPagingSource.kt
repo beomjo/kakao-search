@@ -41,19 +41,20 @@ internal class SearchPagingSource @AssistedInject constructor(
         return try {
             val documentList = when (requestParam.documentType) {
                 DocumentType.ALL -> {
-                    val blogDocumentList = fetchBlogList(pagePosition, 5)
-                    val cafeDocumentList = fetchCafeList(pagePosition, 5)
-                    val webDocumentList = fetchWebList(pagePosition, 5)
-                    val imageDocumentList = fetchImageList(pagePosition, 5)
-                    val bookDocumentList = fetchBookList(pagePosition, 5)
+                    val pageSize = PER_PAGE_SIZE / DocumentType.values().size
+                    val blogDocumentList = fetchBlogList(pagePosition, pageSize)
+                    val cafeDocumentList = fetchCafeList(pagePosition, pageSize)
+                    val webDocumentList = fetchWebList(pagePosition, pageSize)
+                    val imageDocumentList = fetchImageList(pagePosition, pageSize)
+                    val bookDocumentList = fetchBookList(pagePosition, pageSize)
 
                     blogDocumentList + cafeDocumentList + webDocumentList + imageDocumentList + bookDocumentList
                 }
-                DocumentType.BLOG -> fetchBlogList(pagePosition, 25)
-                DocumentType.CAFE -> fetchCafeList(pagePosition, 25)
-                DocumentType.WEB -> fetchWebList(pagePosition, 25)
-                DocumentType.IMAGE -> fetchImageList(pagePosition, 25)
-                DocumentType.BOOK -> fetchBookList(pagePosition, 25)
+                DocumentType.BLOG -> fetchBlogList(pagePosition, PER_PAGE_SIZE)
+                DocumentType.CAFE -> fetchCafeList(pagePosition, PER_PAGE_SIZE)
+                DocumentType.WEB -> fetchWebList(pagePosition, PER_PAGE_SIZE)
+                DocumentType.IMAGE -> fetchImageList(pagePosition, PER_PAGE_SIZE)
+                DocumentType.BOOK -> fetchBookList(pagePosition, PER_PAGE_SIZE)
             }
 
             return LoadResult.Page(
@@ -92,7 +93,6 @@ internal class SearchPagingSource @AssistedInject constructor(
             page = pagePosition,
             size = pageSize
         ).toEntity()
-
 
     private suspend fun fetchWebList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchWeb(
@@ -183,19 +183,26 @@ internal class SearchPagingSource @AssistedInject constructor(
             bookKey.position
         )
 
-        fun nextPage(documentType: DocumentType): PagingParam = when (documentType) {
-            DocumentType.ALL -> copy(
-                blogKey = if (blogKey.hasMore) blogKey.next() else blogKey,
-                cafeKey = if (cafeKey.hasMore) cafeKey.next() else cafeKey,
-                webKey = if (webKey.hasMore) webKey.next() else webKey,
-                imageKey = if (imageKey.hasMore) imageKey.next() else imageKey,
-                bookKey = if (bookKey.hasMore) bookKey.next() else bookKey,
-            )
-            DocumentType.BLOG -> copy(blogKey = if (blogKey.hasMore) blogKey.next() else blogKey)
-            DocumentType.CAFE -> copy(cafeKey = if (cafeKey.hasMore) cafeKey.next() else cafeKey)
-            DocumentType.WEB -> copy(webKey = if (webKey.hasMore) webKey.next() else webKey)
-            DocumentType.IMAGE -> copy(imageKey = if (imageKey.hasMore) imageKey.next() else imageKey)
-            DocumentType.BOOK -> copy(bookKey = if (bookKey.hasMore) bookKey.next() else bookKey)
+        fun nextPage(documentType: DocumentType): PagingParam {
+            val nextBlogKey = if (blogKey.hasMore) blogKey.next() else blogKey
+            val nextCafeKey = if (cafeKey.hasMore) cafeKey.next() else cafeKey
+            val nextWebKey = if (webKey.hasMore) webKey.next() else webKey
+            val nextImageKey = if (imageKey.hasMore) imageKey.next() else imageKey
+            val nextBookKey = if (bookKey.hasMore) bookKey.next() else bookKey
+            return when (documentType) {
+                DocumentType.ALL -> copy(
+                    blogKey = nextBlogKey,
+                    cafeKey = nextCafeKey,
+                    webKey = nextWebKey,
+                    imageKey = nextImageKey,
+                    bookKey = nextBookKey,
+                )
+                DocumentType.BLOG -> copy(blogKey = nextBlogKey)
+                DocumentType.CAFE -> copy(cafeKey = nextCafeKey)
+                DocumentType.WEB -> copy(webKey = nextWebKey)
+                DocumentType.IMAGE -> copy(imageKey = nextImageKey)
+                DocumentType.BOOK -> copy(bookKey = nextBookKey)
+            }
         }
 
         fun prevPage(): PagingParam? {
@@ -221,5 +228,3 @@ internal class SearchPagingSource @AssistedInject constructor(
 internal interface SearchPagingSourceFactory {
     fun create(requestParam: SearchPagingParam): SearchPagingSource
 }
-
-
