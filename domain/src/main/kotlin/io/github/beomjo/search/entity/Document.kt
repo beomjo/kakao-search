@@ -16,11 +16,13 @@
 
 package io.github.beomjo.search.entity
 
+import java.util.*
+
 data class Document(
     val type: DocumentType,
     val url: String,
     val thumbnail: String,
     val title: String,
     val content: String,
-    val date: String,
+    val date: Date,
 )

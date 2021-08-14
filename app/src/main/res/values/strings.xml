@@ -25,4 +25,7 @@
     <string name="sort">SORT</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="today">오늘</string>
+    <string name="yesterday">어제</string>
+    <string name="date_format" formatted="false">%1$tY년 %1$tm월 %1$td일</string>
 </resources>

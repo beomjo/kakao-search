@@ -16,7 +16,9 @@
 
 package io.github.beomjo.search.datasource.remote.api
 
+import com.google.gson.GsonBuilder
 import io.github.beomjo.search.data.BuildConfig
+import io.github.beomjo.search.datasource.remote.api.converter.DateConverter
 import okhttp3.Interceptor
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
@@ -26,6 +28,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieManager
 import java.net.CookiePolicy
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 object RetrofitAdapter {
@@ -35,7 +38,7 @@ object RetrofitAdapter {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(getOkHttpClient(apiKey))
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(getGsonConvertFactory())
             .build()
     }
 
@@ -48,6 +51,13 @@ object RetrofitAdapter {
             .addInterceptor(getHttpLoggingInterceptor())
             .addInterceptor { getRequestInterceptor(it, apiKey) }
             .build()
+    }
+
+    private fun getGsonConvertFactory(): GsonConverterFactory {
+        val gson = GsonBuilder()
+            .registerTypeAdapter(Date::class.java, DateConverter())
+            .create()
+        return GsonConverterFactory.create(gson)
     }
 
     private fun getCookieManager(): CookieManager {
