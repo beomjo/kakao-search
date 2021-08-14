@@ -31,4 +31,3 @@ fun TextView.dateString(date: Date?) {
         else -> context.getString(R.string.date_format, date)
     }
 }
-
