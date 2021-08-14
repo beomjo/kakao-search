@@ -28,6 +28,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@android:string/untitled"
                 android:scaleType="fitCenter"
+                app:imageUrl="@{document.thumbnail}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
