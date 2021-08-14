@@ -59,6 +59,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     },
                     onSortSelected = {
                         searchViewModel.sort = it
+                        searchViewModel.search()
                     },
                 ),
                 searchPagingAdapter.withLoadStateFooter(
