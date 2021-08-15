@@ -50,4 +50,8 @@ dependencies {
     implementation(Dependency.OkHttp.CORE)
     implementation(Dependency.OkHttp.CONNECTION)
     implementation(Dependency.OkHttp.LOGGING_INTERCEPTOR)
+
+    implementation(Dependency.Room.RUNTIME)
+    implementation(Dependency.Room.KTX)
+    kapt(Dependency.Room.APT)
 }
