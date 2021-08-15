@@ -28,6 +28,10 @@ android {
         minSdk = AndroidEnv.ANDROID_MIN
         targetSdk = AndroidEnv.ANDROID_TARGET
     }
+
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
 }
 
 

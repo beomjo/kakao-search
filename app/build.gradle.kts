@@ -62,6 +62,10 @@ android {
         viewBinding = true
     }
 
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
+
     kapt {
         javacOptions {
             option("-Adagger.fastInit=ENABLED")
