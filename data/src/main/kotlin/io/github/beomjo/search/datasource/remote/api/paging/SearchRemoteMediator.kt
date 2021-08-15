@@ -29,6 +29,7 @@ import io.github.beomjo.search.datasource.local.AppDatabase
 import io.github.beomjo.search.datasource.local.table.DocumentTable
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
+import io.github.beomjo.search.entity.DocumentList
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.mapper.toEntity
 import io.github.beomjo.search.mapper.toTable
@@ -126,13 +127,21 @@ internal class SearchRemoteMediator @AssistedInject constructor(
             size = pageSize
         ).toEntity()
 
-    private suspend fun fetchImageList(pagePosition: Int, pageSize: Int) =
-        documentApi.fetchImages(
+    private suspend fun fetchImageList(pagePosition: Int, pageSize: Int): DocumentList {
+        if (pagePosition > 50) return DocumentList(hasMore = false, emptyList())
+        val documentList = documentApi.fetchImages(
             query = requestParam.query,
             sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
+        return documentList.copy(
+            documents = documentList.documents.map {
+                it.copy(content = requestParam.query)
+            }
+        )
+    }
+
 
     private suspend fun fetchBookList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchBook(

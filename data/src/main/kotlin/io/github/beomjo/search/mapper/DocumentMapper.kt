@@ -66,8 +66,8 @@ internal fun ImageResponse.toEntity(): Document = Document(
     type = DocumentType.IMAGE,
     url = docUrl,
     thumbnail = thumbnailUrl,
-    title = displaySiteName,
-    content = collection,
+    title = "$displaySiteName-$collection",
+    content = "",
     date = datetime,
 )
 
