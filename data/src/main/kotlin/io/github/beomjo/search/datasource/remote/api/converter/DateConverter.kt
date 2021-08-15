@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class DateConverter : JsonDeserializer<Date> {
+internal class DateConverter : JsonDeserializer<Date> {
 
     private val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
 
