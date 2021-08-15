@@ -12,12 +12,12 @@ class SearchControlMenuAdapter(
 ) : RecyclerView.Adapter<SearchControlMenuViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchControlMenuViewHolder {
-        return SearchControlMenuViewHolder.create(parent)
+        return SearchControlMenuViewHolder.create(parent).apply {
+            bind(onFilterSelected, onSortSelected)
+        }
     }
 
-    override fun onBindViewHolder(holder: SearchControlMenuViewHolder, position: Int) {
-        holder.bind(onFilterSelected, onSortSelected)
-    }
+    override fun onBindViewHolder(holder: SearchControlMenuViewHolder, position: Int) = Unit
 
     override fun getItemCount(): Int = 1
 }
