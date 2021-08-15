@@ -19,31 +19,31 @@ package io.github.beomjo.search.mapper
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentList
 import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.model.ModelBlog
-import io.github.beomjo.search.model.ModelBook
-import io.github.beomjo.search.model.ModelCafe
-import io.github.beomjo.search.model.ModelDocumentList
-import io.github.beomjo.search.model.ModelImage
-import io.github.beomjo.search.model.ModelWeb
+import io.github.beomjo.search.model.BlogResponse
+import io.github.beomjo.search.model.BookResponse
+import io.github.beomjo.search.model.CafeResponse
+import io.github.beomjo.search.model.DocumentListResponse
+import io.github.beomjo.search.model.ImageResponse
+import io.github.beomjo.search.model.WebResponse
 import java.lang.IllegalStateException
 
-internal fun <T> ModelDocumentList<T>.toEntity(): DocumentList {
+internal fun <T> DocumentListResponse<T>.toEntity(): DocumentList {
     return DocumentList(
         hasMore = !meta.isEnd,
         documents = documents.map {
             when (it) {
-                is ModelBlog -> it.toEntity()
-                is ModelCafe -> it.toEntity()
-                is ModelImage -> it.toEntity()
-                is ModelWeb -> it.toEntity()
-                is ModelBook -> it.toEntity()
+                is BlogResponse -> it.toEntity()
+                is CafeResponse -> it.toEntity()
+                is ImageResponse -> it.toEntity()
+                is WebResponse -> it.toEntity()
+                is BookResponse -> it.toEntity()
                 else -> throw IllegalStateException("Not Exist Model Receive")
             }
         }.toList()
     )
 }
 
-internal fun ModelBlog.toEntity(): Document = Document(
+internal fun BlogResponse.toEntity(): Document = Document(
     type = DocumentType.BLOG,
     url = url,
     thumbnail = thumbnail,
@@ -52,7 +52,7 @@ internal fun ModelBlog.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun ModelCafe.toEntity(): Document = Document(
+internal fun CafeResponse.toEntity(): Document = Document(
     type = DocumentType.CAFE,
     url = url,
     thumbnail = thumbnail,
@@ -61,7 +61,7 @@ internal fun ModelCafe.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun ModelImage.toEntity(): Document = Document(
+internal fun ImageResponse.toEntity(): Document = Document(
     type = DocumentType.IMAGE,
     url = docUrl,
     thumbnail = thumbnailUrl,
@@ -70,7 +70,7 @@ internal fun ModelImage.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun ModelWeb.toEntity(): Document = Document(
+internal fun WebResponse.toEntity(): Document = Document(
     type = DocumentType.WEB,
     url = url,
     thumbnail = "",
@@ -79,7 +79,7 @@ internal fun ModelWeb.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun ModelBook.toEntity(): Document = Document(
+internal fun BookResponse.toEntity(): Document = Document(
     type = DocumentType.BOOK,
     url = url,
     thumbnail = thumbnail,

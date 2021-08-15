@@ -19,21 +19,13 @@ package io.github.beomjo.search.model
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-internal data class ModelImage(
-    @SerializedName("collection")
-    val collection: String,
+internal data class WebResponse(
     @SerializedName("datetime")
     val datetime: Date,
-    @SerializedName("display_sitename")
-    val displaySiteName: String,
-    @SerializedName("doc_url")
-    val docUrl: String,
-    @SerializedName("height")
-    val height: Int,
-    @SerializedName("image_url")
-    val imageUrl: String,
-    @SerializedName("thumbnail_url")
-    val thumbnailUrl: String,
-    @SerializedName("width")
-    val width: Int
+    @SerializedName("contents")
+    val contents: String,
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("url")
+    val url: String
 )

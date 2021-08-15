@@ -16,12 +16,12 @@
 
 package io.github.beomjo.search.datasource.remote.api.service
 
-import io.github.beomjo.search.model.ModelBlog
-import io.github.beomjo.search.model.ModelBook
-import io.github.beomjo.search.model.ModelCafe
-import io.github.beomjo.search.model.ModelDocumentList
-import io.github.beomjo.search.model.ModelImage
-import io.github.beomjo.search.model.ModelWeb
+import io.github.beomjo.search.model.BlogResponse
+import io.github.beomjo.search.model.BookResponse
+import io.github.beomjo.search.model.CafeResponse
+import io.github.beomjo.search.model.DocumentListResponse
+import io.github.beomjo.search.model.ImageResponse
+import io.github.beomjo.search.model.WebResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -32,7 +32,7 @@ internal interface DocumentsApi {
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
         @Query(SIZE) size: Int?,
-    ): ModelDocumentList<ModelBlog>
+    ): DocumentListResponse<BlogResponse>
 
     @GET("v2/search/cafe")
     suspend fun fetchCafe(
@@ -40,7 +40,7 @@ internal interface DocumentsApi {
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
         @Query(SIZE) size: Int?,
-    ): ModelDocumentList<ModelCafe>
+    ): DocumentListResponse<CafeResponse>
 
     @GET("v2/search/image")
     suspend fun fetchImages(
@@ -48,7 +48,7 @@ internal interface DocumentsApi {
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
         @Query(SIZE) size: Int?,
-    ): ModelDocumentList<ModelImage>
+    ): DocumentListResponse<ImageResponse>
 
     @GET("v2/search/web")
     suspend fun fetchWeb(
@@ -56,7 +56,7 @@ internal interface DocumentsApi {
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
         @Query(SIZE) size: Int?,
-    ): ModelDocumentList<ModelWeb>
+    ): DocumentListResponse<WebResponse>
 
     @GET("v3/search/book")
     suspend fun fetchBook(
@@ -64,7 +64,7 @@ internal interface DocumentsApi {
         @Query(SORT) sort: String,
         @Query(PAGE) page: Int?,
         @Query(SIZE) size: Int?,
-    ): ModelDocumentList<ModelBook>
+    ): DocumentListResponse<BookResponse>
 
     companion object {
         const val QUERY = "query"
