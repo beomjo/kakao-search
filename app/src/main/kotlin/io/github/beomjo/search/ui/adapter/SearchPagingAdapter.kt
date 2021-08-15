@@ -20,9 +20,10 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.ui.adapter.diff.AlwaysFailDiff
+import io.github.beomjo.search.ui.adapter.diff.DocumentDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.DocumentViewHolder
 
-class SearchPagingAdapter : PagingDataAdapter<Document, DocumentViewHolder>(AlwaysFailDiff()) {
+class SearchPagingAdapter : PagingDataAdapter<Document, DocumentViewHolder>(DocumentDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocumentViewHolder {
         return DocumentViewHolder.create(parent)
