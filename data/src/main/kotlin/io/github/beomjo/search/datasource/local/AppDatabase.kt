@@ -20,6 +20,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import io.github.beomjo.search.datasource.local.converter.DateConverter
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
 import io.github.beomjo.search.datasource.local.table.DocumentTable
 
@@ -29,6 +31,7 @@ import io.github.beomjo.search.datasource.local.table.DocumentTable
     version = 1,
     exportSchema = false
 )
+@TypeConverters(DateConverter::class)
 internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun documentDao(): DocumentDao

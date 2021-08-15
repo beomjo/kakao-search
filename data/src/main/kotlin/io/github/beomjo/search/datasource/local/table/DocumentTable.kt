@@ -38,5 +38,5 @@ internal data class DocumentTable(
     @field:SerializedName("content")
     val content: String,
     @field:SerializedName("date")
-    val date: Date,
+    val date: Date?,
 )
