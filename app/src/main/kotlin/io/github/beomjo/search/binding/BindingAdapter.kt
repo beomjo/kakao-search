@@ -28,6 +28,6 @@ fun TextView.dateString(date: Date?) {
     text = when (diff / ONE_DAY) {
         0L -> context.getString(R.string.today)
         1L -> context.getString(R.string.yesterday)
-        else -> context.getString(R.string.date_format, date)
+        else -> context.getString(R.string.date, date)
     }
 }

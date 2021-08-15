@@ -19,7 +19,7 @@ class DateConverter : JsonDeserializer<Date> {
         context: JsonDeserializationContext?
     ): Date? {
         return try {
-            dateFormat.parse(json?.asString)
+            dateFormat.parse(json?.asString ?: "")
         } catch (e: ParseException) {
             null
         }
