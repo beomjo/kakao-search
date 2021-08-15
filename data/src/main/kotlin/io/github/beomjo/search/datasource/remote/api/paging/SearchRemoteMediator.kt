@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package io.github.beomjo.search.datasource.remote.api.paging
 
 import androidx.paging.ExperimentalPagingApi
@@ -86,8 +85,7 @@ internal class SearchRemoteMediator @AssistedInject constructor(
 
     private suspend fun fetchDocumentList(position: Int) = when (requestParam.documentType) {
         DocumentType.ALL -> {
-            val typeNum = 5
-            val pageSize = PER_PAGE_SIZE / typeNum
+            val pageSize = PER_PAGE_SIZE / DOCUMENT_TYPE_NUM
             val blogDocumentList = fetchBlogList(position, pageSize)
             val cafeDocumentList = fetchCafeList(position, pageSize)
             val webDocumentList = fetchWebList(position, pageSize)
@@ -128,7 +126,7 @@ internal class SearchRemoteMediator @AssistedInject constructor(
         ).toEntity()
 
     private suspend fun fetchImageList(pagePosition: Int, pageSize: Int): DocumentList {
-        if (pagePosition > 50) return DocumentList(hasMore = false, emptyList())
+        if (pagePosition > MAX_PAGE_POSITION) return DocumentList(hasMore = false, emptyList())
         val documentList = documentApi.fetchImages(
             query = requestParam.query,
             sort = requestParam.sort.value,
@@ -142,7 +140,6 @@ internal class SearchRemoteMediator @AssistedInject constructor(
         )
     }
 
-
     private suspend fun fetchBookList(pagePosition: Int, pageSize: Int) =
         documentApi.fetchBook(
             query = requestParam.query,
@@ -153,7 +150,9 @@ internal class SearchRemoteMediator @AssistedInject constructor(
 
     companion object {
         const val STARTING_POSITION = 1
+        const val MAX_PAGE_POSITION = 10
         const val PER_PAGE_SIZE = 25
+        val DOCUMENT_TYPE_NUM = DocumentType.values().size - 1
     }
 }
 

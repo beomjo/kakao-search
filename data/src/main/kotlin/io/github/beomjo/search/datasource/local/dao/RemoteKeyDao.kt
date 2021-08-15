@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package io.github.beomjo.search.datasource.local.dao
 
 import androidx.room.Dao

@@ -27,7 +27,6 @@ import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.table.DocumentTable
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 
-
 @Database(
     entities = [DocumentTable::class, RemoteKeyTable::class],
     version = 1,

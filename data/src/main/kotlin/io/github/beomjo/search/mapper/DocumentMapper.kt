@@ -89,7 +89,6 @@ internal fun BookResponse.toEntity(): Document = Document(
     date = datetime,
 )
 
-
 internal fun Document.toTable(): DocumentTable {
     return DocumentTable(
         type = this.type,
@@ -111,4 +110,3 @@ internal fun DocumentTable.toEntity(): Document {
         date = this.date
     )
 }
-
