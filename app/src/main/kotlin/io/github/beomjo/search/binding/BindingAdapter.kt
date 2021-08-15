@@ -4,7 +4,7 @@ import android.text.Html
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import io.github.beomjo.search.R
-import java.util.*
+import java.util.Date
 
 @BindingAdapter("html")
 fun TextView.setHtml(html: String?) {

@@ -17,7 +17,7 @@
 package io.github.beomjo.search.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import java.util.Date
 
 internal data class ModelBlog(
     @SerializedName("blogname")

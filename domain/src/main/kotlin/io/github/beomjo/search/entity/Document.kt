@@ -16,7 +16,7 @@
 
 package io.github.beomjo.search.entity
 
-import java.util.*
+import java.util.Date
 
 data class Document(
     val type: DocumentType,
