@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.entity
+package io.github.beomjo.search.datasource.local.table
 
-import java.util.Date
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-data class Document(
-    val type: DocumentType,
-    val url: String,
-    val thumbnail: String,
-    val title: String,
-    val content: String,
-    val date: Date?,
+@Entity(tableName = "remote_key")
+data class RemoteKeyTable(
+    @PrimaryKey
+    @field:SerializedName("position")
+    val position: Int? = -1,
+    @field:SerializedName("prev_key")
+    val prevKey: Int?,
+    @field:SerializedName("next_key")
+    val nextKey: Int?
 )

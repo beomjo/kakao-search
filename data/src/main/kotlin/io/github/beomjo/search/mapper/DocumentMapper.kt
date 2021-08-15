@@ -16,6 +16,7 @@
 
 package io.github.beomjo.search.mapper
 
+import io.github.beomjo.search.datasource.local.table.DocumentTable
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentList
 import io.github.beomjo.search.entity.DocumentType
@@ -87,3 +88,27 @@ internal fun BookResponse.toEntity(): Document = Document(
     content = "${authors.joinToString(",")}\n${translators.joinToString(",")}\n${publisher}\n$price",
     date = datetime,
 )
+
+
+internal fun Document.toTable(): DocumentTable {
+    return DocumentTable(
+        type = this.type,
+        url = this.url,
+        thumbnail = this.thumbnail,
+        title = this.title,
+        content = this.content,
+        date = this.date
+    )
+}
+
+internal fun DocumentTable.toEntity(): Document {
+    return Document(
+        type = this.type,
+        url = this.url,
+        thumbnail = this.thumbnail,
+        title = this.title,
+        content = this.content,
+        date = this.date
+    )
+}
+

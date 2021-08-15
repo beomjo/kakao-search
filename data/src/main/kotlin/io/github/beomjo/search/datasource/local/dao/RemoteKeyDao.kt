@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 
+
 package io.github.beomjo.search.datasource.local.dao
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.github.beomjo.search.datasource.local.table.DocumentTable
-import kotlinx.coroutines.flow.Flow
+import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 
 @Dao
-internal interface DocumentDao {
+interface RemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDocuments(documents: List<DocumentTable>)
+    suspend fun insertKey(remoteKey: RemoteKeyTable)
 
-    @Query("SELECT * FROM document_table WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' ORDER BY date DESC")
-    fun getDocumentByDate(query: String): PagingSource<Int, DocumentTable>
+    @Query("SELECT * FROM remote_key")
+    suspend fun getRemoteKeyTable(): Array<RemoteKeyTable>?
 
-    @Query("SELECT * FROM document_table WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' ORDER BY title ASC")
-    fun getDocumentByTitle(query: String): PagingSource<Int, DocumentTable>
-
-    @Query("DELETE from document_table")
-    suspend fun clearAllDocuments()
+    @Query("DELETE FROM remote_key")
+    suspend fun clearRemoteKeys()
 }

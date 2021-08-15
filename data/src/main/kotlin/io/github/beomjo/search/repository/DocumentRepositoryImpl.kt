@@ -16,27 +16,43 @@
 
 package io.github.beomjo.search.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
+import io.github.beomjo.search.datasource.local.dao.DocumentDao
 import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSource
-import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSourceFactory
+import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
 import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SortType
+import io.github.beomjo.search.mapper.toEntity
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 internal class DocumentRepositoryImpl @Inject constructor(
-    private val searchPagingDataSourceFactory: SearchPagingSourceFactory
+    private val searchRemoteMediatorFactory: SearchRemoteMediatorFactory,
+    private val documentDao: DocumentDao
 ) : DocumentRepository {
     override fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = SearchPagingSource.PER_PAGE_SIZE,
+                prefetchDistance = 3,
+                enablePlaceholders = false
             ),
-            pagingSourceFactory = { searchPagingDataSourceFactory.create(param) }
-        ).flow
+            remoteMediator = searchRemoteMediatorFactory.create(param)
+        ) {
+            val response = when (param.sortType) {
+                SortType.TITLE -> documentDao.getDocumentByTitle(param.query)
+                else -> documentDao.getDocumentByDate(param.query)
+            }
+            response
+        }.flow.map {
+            it.map { documentTable ->
+                documentTable.toEntity()
+            }
+        }
     }
 }

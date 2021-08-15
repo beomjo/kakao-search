@@ -24,11 +24,9 @@ import java.util.Date
 
 @Entity(tableName = "document_table")
 internal data class DocumentTable(
-    @PrimaryKey(autoGenerate = true)
-    @field:SerializedName("id")
-    val id: Int,
     @field:SerializedName("type")
     val type: DocumentType,
+    @PrimaryKey
     @field:SerializedName("url")
     val url: String,
     @field:SerializedName("thumbnail")

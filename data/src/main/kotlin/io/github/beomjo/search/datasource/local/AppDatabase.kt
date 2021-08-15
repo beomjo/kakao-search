@@ -23,11 +23,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.github.beomjo.search.datasource.local.converter.DateConverter
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 
 
 @Database(
-    entities = [DocumentTable::class],
+    entities = [DocumentTable::class, RemoteKeyTable::class],
     version = 1,
     exportSchema = false
 )
@@ -35,6 +37,8 @@ import io.github.beomjo.search.datasource.local.table.DocumentTable
 internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun documentDao(): DocumentDao
+
+    abstract fun remoteKeyDao(): RemoteKeyDao
 
     companion object {
 
