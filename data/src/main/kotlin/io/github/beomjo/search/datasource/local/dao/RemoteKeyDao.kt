@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.entity
+package io.github.beomjo.search.datasource.local.dao
 
-import java.util.Date
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 
-data class Document(
-    val type: DocumentType,
-    val url: String,
-    val thumbnail: String,
-    val title: String,
-    val content: String,
-    val date: Date?,
-)
+@Dao
+interface RemoteKeyDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertKey(remoteKey: RemoteKeyTable)
+
+    @Query("SELECT * FROM remote_key")
+    suspend fun getRemoteKeyTable(): Array<RemoteKeyTable>?
+
+    @Query("DELETE FROM remote_key")
+    suspend fun clearRemoteKeys()
+}

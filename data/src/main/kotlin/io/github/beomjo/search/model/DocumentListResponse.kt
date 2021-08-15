@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.entity
+package io.github.beomjo.search.model
 
-import java.util.Date
+import com.google.gson.annotations.SerializedName
 
-data class Document(
-    val type: DocumentType,
-    val url: String,
-    val thumbnail: String,
-    val title: String,
-    val content: String,
-    val date: Date?,
+internal data class DocumentListResponse<T>(
+    @SerializedName("meta")
+    val meta: MetaReseponse,
+    @SerializedName("documents")
+    val documents: List<T>
 )

@@ -1,3 +1,4 @@
+
 /*
  * Designed and developed by 2021 beomjo
  *
@@ -14,15 +15,15 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.model
+package io.github.beomjo.search.datasource.local.converter
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.TypeConverter
+import java.util.Date
 
-internal data class ModelMeta(
-    @SerializedName("is_end")
-    val isEnd: Boolean,
-    @SerializedName("pageable_count")
-    val pageableCount: Int,
-    @SerializedName("total_count")
-    val totalCount: Int
-)
+internal class DateConverter {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? = value?.let { Date(value) }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? = date?.time
+}

@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.model
+package io.github.beomjo.search.datasource.local.table
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.Date
 
-internal data class ModelWeb(
-    @SerializedName("datetime")
-    val datetime: Date,
-    @SerializedName("contents")
-    val contents: String,
-    @SerializedName("title")
-    val title: String,
-    @SerializedName("url")
-    val url: String
+@Entity(tableName = "remote_key")
+data class RemoteKeyTable(
+    @PrimaryKey
+    @field:SerializedName("position")
+    val position: Int? = -1,
+    @field:SerializedName("prev_key")
+    val prevKey: Int?,
+    @field:SerializedName("next_key")
+    val nextKey: Int?
 )

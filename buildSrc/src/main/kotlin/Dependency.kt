@@ -92,6 +92,7 @@ object Dependency {
     object Room {
         const val RUNTIME = "androidx.room:room-runtime:2.3.0"
         const val APT = "androidx.room:room-compiler:2.3.0"
+        const val KTX = "androidx.room:room-ktx:2.3.0"
     }
 
     object Paging3 {

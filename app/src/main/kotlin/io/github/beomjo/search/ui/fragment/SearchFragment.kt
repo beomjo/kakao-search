@@ -52,6 +52,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         binding {
             viewModel = searchViewModel
             adapter = ConcatAdapter(
+                ConcatAdapter.Config.DEFAULT,
                 SearchControlMenuAdapter(
                     onFilterSelected = {
                         searchViewModel.searchFilter = it
@@ -66,10 +67,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     SearchPagingLoadStateAdapter {
                         searchPagingAdapter.retry()
                     }
-                ))
+                ),
+            )
 
             editSearch.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchViewModel.search()
                     true
                 } else false

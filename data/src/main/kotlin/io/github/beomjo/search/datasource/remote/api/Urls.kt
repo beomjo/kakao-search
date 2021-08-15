@@ -16,6 +16,6 @@
 
 package io.github.beomjo.search.datasource.remote.api
 
-object Urls {
+internal object Urls {
     const val baseUrl = "https://dapi.kakao.com/"
 }

@@ -31,7 +31,7 @@ import java.net.CookiePolicy
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
-object RetrofitAdapter {
+internal object RetrofitAdapter {
     private const val TIMEOUT: Long = 20
 
     fun getInstance(baseUrl: String, apiKey: String): Retrofit {

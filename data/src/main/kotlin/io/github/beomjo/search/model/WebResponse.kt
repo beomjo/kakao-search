@@ -19,15 +19,11 @@ package io.github.beomjo.search.model
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-internal data class ModelCafe(
-    @SerializedName("cafename")
-    val cafeName: String,
-    @SerializedName("contents")
-    val contents: String,
+internal data class WebResponse(
     @SerializedName("datetime")
     val datetime: Date,
-    @SerializedName("thumbnail")
-    val thumbnail: String,
+    @SerializedName("contents")
+    val contents: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("url")

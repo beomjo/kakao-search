@@ -28,6 +28,10 @@ android {
         minSdk = AndroidEnv.ANDROID_MIN
         targetSdk = AndroidEnv.ANDROID_TARGET
     }
+
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
 }
 
 
@@ -50,4 +54,8 @@ dependencies {
     implementation(Dependency.OkHttp.CORE)
     implementation(Dependency.OkHttp.CONNECTION)
     implementation(Dependency.OkHttp.LOGGING_INTERCEPTOR)
+
+    implementation(Dependency.Room.RUNTIME)
+    implementation(Dependency.Room.KTX)
+    kapt(Dependency.Room.APT)
 }
