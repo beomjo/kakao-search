@@ -17,7 +17,6 @@
 
 package io.github.beomjo.search.datasource.remote.api.paging
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -86,7 +85,8 @@ internal class SearchRemoteMediator @AssistedInject constructor(
 
     private suspend fun fetchDocumentList(position: Int) = when (requestParam.documentType) {
         DocumentType.ALL -> {
-            val pageSize = PER_PAGE_SIZE / (DocumentType.values().size - 1)
+            val typeNum = 5
+            val pageSize = PER_PAGE_SIZE / typeNum
             val blogDocumentList = fetchBlogList(position, pageSize)
             val cafeDocumentList = fetchCafeList(position, pageSize)
             val webDocumentList = fetchWebList(position, pageSize)
