@@ -28,6 +28,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@android:string/untitled"
                 android:scaleType="fitCenter"
+                app:imageUrl="@{document.thumbnail}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,12 +41,13 @@
                 android:layout_margin="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{document.type.toString()}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="title" />
+                tools:text="Type" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/name"
@@ -55,7 +57,7 @@
                 android:layout_marginVertical="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="33"
+                app:html="@{document.title}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintBottom_toBottomOf="@id/type"
                 app:layout_constraintEnd_toStartOf="@id/image"
@@ -64,19 +66,19 @@
                 tools:text="name" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/title"
+                android:id="@+id/content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="6dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                app:html="@{document.content}"
                 android:textAppearance="?attr/textAppearanceListItem"
-                android:text="@{document.title}"
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/type"
-                tools:text="Tomato" />
+                tools:text="contents" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/datetime"
@@ -84,11 +86,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="6dp"
+                app:date="@{document.date}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/content"
                 tools:text="2021년 12월 30일" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

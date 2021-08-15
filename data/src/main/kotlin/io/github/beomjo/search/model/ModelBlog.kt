@@ -17,6 +17,7 @@
 package io.github.beomjo.search.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 internal data class ModelBlog(
     @SerializedName("blogname")
@@ -24,7 +25,7 @@ internal data class ModelBlog(
     @SerializedName("contents")
     val contents: String,
     @SerializedName("datetime")
-    val datetime: String,
+    val datetime: Date,
     @SerializedName("thumbnail")
     val thumbnail: String,
     @SerializedName("title")

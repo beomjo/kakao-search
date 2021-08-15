@@ -17,12 +17,13 @@
 package io.github.beomjo.search.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 internal data class ModelImage(
     @SerializedName("collection")
     val collection: String,
     @SerializedName("datetime")
-    val datetime: String,
+    val datetime: Date,
     @SerializedName("display_sitename")
     val displaySiteName: String,
     @SerializedName("doc_url")
