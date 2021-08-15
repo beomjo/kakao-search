@@ -12,6 +12,7 @@ class DocumentViewHolder(
 
     fun bind(document: Document) {
         binding.document = document
+        binding.executePendingBindings()
     }
 
     companion object {
