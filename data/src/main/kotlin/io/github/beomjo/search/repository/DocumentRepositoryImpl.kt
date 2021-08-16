@@ -43,8 +43,8 @@ internal class DocumentRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = SearchPagingSource.PER_PAGE_SIZE,
-                prefetchDistance = 3,
-                enablePlaceholders = false
+                prefetchDistance = 3
+
             ),
             remoteMediator = searchRemoteMediatorFactory.create(param)
         ) {
