@@ -59,14 +59,16 @@ internal class SearchRemoteMediator @AssistedInject constructor(
                 }
             }
 
-            val documentList = fetchDocumentList(position)
-
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     database.documentDao().clearAllDocuments()
                     database.remoteKeyDao().clearRemoteKeys()
                 }
+            }
 
+            val documentList = fetchDocumentList(position)
+
+            database.withTransaction {
                 val prevKey = if (position == STARTING_POSITION) null else position - 1
                 val nextKey = if (documentList.hasMore) position + 1 else null
                 val keys = RemoteKeyTable(position = position, prevKey = prevKey, nextKey = nextKey)

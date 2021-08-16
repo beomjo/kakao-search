@@ -30,6 +30,8 @@ import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.usecase.GetSearchPagingData
 import io.github.beomjo.search.usecase.SearchPagingParam
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,6 +48,9 @@ class SearchViewModel @Inject constructor(
     private val _pager = MutableLiveData<SearchPagingParam>()
     val pager: LiveData<PagingData<Document>> = _pager.switchMap(::getPager)
 
+    private val _isShowProgress = MutableLiveData(false)
+    val isShowProgress: LiveData<Boolean> get() = _isShowProgress
+
     fun search() {
         if (!query.value.isNullOrEmpty()) {
             _pager.value = getSearchPagingParam(query.value!!)
@@ -61,6 +66,8 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun getPager(requestParam: SearchPagingParam): LiveData<PagingData<Document>> {
-        return getSearchPagingData(requestParam).cachedIn(viewModelScope).asLiveData()
+        return getSearchPagingData(requestParam)
+            .cachedIn(viewModelScope)
+            .asLiveData()
     }
 }
