@@ -46,6 +46,9 @@ class SearchViewModel @Inject constructor(
     private val _pager = MutableLiveData<SearchPagingParam>()
     val pager: LiveData<PagingData<Document>> = _pager.switchMap(::getPager)
 
+    private val _isShowProgress = MutableLiveData(false)
+    val isShowProgress: LiveData<Boolean> get() = _isShowProgress
+
     fun search() {
         if (!query.value.isNullOrEmpty()) {
             _pager.value = getSearchPagingParam(query.value!!)
@@ -61,6 +64,8 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun getPager(requestParam: SearchPagingParam): LiveData<PagingData<Document>> {
-        return getSearchPagingData(requestParam).cachedIn(viewModelScope).asLiveData()
+        return getSearchPagingData(requestParam)
+            .cachedIn(viewModelScope)
+            .asLiveData()
     }
 }

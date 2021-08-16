@@ -19,8 +19,10 @@ package io.github.beomjo.search.ui.fragment
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
@@ -63,11 +65,28 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                         searchViewModel.search()
                     },
                 ),
-                searchPagingAdapter.withLoadStateFooter(
-                    SearchPagingLoadStateAdapter {
-                        searchPagingAdapter.retry()
+                searchPagingAdapter
+                    .apply {
+                        addLoadStateListener { loadState ->
+                            val isLoading = loadState.mediator?.refresh is LoadState.Loading
+                            val isError = loadState.mediator?.refresh is LoadState.Error
+                            val isEmptyItem = searchPagingAdapter.itemCount == 0
+                            emptyLayout.isVisible = isEmptyItem && !isError && !isLoading
+                            recyclerview.isVisible = searchPagingAdapter.itemCount > 0
+                            progressBar.isVisible = isLoading && isEmptyItem
+                            retryButton.apply {
+                                isVisible = isError
+                                setOnClickListener {
+                                    searchPagingAdapter.retry()
+                                }
+                            }
+                        }
                     }
-                ),
+                    .withLoadStateFooter(
+                        SearchPagingLoadStateAdapter {
+                            searchPagingAdapter.retry()
+                        }
+                    ),
             )
 
             editSearch.setOnEditorActionListener { _, actionId, _ ->

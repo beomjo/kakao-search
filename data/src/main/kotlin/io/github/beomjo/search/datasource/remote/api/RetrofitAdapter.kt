@@ -32,7 +32,7 @@ import java.util.Date
 import java.util.concurrent.TimeUnit
 
 internal object RetrofitAdapter {
-    private const val TIMEOUT: Long = 20
+    private const val TIMEOUT: Long = 10
 
     fun getInstance(baseUrl: String, apiKey: String): Retrofit {
         return Retrofit.Builder()
