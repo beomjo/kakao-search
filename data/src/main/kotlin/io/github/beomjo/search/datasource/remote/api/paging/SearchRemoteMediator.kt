@@ -133,7 +133,6 @@ internal class SearchRemoteMediator @AssistedInject constructor(
         ).toEntity()
     }
 
-
     private suspend fun fetchImageList(pagePosition: Int, pageSize: Int): DocumentList {
         if (pagePosition > MAX_PAGE_POSITION) return getEmptyDocumentList()
         val documentList = documentApi.fetchImages(
