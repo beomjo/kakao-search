@@ -30,8 +30,6 @@ import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.usecase.GetSearchPagingData
 import io.github.beomjo.search.usecase.SearchPagingParam
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @HiltViewModel
