@@ -18,19 +18,38 @@ package io.github.beomjo.search.ui.adapter
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import io.github.beomjo.search.entity.Document
+import androidx.recyclerview.widget.RecyclerView
+import io.github.beomjo.search.R
 import io.github.beomjo.search.ui.adapter.diff.DocumentDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.DocumentViewHolder
+import io.github.beomjo.search.ui.adapter.viewholders.SeparatorViewHolder
+import io.github.beomjo.search.ui.viewmodels.SearchViewModel.SearchUiItem
 
-class SearchPagingAdapter : PagingDataAdapter<Document, DocumentViewHolder>(DocumentDiffUtil()) {
+class SearchPagingAdapter :
+    PagingDataAdapter<SearchUiItem, RecyclerView.ViewHolder>(DocumentDiffUtil()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocumentViewHolder {
-        return DocumentViewHolder.create(parent)
-    }
-
-    override fun onBindViewHolder(holder: DocumentViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            R.layout.document_list_item -> DocumentViewHolder.create(parent)
+            else -> SeparatorViewHolder.create(parent)
         }
     }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is SearchUiItem.DocumentItem -> R.layout.document_list_item
+            is SearchUiItem.SeparatorItem -> R.layout.separator_list_item
+            null -> throw UnsupportedOperationException("Unknown view")
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        getItem(position)?.let {
+            when (it) {
+                is SearchUiItem.DocumentItem -> (holder as DocumentViewHolder).bind(it.document)
+                is SearchUiItem.SeparatorItem -> (holder as SeparatorViewHolder).bind(it.description)
+            }
+        }
+    }
+
 }

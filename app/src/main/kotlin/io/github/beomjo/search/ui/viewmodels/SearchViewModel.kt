@@ -23,6 +23,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.asLiveData
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.beomjo.search.base.BaseViewModel
 import io.github.beomjo.search.entity.Document
@@ -30,6 +32,7 @@ import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.usecase.GetSearchPagingData
 import io.github.beomjo.search.usecase.SearchPagingParam
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,7 +47,7 @@ class SearchViewModel @Inject constructor(
     var sort: SortType = SortType.TITLE
 
     private val _pager = MutableLiveData<SearchPagingParam>()
-    val pager: LiveData<PagingData<Document>> = _pager.switchMap(::getPager)
+    val pager: LiveData<PagingData<SearchUiItem>> = _pager.switchMap(::getPager)
 
     private val _isShowProgress = MutableLiveData(false)
     val isShowProgress: LiveData<Boolean> get() = _isShowProgress
@@ -63,9 +66,36 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun getPager(requestParam: SearchPagingParam): LiveData<PagingData<Document>> {
+    private fun getPager(requestParam: SearchPagingParam): LiveData<PagingData<SearchUiItem>> {
         return getSearchPagingData(requestParam)
+            .map { pagingData -> pagingData.map { document -> SearchUiItem.DocumentItem(document) } }
+            .map {
+                it.insertSeparators<SearchUiItem.DocumentItem, SearchUiItem> { before, after ->
+                    if (after == null) return@insertSeparators null
+                    if (before == null) return@insertSeparators SearchUiItem.SeparatorItem("${after.document.title.first()}")
+
+                    val beforeFirstWord = before.document.title.first()
+                    val afterFirstWord = after.document.title.first()
+                    return@insertSeparators when (beforeFirstWord.compareTo(afterFirstWord)) {
+                        EQUAL, OVER -> null
+                        UNDER -> SearchUiItem.SeparatorItem("${after.document.title.first()}")
+                        else -> null
+                    }
+                }
+            }
             .cachedIn(viewModelScope)
             .asLiveData()
+    }
+
+
+    sealed class SearchUiItem {
+        data class DocumentItem(val document: Document) : SearchUiItem()
+        data class SeparatorItem(val description: String) : SearchUiItem()
+    }
+
+    companion object {
+        const val EQUAL = 0
+        const val UNDER = -1
+        const val OVER = 1
     }
 }
