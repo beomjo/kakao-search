@@ -48,11 +48,10 @@ internal class DocumentRepositoryImpl @Inject constructor(
             ),
             remoteMediator = searchRemoteMediatorFactory.create(param)
         ) {
-            val response = when (param.sortType) {
+            when (param.sortType) {
                 SortType.TITLE -> documentDao.getDocumentByTitle(param.query)
                 else -> documentDao.getDocumentByDate(param.query)
             }
-            response
         }.flow.map {
             it.map { documentTable ->
                 documentTable.toEntity()

@@ -3,7 +3,7 @@ package io.github.beomjo.search.binding
 import android.text.Html
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import io.github.beomjo.search.R
+import io.github.beomjo.search.util.DateHelper
 import java.util.Date
 
 @BindingAdapter("html")
@@ -15,8 +15,6 @@ fun TextView.setHtml(html: String?) {
     }
 }
 
-private const val ONE_DAY: Long = 1000 * 60 * 60 * 24
-
 @BindingAdapter("date")
 fun TextView.dateString(date: Date?) {
     date ?: kotlin.run {
@@ -24,10 +22,5 @@ fun TextView.dateString(date: Date?) {
         return
     }
 
-    val diff = Date().time - date.time
-    text = when (diff / ONE_DAY) {
-        0L -> context.getString(R.string.today)
-        1L -> context.getString(R.string.yesterday)
-        else -> context.getString(R.string.date, date)
-    }
+    text = DateHelper(context).convert(date)
 }

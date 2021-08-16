@@ -16,12 +16,15 @@
 
 package io.github.beomjo.search.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.ApiKey
 import io.github.beomjo.search.BuildConfig
+import io.github.beomjo.search.util.DateHelper
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,5 +34,12 @@ internal object SingletonModule {
     @ApiKey
     fun provideApiKey(): String {
         return BuildConfig.REST_KEY
+    }
+
+    @Provides
+    fun provideDateConverter(
+        @ApplicationContext context: Context
+    ): DateHelper {
+        return DateHelper(context)
     }
 }
