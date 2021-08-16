@@ -28,5 +28,6 @@
     <string name="today">오늘</string>
     <string name="yesterday">어제</string>
     <string name="date" formatted="true">%1$tY년 %1$tm월 %1$td일</string>
+    <string name="date_month" formatted="true">%1$tY년 %1$tm월</string>
     <string name="no_results">결과가 존재하지 않습니다.</string>
 </resources>
