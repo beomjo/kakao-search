@@ -9,8 +9,8 @@ class SeparatorViewHolder(
     private val binding: SeparatorListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(separatorText: String) {
-        binding.separatorDescription.text = separatorText
+    fun bind(separatorText: String?) {
+        binding.separatorDescription.text = separatorText ?: ""
         binding.executePendingBindings()
     }
 

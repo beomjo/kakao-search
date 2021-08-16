@@ -38,8 +38,7 @@ class SearchPagingAdapter :
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is SearchUiItem.DocumentItem -> R.layout.document_list_item
-            is SearchUiItem.SeparatorItem -> R.layout.separator_list_item
-            null -> throw UnsupportedOperationException("Unknown view")
+            else -> R.layout.separator_list_item
         }
     }
 
