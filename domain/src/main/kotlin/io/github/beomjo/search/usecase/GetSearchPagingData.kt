@@ -17,15 +17,13 @@
 package io.github.beomjo.search.usecase
 
 import androidx.paging.PagingData
-import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.entity.SortType
-import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.DocumentType
+import io.github.beomjo.search.entity.Sort
+import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.repository.DocumentRepository
 import io.github.beomjo.search.usecase.base.PagingUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 data class SearchPagingParam(
@@ -40,6 +38,5 @@ class GetSearchPagingData @Inject constructor(
 ) : PagingUseCase<SearchPagingParam, Document>() {
     override fun execute(parameters: SearchPagingParam): Flow<PagingData<Document>> {
         return documentRepository.fetchDocumentPagingData(parameters)
-            .flowOn(Dispatchers.IO)
     }
 }
