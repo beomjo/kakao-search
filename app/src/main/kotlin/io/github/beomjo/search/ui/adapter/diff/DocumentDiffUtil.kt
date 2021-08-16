@@ -9,9 +9,9 @@ class DocumentDiffUtil : DiffUtil.ItemCallback<SearchUiItem>() {
         newItem: SearchUiItem
     ): Boolean {
         val isSameDocumentItem =
-            oldItem is SearchUiItem.DocumentItem && newItem is SearchUiItem.DocumentItem
-                    && oldItem.document.title == newItem.document.title
-                    && oldItem.document.date == newItem.document.date
+            oldItem is SearchUiItem.DocumentItem && newItem is SearchUiItem.DocumentItem &&
+                    oldItem.document.title == newItem.document.title &&
+                    oldItem.document.date == newItem.document.date
         val isSameSeparatorItem =
             oldItem is SearchUiItem.SeparatorItem && newItem is SearchUiItem.SeparatorItem &&
                     oldItem.description == newItem.description

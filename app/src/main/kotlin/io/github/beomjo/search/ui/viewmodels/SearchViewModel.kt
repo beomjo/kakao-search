@@ -35,7 +35,6 @@ import io.github.beomjo.search.usecase.GetSearchPagingData
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.github.beomjo.search.util.DateHelper
 import kotlinx.coroutines.flow.map
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,12 +77,10 @@ class SearchViewModel @Inject constructor(
                     SortType.TITLE -> insertTitleSeparator(pagingData)
                     else -> insertDateSeparator(pagingData)
                 }
-
             }
             .cachedIn(viewModelScope)
             .asLiveData()
     }
-
 
     private fun insertTitleSeparator(it: PagingData<SearchUiItem.DocumentItem>): PagingData<SearchUiItem> {
         return it.insertSeparators { before, after ->
@@ -98,7 +95,6 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
 
     private fun insertDateSeparator(it: PagingData<SearchUiItem.DocumentItem>): PagingData<SearchUiItem> {
         return it.insertSeparators { before, after ->

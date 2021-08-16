@@ -3,7 +3,6 @@ package io.github.beomjo.search.binding
 import android.text.Html
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import io.github.beomjo.search.R
 import io.github.beomjo.search.util.DateHelper
 import java.util.Date
 

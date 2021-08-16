@@ -36,7 +36,6 @@ internal object SingletonModule {
         return BuildConfig.REST_KEY
     }
 
-
     @Provides
     fun provideDateConverter(
         @ApplicationContext context: Context
