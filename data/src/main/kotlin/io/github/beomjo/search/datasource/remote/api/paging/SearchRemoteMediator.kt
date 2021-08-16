@@ -103,32 +103,39 @@ internal class SearchRemoteMediator @AssistedInject constructor(
         DocumentType.BOOK -> fetchBookList(position, PER_PAGE_SIZE)
     }
 
-    private suspend fun fetchBlogList(pagePosition: Int, pageSize: Int) =
-        documentApi.fetchBlog(
+    private suspend fun fetchBlogList(pagePosition: Int, pageSize: Int): DocumentList {
+        if (pagePosition > MAX_PAGE_POSITION) return getEmptyDocumentList()
+        return documentApi.fetchBlog(
             query = requestParam.query,
             sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
+    }
 
-    private suspend fun fetchCafeList(pagePosition: Int, pageSize: Int) =
-        documentApi.fetchCafe(
+    private suspend fun fetchCafeList(pagePosition: Int, pageSize: Int): DocumentList {
+        if (pagePosition > MAX_PAGE_POSITION) return getEmptyDocumentList()
+        return documentApi.fetchCafe(
             query = requestParam.query,
             sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
+    }
 
-    private suspend fun fetchWebList(pagePosition: Int, pageSize: Int) =
-        documentApi.fetchWeb(
+    private suspend fun fetchWebList(pagePosition: Int, pageSize: Int): DocumentList {
+        if (pagePosition > MAX_PAGE_POSITION) return getEmptyDocumentList()
+        return documentApi.fetchWeb(
             query = requestParam.query,
             sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
+    }
+
 
     private suspend fun fetchImageList(pagePosition: Int, pageSize: Int): DocumentList {
-        if (pagePosition > MAX_PAGE_POSITION) return DocumentList(hasMore = false, emptyList())
+        if (pagePosition > MAX_PAGE_POSITION) return getEmptyDocumentList()
         val documentList = documentApi.fetchImages(
             query = requestParam.query,
             sort = requestParam.sort.value,
@@ -142,13 +149,17 @@ internal class SearchRemoteMediator @AssistedInject constructor(
         )
     }
 
-    private suspend fun fetchBookList(pagePosition: Int, pageSize: Int) =
-        documentApi.fetchBook(
+    private suspend fun fetchBookList(pagePosition: Int, pageSize: Int): DocumentList {
+        if (pagePosition > MAX_PAGE_POSITION) return getEmptyDocumentList()
+        return documentApi.fetchBook(
             query = requestParam.query,
             sort = requestParam.sort.value,
             page = pagePosition,
             size = pageSize
         ).toEntity()
+    }
+
+    private fun getEmptyDocumentList() = DocumentList(hasMore = false, emptyList())
 
     companion object {
         const val STARTING_POSITION = 1
