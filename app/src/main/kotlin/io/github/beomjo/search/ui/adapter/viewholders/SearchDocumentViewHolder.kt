@@ -19,21 +19,22 @@ package io.github.beomjo.search.ui.adapter.viewholders
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.github.beomjo.search.databinding.SeparatorListItemBinding
+import io.github.beomjo.search.databinding.SearchListDocumentItemBinding
+import io.github.beomjo.search.entity.Document
 
-class SeparatorViewHolder(
-    private val binding: SeparatorListItemBinding
+class SearchDocumentViewHolder(
+    private val binding: SearchListDocumentItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(separatorText: String?) {
-        binding.separatorDescription.text = separatorText ?: ""
+    fun bind(document: Document) {
+        binding.document = document
         binding.executePendingBindings()
     }
 
     companion object {
-        fun create(parent: ViewGroup): SeparatorViewHolder {
-            return SeparatorViewHolder(
-                SeparatorListItemBinding.inflate(
+        fun create(parent: ViewGroup): SearchDocumentViewHolder {
+            return SearchDocumentViewHolder(
+                SearchListDocumentItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

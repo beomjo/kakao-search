@@ -22,7 +22,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
-import io.github.beomjo.search.datasource.remote.api.paging.SearchPagingSource
+import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.SortType
@@ -42,9 +42,9 @@ internal class DocumentRepositoryImpl @Inject constructor(
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
-                pageSize = SearchPagingSource.PER_PAGE_SIZE,
-                prefetchDistance = 3,
-                enablePlaceholders = false
+                pageSize = SearchRemoteMediator.PER_PAGE_SIZE,
+                prefetchDistance = 3
+
             ),
             remoteMediator = searchRemoteMediatorFactory.create(param)
         ) {

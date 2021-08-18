@@ -22,10 +22,10 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.R
-import io.github.beomjo.search.databinding.DocumentListFooterItemBinding
+import io.github.beomjo.search.databinding.SearchListFooterItemBinding
 
-class DocumentLoadStateViewHolder(
-    private val binding: DocumentListFooterItemBinding,
+class SearchLoadStateViewHolder(
+    private val binding: SearchListFooterItemBinding,
     private val retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -44,11 +44,11 @@ class DocumentLoadStateViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, retry: () -> Unit): DocumentLoadStateViewHolder {
+        fun create(parent: ViewGroup, retry: () -> Unit): SearchLoadStateViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.document_list_footer_item, parent, false)
-            val binding = DocumentListFooterItemBinding.bind(view)
-            return DocumentLoadStateViewHolder(binding, retry)
+                .inflate(R.layout.search_list_footer_item, parent, false)
+            val binding = SearchListFooterItemBinding.bind(view)
+            return SearchLoadStateViewHolder(binding, retry)
         }
     }
 }

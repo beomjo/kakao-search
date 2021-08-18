@@ -21,8 +21,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.R
 import io.github.beomjo.search.ui.adapter.diff.DocumentDiffUtil
-import io.github.beomjo.search.ui.adapter.viewholders.DocumentViewHolder
-import io.github.beomjo.search.ui.adapter.viewholders.SeparatorViewHolder
+import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
+import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel.SearchUiItem
 
 class SearchPagingAdapter :
@@ -30,23 +30,23 @@ class SearchPagingAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.document_list_item -> DocumentViewHolder.create(parent)
-            else -> SeparatorViewHolder.create(parent)
+            R.layout.search_list_document_item -> SearchDocumentViewHolder.create(parent)
+            else -> SearchSeparatorViewHolder.create(parent)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is SearchUiItem.DocumentItem -> R.layout.document_list_item
-            else -> R.layout.separator_list_item
+            is SearchUiItem.DocumentItem -> R.layout.search_list_document_item
+            else -> R.layout.search_list_separator_item
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         getItem(position)?.let {
             when (it) {
-                is SearchUiItem.DocumentItem -> (holder as DocumentViewHolder).bind(it.document)
-                is SearchUiItem.SeparatorItem -> (holder as SeparatorViewHolder).bind(it.description)
+                is SearchUiItem.DocumentItem -> (holder as SearchDocumentViewHolder).bind(it.document)
+                is SearchUiItem.SeparatorItem -> (holder as SearchSeparatorViewHolder).bind(it.description)
             }
         }
     }
