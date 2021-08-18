@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAppBarConfiguration() {
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.home_dest, R.id.search_dest),
+            setOf(R.id.bookmark_dest, R.id.search_dest),
             binding.drawerLayout
         )
     }
