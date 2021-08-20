@@ -29,23 +29,37 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.databinding.ActivityMainBinding
+import io.github.beomjo.search.navigator.BottomNavigator
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main
+        )
+    }
 
-    private lateinit var navController: NavController
+    private val navController: NavController by lazy { getNavHostFragment().navController }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
 
-        val navHostFragment = getNavHostFragment()
-        navController = navHostFragment.navController
+        navController.apply {
+            navigatorProvider.addNavigator(
+                BottomNavigator(
+                    R.id.nav_host_container_fragment,
+                    supportFragmentManager
+                )
+            )
+
+            setGraph(R.navigation.nav_graph)
+        }
 
         setAppBarConfiguration()
 
