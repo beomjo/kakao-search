@@ -19,7 +19,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/search_dest">
 
-    <fragment
+    <bottom
         android:id="@+id/search_dest"
         android:name="io.github.beomjo.search.ui.fragment.SearchFragment"
         android:label="@string/search_fragment_title"
@@ -27,9 +27,9 @@
         <action
             android:id="@+id/action_search_dest_to_detail_dest"
             app:destination="@id/detail_dest" />
-    </fragment>
+    </bottom>
 
-    <fragment
+    <bottom
         android:id="@+id/bookmark_dest"
         android:name="io.github.beomjo.search.ui.fragment.BookmarkFragment"
         android:label="@string/bookmark_fragment_title"
@@ -43,7 +43,7 @@
         <action
             android:id="@+id/action_bookmark_dest_to_search_dest"
             app:destination="@id/search_dest" />
-    </fragment>
+    </bottom>
 
 
     <fragment
