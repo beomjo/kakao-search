@@ -76,13 +76,9 @@ class BottomNavigator(
     }
 
     private fun FragmentTransaction.hideOthers(tag: String) {
-        val others = Tab.otherTab(exceptTag = tag)
-            .mapNotNull {
-                fragmentManager.findFragmentByTag(it.tag)
-            }
-        others.forEach {
-            hide(it)
-        }
+        Tab.otherTab(exceptTag = tag)
+            .mapNotNull { fragmentManager.findFragmentByTag(it.tag) }
+            .forEach { hide(it) }
     }
 
     override fun onSaveState(): Bundle {
