@@ -22,6 +22,7 @@ import android.view.Menu
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -30,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.databinding.ActivityMainBinding
 import io.github.beomjo.search.navigator.BottomNavigator
+import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -40,10 +42,19 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
     }
+    private val navController: NavController by lazy {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment)
+                ?: throw IllegalStateException()
+        navHostFragment.findNavController()
+    }
 
-    private val navController: NavController by lazy { getNavHostFragment().navController }
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    private val appBarConfiguration: AppBarConfiguration by lazy {
+        AppBarConfiguration(
+            setOf(R.id.bookmark_dest, R.id.search_dest),
+            binding.drawerLayout
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,23 +72,11 @@ class MainActivity : AppCompatActivity() {
             setGraph(R.navigation.nav_graph)
         }
 
-        setAppBarConfiguration()
-
         setupActionBar()
 
         setupBottomNavMenu()
 
         setupNavigationMenu()
-    }
-
-    private fun getNavHostFragment() =
-        supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment) as NavHostFragment
-
-    private fun setAppBarConfiguration() {
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.bookmark_dest, R.id.search_dest),
-            binding.drawerLayout
-        )
     }
 
     private fun setupActionBar() {
