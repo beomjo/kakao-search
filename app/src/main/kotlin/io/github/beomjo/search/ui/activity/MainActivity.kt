@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private val navController: NavController by lazy {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment)
-                ?: throw IllegalStateException()
+                ?: throw IllegalStateException("Required navigation host fragment")
         navHostFragment.findNavController()
     }
 

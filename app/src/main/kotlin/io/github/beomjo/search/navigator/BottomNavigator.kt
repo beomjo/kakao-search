@@ -105,7 +105,6 @@ class BottomNavigator(
                 .use {
                     it.getString(R.styleable.BottomNavigator_android_name)
                 }
-
         }
     }
 

@@ -3,4 +3,4 @@ build:
 
 style:
   ReturnCount:
-    excludedFunctions: "load"
+    active: false
