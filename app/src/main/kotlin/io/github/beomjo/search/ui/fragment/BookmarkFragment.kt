@@ -42,4 +42,8 @@ class BookmarkFragment : Fragment() {
             }
         }
     }
+
+    companion object {
+        val TAG = BookmarkFragment::class.java.simpleName
+    }
 }

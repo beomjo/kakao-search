@@ -21,7 +21,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,41 +29,53 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.databinding.ActivityMainBinding
+import io.github.beomjo.search.navigator.BottomNavigator
+import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main
+        )
+    }
+    private val navController: NavController by lazy {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment)
+                ?: throw IllegalStateException("Required navigation host fragment")
+        navHostFragment.findNavController()
+    }
 
-    private lateinit var navController: NavController
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    private val appBarConfiguration: AppBarConfiguration by lazy {
+        AppBarConfiguration(
+            setOf(R.id.bookmark_dest, R.id.search_dest),
+            binding.drawerLayout
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
 
-        val navHostFragment = getNavHostFragment()
-        navController = navHostFragment.navController
+        navController.apply {
+            navigatorProvider.addNavigator(
+                BottomNavigator(
+                    R.id.nav_host_container_fragment,
+                    supportFragmentManager
+                )
+            )
 
-        setAppBarConfiguration()
+            setGraph(R.navigation.nav_graph)
+        }
 
         setupActionBar()
 
         setupBottomNavMenu()
 
         setupNavigationMenu()
-    }
-
-    private fun getNavHostFragment() =
-        supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment) as NavHostFragment
-
-    private fun setAppBarConfiguration() {
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.bookmark_dest, R.id.search_dest),
-            binding.drawerLayout
-        )
     }
 
     private fun setupActionBar() {

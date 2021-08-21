@@ -105,4 +105,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             }
         })
     }
+
+    companion object {
+        val TAG = SearchFragment::class.java.simpleName
+    }
 }
