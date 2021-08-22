@@ -37,4 +37,5 @@ dependencies {
     implementation(Dependency.Paging3.COMMON)
 
     testImplementation(TestDependency.KOTEST)
+    testImplementation(TestDependency.MOCKK)
 }

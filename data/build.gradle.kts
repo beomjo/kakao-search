@@ -60,4 +60,5 @@ dependencies {
     kapt(Dependency.Room.APT)
 
     testImplementation(TestDependency.KOTEST)
+    testImplementation(TestDependency.MOCKK)
 }
