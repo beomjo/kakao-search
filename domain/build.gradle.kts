@@ -35,4 +35,6 @@ dependencies {
     implementation(Dependency.Kotlin.COROUTINE_ANDROID)
     implementation(Dependency.Paging3.RUNTIME)
     implementation(Dependency.Paging3.COMMON)
+
+    testImplementation(TestDependency.KOTEST)
 }

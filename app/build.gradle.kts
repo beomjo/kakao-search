@@ -116,6 +116,7 @@ dependencies {
     testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)
     testImplementation(TestDependency.COROUTINE_TEST)
+    testImplementation(TestDependency.KOTEST)
     androidTestImplementation(AndroidTestDependency.TEST_RUNNER)
     androidTestImplementation(AndroidTestDependency.ESPRESSO_CORE)
 }

@@ -58,4 +58,6 @@ dependencies {
     implementation(Dependency.Room.RUNTIME)
     implementation(Dependency.Room.KTX)
     kapt(Dependency.Room.APT)
+
+    testImplementation(TestDependency.KOTEST)
 }
