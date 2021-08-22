@@ -62,6 +62,14 @@ android {
         viewBinding = true
     }
 
+    testOptions {
+        unitTests {
+            all {
+                it.useJUnitPlatform()
+            }
+        }
+    }
+
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }

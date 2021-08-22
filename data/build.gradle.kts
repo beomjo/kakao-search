@@ -29,6 +29,14 @@ android {
         targetSdk = AndroidEnv.ANDROID_TARGET
     }
 
+    testOptions {
+        unitTests {
+            all {
+                it.useJUnitPlatform()
+            }
+        }
+    }
+
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }

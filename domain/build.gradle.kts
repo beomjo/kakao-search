@@ -27,6 +27,14 @@ android {
         minSdk = AndroidEnv.ANDROID_MIN
         targetSdk = AndroidEnv.ANDROID_TARGET
     }
+
+    testOptions {
+        unitTests {
+            all {
+                it.useJUnitPlatform()
+            }
+        }
+    }
 }
 
 dependencies {
