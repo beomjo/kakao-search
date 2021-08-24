@@ -17,12 +17,12 @@
 object Dependency {
 
     object Kotlin {
-        const val SDK = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21"
+        const val SDK = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30"
         const val COROUTINE_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
         const val COROUTINE_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
         const val COROUTINE_PLAY_SERVICE =
             "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1"
-        const val REFLECTION = "org.jetbrains.kotlin:kotlin-reflect:1.5.21"
+        const val REFLECTION = "org.jetbrains.kotlin:kotlin-reflect:1.5.30"
     }
 
     object AndroidX {
