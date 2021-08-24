@@ -63,10 +63,8 @@ android {
     }
 
     testOptions {
-        unitTests {
-            all {
-                it.useJUnitPlatform()
-            }
+        unitTests.all {
+            it.useJUnitPlatform()
         }
     }
 
@@ -90,6 +88,7 @@ dependencies {
     implementation(Dependency.Kotlin.SDK)
     implementation(Dependency.Kotlin.COROUTINE_CORE)
     implementation(Dependency.Kotlin.COROUTINE_ANDROID)
+    implementation(Dependency.Kotlin.REFLECTION)
 
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.MATERIAL)
@@ -121,7 +120,6 @@ dependencies {
 
     implementation(Dependency.BINDABLES)
 
-    testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)
     testImplementation(TestDependency.COROUTINE_TEST)
     testImplementation(TestDependency.KOTEST)
