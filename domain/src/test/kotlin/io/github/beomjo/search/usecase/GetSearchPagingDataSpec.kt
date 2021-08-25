@@ -12,8 +12,9 @@ import io.kotest.fp.success
 import io.kotest.matchers.equality.shouldBeEqualToUsingFields
 import io.kotest.matchers.shouldBe
 import io.mockk.*
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class GetSearchPagingDataSpec : BehaviorSpec({
 
@@ -28,15 +29,15 @@ class GetSearchPagingDataSpec : BehaviorSpec({
             query = "IU",
             sort = Sort.ACCURACY
         )
-        val pagingData = mockk<PagingData<Document>> {}
+        val pagingData = mockk<PagingData<Document>>()
         coEvery { documentRepository.fetchDocumentPagingData(param) } returns flowOf(pagingData)
 
         When("invoke") {
-            val result = getSearchPagingData.invoke(param)
+            val resultFlow = getSearchPagingData.invoke(param)
 
             Then("Return PagingData") {
                 coVerify { documentRepository.fetchDocumentPagingData(eq(param)) }
-                result shouldBe pagingData
+                resultFlow.first() shouldBe pagingData
             }
         }
     }
