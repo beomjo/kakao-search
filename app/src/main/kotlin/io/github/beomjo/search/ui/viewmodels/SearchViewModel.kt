@@ -16,11 +16,7 @@
 
 package io.github.beomjo.search.ui.viewmodels
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
@@ -34,13 +30,15 @@ import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.usecase.GetSearchPagingData
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.github.beomjo.search.util.DateHelper
+import io.github.beomjo.search.ui.paging.SearchSeparatorFactory
+import io.github.beomjo.search.ui.paging.SearchSeparatorGenerator
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getSearchPagingData: GetSearchPagingData,
-    private val dateHelper: DateHelper
+    private val searchSeparatorFactory: SearchSeparatorFactory
 ) : BaseViewModel() {
 
     val query = MutableLiveData<String>()
@@ -71,49 +69,17 @@ class SearchViewModel @Inject constructor(
 
     private fun getPager(requestParam: SearchPagingParam): LiveData<PagingData<SearchUiItem>> {
         return getSearchPagingData(requestParam)
-            .map { pagingData -> pagingData.map { document -> SearchUiItem.DocumentItem(document) } }
             .map { pagingData ->
                 when (sort) {
-                    SortType.TITLE -> insertTitleSeparator(pagingData)
-                    else -> insertDateSeparator(pagingData)
+                    SortType.TITLE -> searchSeparatorFactory.create(pagingData)
+                        .insertTitleSeparator()
+                    else -> searchSeparatorFactory.create(pagingData).insertDateSeparator()
                 }
             }
             .cachedIn(viewModelScope)
             .asLiveData()
     }
 
-    private fun insertTitleSeparator(it: PagingData<SearchUiItem.DocumentItem>): PagingData<SearchUiItem> {
-        return it.insertSeparators { before, after ->
-            if (after == null) return@insertSeparators null
-            if (before == null) return@insertSeparators SearchUiItem.SeparatorItem("${after.document.title.first()}")
-
-            val beforeFirstWord = before.document.title.first()
-            val afterFirstWord = after.document.title.first()
-            return@insertSeparators when (beforeFirstWord != afterFirstWord) {
-                true -> SearchUiItem.SeparatorItem("${after.document.title.first()}")
-                else -> null
-            }
-        }
-    }
-
-    private fun insertDateSeparator(it: PagingData<SearchUiItem.DocumentItem>): PagingData<SearchUiItem> {
-        return it.insertSeparators { before, after ->
-            if (after == null) return@insertSeparators null
-            if (before == null) return@insertSeparators SearchUiItem.SeparatorItem(
-                dateHelper.convert(after.document.date)
-            )
-
-            val beforeDate = before.document.date
-            val afterDate = after.document.date
-
-            val beforeDateString = dateHelper.convert(beforeDate, R.string.date_month)
-            val afterDateString = dateHelper.convert(afterDate)
-            return@insertSeparators when (beforeDateString != afterDateString) {
-                true -> SearchUiItem.SeparatorItem(description = afterDateString)
-                else -> null
-            }
-        }
-    }
 
     sealed class SearchUiItem {
         data class DocumentItem(val document: Document) : SearchUiItem()
