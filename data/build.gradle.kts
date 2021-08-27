@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
     `android-library`
     `kotlin-android`
@@ -32,6 +34,17 @@ android {
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
+            it.testLogging {
+                events("passed", "skipped", "failed", "standardOut", "standardError")
+                it.outputs.upToDateWhen {
+                    false
+                }
+                showStandardStreams = true
+                showCauses = true
+                showExceptions = true
+                showStackTraces = true
+                exceptionFormat = TestExceptionFormat.FULL
+            }
         }
     }
 
