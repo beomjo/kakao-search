@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.datasource
+package io.github.beomjo.search.datasource.remote
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -30,8 +30,6 @@ import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.SortType
-import io.github.beomjo.search.mapper.toEntity
-import io.github.beomjo.search.mapper.toTable
 import io.github.beomjo.search.model.*
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
