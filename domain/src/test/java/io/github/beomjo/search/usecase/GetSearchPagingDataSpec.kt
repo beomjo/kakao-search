@@ -32,33 +32,35 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class GetSearchPagingDataSpec : BehaviorSpec({
+class GetSearchPagingDataSpec : BehaviorSpec() {
 
-    val documentRepository: DocumentRepository = mockk()
+    private val documentRepository: DocumentRepository = mockk()
 
-    val getSearchPagingData = GetSearchPagingData(documentRepository)
+    private val getSearchPagingData = GetSearchPagingData(documentRepository)
 
-    Given("SearchPagingParam") {
-        val param = SearchPagingParam(
-            documentType = DocumentType.ALL,
-            sortType = SortType.TITLE,
-            query = "IU",
-            sort = Sort.ACCURACY
-        )
-        val pagingData = mockk<PagingData<Document>>()
-        coEvery { documentRepository.fetchDocumentPagingData(param) } returns flowOf(pagingData)
+    init {
+        Given("SearchPagingParam") {
+            val param = SearchPagingParam(
+                documentType = DocumentType.ALL,
+                sortType = SortType.TITLE,
+                query = "IU",
+                sort = Sort.ACCURACY
+            )
+            val pagingData = mockk<PagingData<Document>>()
+            coEvery { documentRepository.fetchDocumentPagingData(param) } returns flowOf(pagingData)
 
-        When("invoke") {
-            val resultFlow = getSearchPagingData.invoke(param)
+            When("invoke") {
+                val resultFlow = getSearchPagingData.invoke(param)
 
-            Then("Return PagingData") {
-                coVerify { documentRepository.fetchDocumentPagingData(eq(param)) }
-                resultFlow.first() shouldBe pagingData
+                Then("Return PagingData") {
+                    coVerify { documentRepository.fetchDocumentPagingData(eq(param)) }
+                    resultFlow.first() shouldBe pagingData
+                }
             }
         }
-    }
 
-    afterTest {
-        unmockkAll()
+        afterTest {
+            unmockkAll()
+        }
     }
-})
+}
