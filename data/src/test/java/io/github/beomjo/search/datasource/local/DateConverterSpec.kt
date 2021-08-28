@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package io.github.beomjo.search.datasource.local
 
 import io.github.beomjo.search.datasource.local.converter.DateConverter
@@ -22,7 +21,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk
-import java.util.*
+import java.util.Date
 
 internal class DateConverterSpec : FunSpec({
     val converter = DateConverter()
@@ -41,7 +40,6 @@ internal class DateConverterSpec : FunSpec({
 
         timestamp shouldBe null
     }
-
 
     test("success converted from timestamp to date") {
         val timestamp = 100000L

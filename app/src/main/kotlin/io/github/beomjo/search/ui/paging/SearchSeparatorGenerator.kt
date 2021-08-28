@@ -58,4 +58,3 @@ class SearchSeparatorGenerator @AssistedInject constructor(
 interface SearchSeparatorFactory {
     fun create(pagingData: PagingData<Document>): SearchSeparatorGenerator
 }
-

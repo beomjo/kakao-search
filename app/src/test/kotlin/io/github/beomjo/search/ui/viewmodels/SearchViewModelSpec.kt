@@ -29,7 +29,12 @@ import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.mockk
+import io.mockk.every
+import io.mockk.slot
+import io.mockk.just
+import io.mockk.Runs
+import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 
 class SearchViewModelSpec : BehaviorSpec() {

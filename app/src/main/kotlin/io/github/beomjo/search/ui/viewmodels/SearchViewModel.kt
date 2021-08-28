@@ -16,22 +16,21 @@
 
 package io.github.beomjo.search.ui.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseViewModel
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.usecase.GetSearchPagingData
 import io.github.beomjo.search.usecase.SearchPagingParam
-import io.github.beomjo.search.util.DateHelper
 import io.github.beomjo.search.ui.paging.SearchSeparatorFactory
-import io.github.beomjo.search.ui.paging.SearchSeparatorGenerator
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -79,7 +78,6 @@ class SearchViewModel @Inject constructor(
             .cachedIn(viewModelScope)
             .asLiveData()
     }
-
 
     sealed class SearchUiItem {
         data class DocumentItem(val document: Document) : SearchUiItem()

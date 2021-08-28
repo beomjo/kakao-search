@@ -17,20 +17,20 @@
 package io.github.beomjo.search.usecase
 
 import androidx.paging.PagingData
-import androidx.paging.insertSeparators
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.repository.DocumentRepository
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.fp.success
-import io.kotest.matchers.equality.shouldBeEqualToUsingFields
 import io.kotest.matchers.shouldBe
-import io.mockk.*
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import io.mockk.mockk
+
+import io.mockk.coEvery
+import io.mockk.unmockkAll
+import io.mockk.coVerify
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.first
 
 class GetSearchPagingDataSpec : BehaviorSpec() {
 

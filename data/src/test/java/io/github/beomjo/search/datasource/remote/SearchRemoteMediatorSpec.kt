@@ -30,12 +30,20 @@ import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.SortType
-import io.github.beomjo.search.model.*
+import io.github.beomjo.search.model.BlogResponse
+import io.github.beomjo.search.model.CafeResponse
+import io.github.beomjo.search.model.WebResponse
+import io.github.beomjo.search.model.ImageResponse
+import io.github.beomjo.search.model.BookResponse
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.mockk.*
+import io.mockk.mockk
+import io.mockk.every
+import io.mockk.slot
+import io.mockk.just
+import io.mockk.Runs
 
 @OptIn(ExperimentalPagingApi::class)
 internal class SearchRemoteMediatorSpec : BehaviorSpec() {
@@ -493,7 +501,6 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
                     tableKeySlot.captured.prevKey shouldBe null
                     tableKeySlot.captured.nextKey shouldBe 2
 
-
                     mediatorResult.shouldBeTypeOf<RemoteMediator.MediatorResult.Success>()
                     mediatorResult.endOfPaginationReached shouldBe false
                 }
@@ -633,7 +640,6 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
                     tableKeySlot.captured.prevKey shouldBe null
                     tableKeySlot.captured.nextKey shouldBe 2
 
-
                     mediatorResult.shouldBeTypeOf<RemoteMediator.MediatorResult.Success>()
                     mediatorResult.endOfPaginationReached shouldBe false
                 }
@@ -772,7 +778,6 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
                     tableKeySlot.captured.position shouldBe 1
                     tableKeySlot.captured.prevKey shouldBe null
                     tableKeySlot.captured.nextKey shouldBe 2
-
 
                     mediatorResult.shouldBeTypeOf<RemoteMediator.MediatorResult.Success>()
                     mediatorResult.endOfPaginationReached shouldBe false
@@ -940,7 +945,6 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
                     tableKeySlot.captured.position shouldBe 1
                     tableKeySlot.captured.prevKey shouldBe null
                     tableKeySlot.captured.nextKey shouldBe 2
-
 
                     mediatorResult.shouldBeTypeOf<RemoteMediator.MediatorResult.Success>()
                     mediatorResult.endOfPaginationReached shouldBe false

@@ -30,7 +30,8 @@ import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.mockk.*
+import io.mockk.mockk
+import io.mockk.every
 import kotlinx.coroutines.flow.first
 
 @OptIn(ExperimentalPagingApi::class)
