@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.datasource.local.converter
+package io.github.beomjo.search
 
-import androidx.room.TypeConverter
-import java.util.Date
+import io.kotest.core.config.AbstractProjectConfig
+import io.kotest.core.spec.IsolationMode
 
-internal class DateConverter {
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date? = value?.let { Date(value) }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? = date?.time
+internal class ProjectConfig : AbstractProjectConfig() {
+    override val isolationMode = IsolationMode.InstancePerLeaf
 }
