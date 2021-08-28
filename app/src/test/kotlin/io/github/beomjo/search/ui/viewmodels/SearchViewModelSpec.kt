@@ -34,12 +34,10 @@ import kotlinx.coroutines.flow.flowOf
 
 class SearchViewModelSpec : BehaviorSpec() {
 
-
     init {
         Given("When query, sort, documentType is given") {
             val query = "IU"
             val searchFilter = DocumentType.ALL
-            val sortType = SortType.TITLE
 
             val pagingData = PagingData.from<Document>(
                 listOf(mockk())
@@ -69,7 +67,6 @@ class SearchViewModelSpec : BehaviorSpec() {
 
             viewModel.query.value = query
             viewModel.searchFilter = searchFilter
-            viewModel.sort = sortType
 
             val pagerDateSlot = slot<PagingData<SearchViewModel.SearchUiItem>>()
             val pagerObserver = mockk<Observer<PagingData<SearchViewModel.SearchUiItem>>> {
@@ -77,31 +74,65 @@ class SearchViewModelSpec : BehaviorSpec() {
             }
             viewModel.pager.observeForever(pagerObserver)
 
-            When("Do search") {
-                viewModel.search()
+            And("SortType is Title") {
+                val sortType = SortType.TITLE
+                viewModel.sort = sortType
 
-                Then("Need to load PagingData") {
-                    verify {
-                        getSearchPagingUseCase.invoke(any())
-                        searchSeparatorFactory.create(eq(pagingData))
-                        separatorGenerator.insertTitleSeparator()
-                    }
-                    requestParamSlot.captured.documentType shouldBe searchFilter
-                    requestParamSlot.captured.sortType shouldBe sortType
-                    requestParamSlot.captured.query shouldBe query
+                When("Do search") {
+                    viewModel.search()
 
-                    val expect = mutableListOf<SearchViewModel.SearchUiItem>()
-                    val actual = mutableListOf<SearchViewModel.SearchUiItem>()
-                    pagerDateSlot.captured.map {
-                        actual.add(it)
+                    Then("Need to load PagingData") {
+                        verify {
+                            getSearchPagingUseCase.invoke(any())
+                            searchSeparatorFactory.create(eq(pagingData))
+                            separatorGenerator.insertTitleSeparator()
+                        }
+                        requestParamSlot.captured.documentType shouldBe searchFilter
+                        requestParamSlot.captured.sortType shouldBe sortType
+                        requestParamSlot.captured.query shouldBe query
+
+                        val expect = mutableListOf<SearchViewModel.SearchUiItem>()
+                        val actual = mutableListOf<SearchViewModel.SearchUiItem>()
+                        pagerDateSlot.captured.map {
+                            actual.add(it)
+                        }
+                        insertedSeparatorPagingData.map {
+                            expect.add(it)
+                        }
+                        actual shouldContainAll expect
                     }
-                    insertedSeparatorPagingData.map {
-                        expect.add(it)
+                }
+            }
+
+            And("SortType is DATE") {
+                val sortType = SortType.DATE
+                viewModel.sort = sortType
+
+                When("Do search") {
+                    viewModel.search()
+
+                    Then("Need to load PagingData") {
+                        verify {
+                            getSearchPagingUseCase.invoke(any())
+                            searchSeparatorFactory.create(eq(pagingData))
+                            separatorGenerator.insertDateSeparator()
+                        }
+                        requestParamSlot.captured.documentType shouldBe searchFilter
+                        requestParamSlot.captured.sortType shouldBe sortType
+                        requestParamSlot.captured.query shouldBe query
+
+                        val expect = mutableListOf<SearchViewModel.SearchUiItem>()
+                        val actual = mutableListOf<SearchViewModel.SearchUiItem>()
+                        pagerDateSlot.captured.map {
+                            actual.add(it)
+                        }
+                        insertedSeparatorPagingData.map {
+                            expect.add(it)
+                        }
+                        actual shouldContainAll expect
                     }
-                    actual shouldContainAll expect
                 }
             }
         }
-
     }
 }
