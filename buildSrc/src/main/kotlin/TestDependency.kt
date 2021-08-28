@@ -21,4 +21,5 @@ object TestDependency {
     const val COROUTINE_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
     const val ANDROID_JUNIT_RUNNER = "AndroidJUnitRunner"
     const val MOCKK = "io.mockk:mockk:1.12.0"
+    const val KOTEST = "io.kotest:kotest-runner-junit5:4.6.1"
 }

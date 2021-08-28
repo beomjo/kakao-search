@@ -4,3 +4,6 @@ build:
 style:
   ReturnCount:
     active: false
+complexity:
+  LargeClass:
+    excludes: ['**/test/**']

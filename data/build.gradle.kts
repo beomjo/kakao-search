@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
     `android-library`
     `kotlin-android`
@@ -29,6 +31,23 @@ android {
         targetSdk = AndroidEnv.ANDROID_TARGET
     }
 
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+            it.testLogging {
+                events("passed", "skipped", "failed", "standardOut", "standardError")
+                it.outputs.upToDateWhen {
+                    false
+                }
+                showStandardStreams = true
+                showCauses = true
+                showExceptions = true
+                showStackTraces = true
+                exceptionFormat = TestExceptionFormat.FULL
+            }
+        }
+    }
+
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
@@ -40,6 +59,7 @@ dependencies {
 
     implementation(Dependency.Kotlin.COROUTINE_CORE)
     implementation(Dependency.Kotlin.COROUTINE_ANDROID)
+    implementation(Dependency.Kotlin.REFLECTION)
 
     implementation(Dependency.Paging3.RUNTIME)
 
@@ -58,4 +78,7 @@ dependencies {
     implementation(Dependency.Room.RUNTIME)
     implementation(Dependency.Room.KTX)
     kapt(Dependency.Room.APT)
+
+    testImplementation(TestDependency.KOTEST)
+    testImplementation(TestDependency.MOCKK)
 }

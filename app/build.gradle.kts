@@ -62,6 +62,23 @@ android {
         viewBinding = true
     }
 
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+            it.testLogging {
+                events("passed", "skipped", "failed")
+                it.outputs.upToDateWhen {
+                    false
+                }
+                showStandardStreams = true
+                showCauses = true
+                showExceptions = true
+                showStackTraces = true
+                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            }
+        }
+    }
+
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
@@ -82,6 +99,7 @@ dependencies {
     implementation(Dependency.Kotlin.SDK)
     implementation(Dependency.Kotlin.COROUTINE_CORE)
     implementation(Dependency.Kotlin.COROUTINE_ANDROID)
+    implementation(Dependency.Kotlin.REFLECTION)
 
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.MATERIAL)
@@ -113,9 +131,9 @@ dependencies {
 
     implementation(Dependency.BINDABLES)
 
-    testImplementation(TestDependency.JUNIT)
     testImplementation(TestDependency.MOCKK)
     testImplementation(TestDependency.COROUTINE_TEST)
+    testImplementation(TestDependency.KOTEST)
     androidTestImplementation(AndroidTestDependency.TEST_RUNNER)
     androidTestImplementation(AndroidTestDependency.ESPRESSO_CORE)
 }
