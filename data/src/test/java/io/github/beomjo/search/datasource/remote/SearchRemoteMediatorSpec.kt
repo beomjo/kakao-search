@@ -35,6 +35,7 @@ import io.github.beomjo.search.model.CafeResponse
 import io.github.beomjo.search.model.WebResponse
 import io.github.beomjo.search.model.ImageResponse
 import io.github.beomjo.search.model.BookResponse
+import io.github.beomjo.search.model.DocumentListResponse
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -44,6 +45,12 @@ import io.mockk.every
 import io.mockk.slot
 import io.mockk.just
 import io.mockk.Runs
+import io.mockk.unmockkAll
+import io.mockk.coVerify
+import io.mockk.coVerifyOrder
+import io.mockk.Called
+import io.mockk.coEvery
+import io.mockk.mockkStatic
 
 @OptIn(ExperimentalPagingApi::class)
 internal class SearchRemoteMediatorSpec : BehaviorSpec() {

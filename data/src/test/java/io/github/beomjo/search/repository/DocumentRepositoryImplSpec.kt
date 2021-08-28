@@ -32,6 +32,9 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.mockk
 import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 
 @OptIn(ExperimentalPagingApi::class)
