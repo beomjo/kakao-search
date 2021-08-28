@@ -162,7 +162,7 @@ internal class SearchRemoteMediator @AssistedInject constructor(
 
     companion object {
         const val STARTING_POSITION = 1
-        const val MAX_PAGE_POSITION = 10
+        const val MAX_PAGE_POSITION = 50
         const val PER_PAGE_SIZE = 25
         val DOCUMENT_TYPE_NUM = DocumentType.values().size - 1
     }
