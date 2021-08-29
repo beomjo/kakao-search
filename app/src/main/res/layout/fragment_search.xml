@@ -24,8 +24,12 @@
             type="io.github.beomjo.search.ui.viewmodels.SearchViewModel" />
 
         <variable
-            name="adapter"
+            name="searchAdapter"
             type="androidx.recyclerview.widget.ConcatAdapter" />
+
+        <variable
+            name="searchHistoryAdapter"
+            type="io.github.beomjo.search.ui.adapter.SearchHistoryAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,7 +82,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:visibility="gone"
-            app:adapter="@{adapter}"
+            app:adapter="@{searchAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,6 +123,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_history"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxHeight="150dp"
+            app:adapter="@{searchHistoryAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/search_layout"
+            app:layout_constraintStart_toStartOf="@id/search_layout"
+            app:layout_constraintTop_toBottomOf="@id/search_layout"
+            tools:listitem="@layout/search_history_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

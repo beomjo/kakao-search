@@ -28,11 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentSearchBinding
+import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.ui.adapter.SearchControlMenuAdapter
+import io.github.beomjo.search.ui.adapter.SearchHistoryAdapter
 import io.github.beomjo.search.ui.adapter.SearchPagingAdapter
 import io.github.beomjo.search.ui.adapter.SearchPagingLoadStateAdapter
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
@@ -40,6 +43,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private val searchViewModel: SearchViewModel by getViewModel()
 
     private val searchPagingAdapter: SearchPagingAdapter by lazy { SearchPagingAdapter() }
+
+    private val searchHistoryAdapter: SearchHistoryAdapter by lazy { SearchHistoryAdapter() }
 
     override val viewModelProvideOwner: ViewModelStoreOwner
         get() = this.requireActivity()
@@ -53,7 +58,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private fun bindLayout() {
         binding {
             viewModel = searchViewModel
-            adapter = ConcatAdapter(
+            searchAdapter = ConcatAdapter(
                 ConcatAdapter.Config.DEFAULT,
                 SearchControlMenuAdapter(
                     onFilterSelected = {
@@ -94,6 +99,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     searchViewModel.search()
                     true
                 } else false
+            }
+
+            searchHistoryAdapter = this@SearchFragment.searchHistoryAdapter.apply {
+                submitList(
+                    listOf(
+                        History(
+                            "aa",
+                            Date()
+                        ),
+                        History(
+                            "aa",
+                            Date()
+                        )
+                    )
+                )
             }
         }
     }
