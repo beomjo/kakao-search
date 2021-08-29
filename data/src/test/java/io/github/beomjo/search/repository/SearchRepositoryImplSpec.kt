@@ -38,7 +38,7 @@ import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 
 @OptIn(ExperimentalPagingApi::class)
-internal class DocumentRepositoryImplSpec : BehaviorSpec() {
+internal class SearchRepositoryImplSpec : BehaviorSpec() {
 
     private val searchRemoteMediatorFactory = mockk<SearchRemoteMediatorFactory>()
 
@@ -62,7 +62,7 @@ internal class DocumentRepositoryImplSpec : BehaviorSpec() {
 
             coEvery { documentDao.getDocumentByTitle(param.query) } returns pagingSource
 
-            val documentRepositoryImpl = DocumentRepositoryImpl(
+            val documentRepositoryImpl = SearchRepositoryImpl(
                 searchRemoteMediatorFactory,
                 documentDao
             )
@@ -91,7 +91,7 @@ internal class DocumentRepositoryImplSpec : BehaviorSpec() {
 
             coEvery { documentDao.getDocumentByDate(param.query) } returns pagingSource
 
-            val documentRepositoryImpl = DocumentRepositoryImpl(
+            val documentRepositoryImpl = SearchRepositoryImpl(
                 searchRemoteMediatorFactory,
                 documentDao
             )

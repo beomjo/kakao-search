@@ -34,10 +34,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class DocumentRepositoryImpl @Inject constructor(
+internal class SearchRepositoryImpl @Inject constructor(
     private val searchRemoteMediatorFactory: SearchRemoteMediatorFactory,
     private val documentDao: DocumentDao
-) : DocumentRepository {
+) : SearchRepository {
     override fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(

@@ -21,6 +21,6 @@ import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 
-interface DocumentRepository {
+interface SearchRepository {
     fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
 }

@@ -21,7 +21,7 @@ import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.SortType
-import io.github.beomjo.search.repository.DocumentRepository
+import io.github.beomjo.search.repository.SearchRepository
 import io.github.beomjo.search.usecase.base.PagingUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -34,9 +34,9 @@ data class SearchPagingParam(
 )
 
 class GetSearchPagingData @Inject constructor(
-    private val documentRepository: DocumentRepository
+    private val searchRepository: SearchRepository
 ) : PagingUseCase<SearchPagingParam, Document>() {
     override fun execute(parameters: SearchPagingParam): Flow<PagingData<Document>> {
-        return documentRepository.fetchDocumentPagingData(parameters)
+        return searchRepository.fetchDocumentPagingData(parameters)
     }
 }
