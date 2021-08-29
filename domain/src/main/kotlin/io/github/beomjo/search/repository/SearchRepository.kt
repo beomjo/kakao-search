@@ -18,9 +18,12 @@ package io.github.beomjo.search.repository
 
 import androidx.paging.PagingData
 import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
     fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
+
+    suspend fun fetchSearchHistory(): List<History>
 }
