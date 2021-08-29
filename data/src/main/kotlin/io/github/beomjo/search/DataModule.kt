@@ -26,6 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.datasource.local.AppDatabase
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
+import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
 import io.github.beomjo.search.datasource.remote.api.Urls
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
@@ -62,6 +63,12 @@ internal object DataModule {
     @Provides
     fun provideRemoteKeyDao(database: AppDatabase): RemoteKeyDao {
         return database.remoteKeyDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchHistoryDao(database: AppDatabase): SearchHistoryDao {
+        return database.searchHistoryDao()
     }
 
     @Module
