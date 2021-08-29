@@ -20,15 +20,18 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
 import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
-import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.entity.Sort
-import io.github.beomjo.search.entity.SortType
+import io.github.beomjo.search.entity.*
+import io.github.beomjo.search.mapper.toEntity
+import io.github.beomjo.search.mapper.toTable
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.mockk
 import io.mockk.every
@@ -46,7 +49,9 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
 
     private val pagingSource = mockk<PagingSource<Int, DocumentTable>>(relaxed = true)
 
-    private val documentDao = mockk<DocumentDao>()
+    private val documentDao = mockk<DocumentDao>(relaxed = true)
+
+    private val searchHistoryDao = mockk<SearchHistoryDao>(relaxed = true)
 
     init {
 
@@ -62,13 +67,14 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
 
             coEvery { documentDao.getDocumentByTitle(param.query) } returns pagingSource
 
-            val documentRepositoryImpl = SearchRepositoryImpl(
+            val searchRepositoryImpl = SearchRepositoryImpl(
                 searchRemoteMediatorFactory,
-                documentDao
+                documentDao,
+                searchHistoryDao
             )
 
             When("invoke fetchPagingData") {
-                val resultFlow = documentRepositoryImpl.getDocumentPagingData(param)
+                val resultFlow = searchRepositoryImpl.getDocumentPagingData(param)
 
                 Then("Returns PagingData sorted by TITLE") {
                     resultFlow.first().shouldBeTypeOf<PagingData<Document>>()
@@ -91,19 +97,67 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
 
             coEvery { documentDao.getDocumentByDate(param.query) } returns pagingSource
 
-            val documentRepositoryImpl = SearchRepositoryImpl(
+            val searchRepositoryImpl = SearchRepositoryImpl(
                 searchRemoteMediatorFactory,
-                documentDao
+                documentDao,
+                searchHistoryDao
             )
 
             When("invoke fetchPagingData") {
-                val resultFlow = documentRepositoryImpl.getDocumentPagingData(param)
+                val resultFlow = searchRepositoryImpl.getDocumentPagingData(param)
 
                 Then("Returns PagingData sorted by DATE") {
                     resultFlow.first().shouldBeTypeOf<PagingData<Document>>()
 
                     coVerify(inverse = true) { documentDao.getDocumentByTitle(any()) }
                     coVerify { documentDao.getDocumentByDate(eq(param.query)) }
+                }
+            }
+        }
+
+        Given("Given the search query keyword") {
+            val history = History(
+                "IU",
+                mockk(),
+            )
+
+            val searchRepositoryImpl = SearchRepositoryImpl(
+                searchRemoteMediatorFactory,
+                documentDao,
+                searchHistoryDao
+            )
+
+            When("When you call insert history to DB") {
+                searchRepositoryImpl.insertSearchHistory(history)
+
+                Then("Should be stored in DB") {
+                    coVerify(inverse = false) { searchHistoryDao.insertHistory(eq(history.toTable())) }
+                }
+            }
+        }
+
+        Given("Nothing needs to be given") {
+            val searchTableList = listOf(
+                mockk<SearchHistoryTable> {
+                    every { query } returns "IU"
+                    every { date } returns mockk()
+                }
+            )
+
+            coEvery { searchHistoryDao.getHistoryList() } returns searchTableList
+
+            val searchRepositoryImpl = SearchRepositoryImpl(
+                searchRemoteMediatorFactory,
+                documentDao,
+                searchHistoryDao
+            )
+
+            When("When you call insert history to DB") {
+                val result = searchRepositoryImpl.getSearchHistoryList()
+
+                Then("Should be stored in DB") {
+                    coVerify(inverse = false) { searchHistoryDao.getHistoryList() }
+                    result shouldBe searchTableList.map { it.toEntity() }
                 }
             }
         }
