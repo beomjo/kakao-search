@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+   Designed and developed by 2021 beomjo
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   -->
+    <string name="app_name">kakao-search</string>
+    <string name="bookmark_fragment_title">Bookmark Fragment</string>
+    <string name="search_fragment_title">Search Fragment</string>
+    <string name="detail_fragment_title">Detail Fragment</string>
+    <string name="bookmark">북마크</string>
+    <string name="search">검색</string>
+    <string name="search_hint">검색어를 입력하세요.</string>
+    <string name="retry">재시도</string>
+    <string name="sort">정렬</string>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="today">오늘</string>
+    <string name="yesterday">어제</string>
+    <string name="date" formatted="true">%1$tY년 %1$tm월 %1$td일</string>
+    <string name="date_month" formatted="true">%1$tY년 %1$tm월</string>
+    <string name="no_results">결과가 존재하지 않습니다.</string>
+</resources>
