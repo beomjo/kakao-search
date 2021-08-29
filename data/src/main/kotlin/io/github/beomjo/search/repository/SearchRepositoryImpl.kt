@@ -22,11 +22,14 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
 import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.mapper.toEntity
+import io.github.beomjo.search.mapper.toTable
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -36,9 +39,10 @@ import javax.inject.Singleton
 @Singleton
 internal class SearchRepositoryImpl @Inject constructor(
     private val searchRemoteMediatorFactory: SearchRemoteMediatorFactory,
-    private val documentDao: DocumentDao
+    private val documentDao: DocumentDao,
+    private val searchHistoryDao: SearchHistoryDao
 ) : SearchRepository {
-    override fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>> {
+    override fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
@@ -57,5 +61,14 @@ internal class SearchRepositoryImpl @Inject constructor(
                 documentTable.toEntity()
             }
         }
+    }
+
+    override suspend fun insertSearchHistory(history: History) {
+        return searchHistoryDao.insertHistory(history.toTable())
+
+    }
+
+    override suspend fun getSearchHistoryList(): List<History> {
+        return searchHistoryDao.getHistoryList()?.map { it.toEntity() } ?: listOf()
     }
 }
