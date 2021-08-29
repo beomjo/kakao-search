@@ -23,7 +23,7 @@ import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
+    fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
 
     suspend fun fetchSearchHistory(): List<History>
 }

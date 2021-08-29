@@ -47,13 +47,13 @@ class GetSearchPagingDataSpec : BehaviorSpec() {
                 sort = Sort.ACCURACY
             )
             val pagingData = mockk<PagingData<Document>>()
-            coEvery { searchRepository.fetchDocumentPagingData(param) } returns flowOf(pagingData)
+            coEvery { searchRepository.getDocumentPagingData(param) } returns flowOf(pagingData)
 
             When("invoke") {
                 val resultFlow = getSearchPagingData.invoke(param)
 
                 Then("Return PagingData") {
-                    coVerify { searchRepository.fetchDocumentPagingData(eq(param)) }
+                    coVerify { searchRepository.getDocumentPagingData(eq(param)) }
                     resultFlow.first() shouldBe pagingData
                 }
             }

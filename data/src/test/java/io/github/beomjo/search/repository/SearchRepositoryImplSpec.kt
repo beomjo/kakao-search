@@ -68,7 +68,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
             )
 
             When("invoke fetchPagingData") {
-                val resultFlow = documentRepositoryImpl.fetchDocumentPagingData(param)
+                val resultFlow = documentRepositoryImpl.getDocumentPagingData(param)
 
                 Then("Returns PagingData sorted by TITLE") {
                     resultFlow.first().shouldBeTypeOf<PagingData<Document>>()
@@ -97,7 +97,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
             )
 
             When("invoke fetchPagingData") {
-                val resultFlow = documentRepositoryImpl.fetchDocumentPagingData(param)
+                val resultFlow = documentRepositoryImpl.getDocumentPagingData(param)
 
                 Then("Returns PagingData sorted by DATE") {
                     resultFlow.first().shouldBeTypeOf<PagingData<Document>>()

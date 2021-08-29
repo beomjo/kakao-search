@@ -37,6 +37,6 @@ class GetSearchPagingData @Inject constructor(
     private val searchRepository: SearchRepository
 ) : PagingUseCase<SearchPagingParam, Document>() {
     override fun execute(parameters: SearchPagingParam): Flow<PagingData<Document>> {
-        return searchRepository.fetchDocumentPagingData(parameters)
+        return searchRepository.getDocumentPagingData(parameters)
     }
 }
