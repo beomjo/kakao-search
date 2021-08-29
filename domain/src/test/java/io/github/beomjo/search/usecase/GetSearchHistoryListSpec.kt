@@ -20,13 +20,13 @@ class GetSearchHistoryListSpec : BehaviorSpec() {
 
             val expect = listOf(mockk<History>())
 
-            coEvery { searchRepository.fetchSearchHistory() } returns expect
+            coEvery { searchRepository.getSearchHistoryList() } returns expect
 
             When("invoke") {
                 val result = getSearchHistoryList.invoke(Empty)
 
                 Then("Should return a HistoryList") {
-                    coVerify { searchRepository.fetchSearchHistory() }
+                    coVerify { searchRepository.getSearchHistoryList() }
                     result shouldBe expect
                 }
             }

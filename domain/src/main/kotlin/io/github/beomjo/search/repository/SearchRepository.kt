@@ -25,5 +25,5 @@ import kotlinx.coroutines.flow.Flow
 interface SearchRepository {
     fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
 
-    suspend fun fetchSearchHistory(): List<History>
+    suspend fun getSearchHistoryList(): List<History>
 }

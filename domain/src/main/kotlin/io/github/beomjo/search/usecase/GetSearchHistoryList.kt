@@ -11,6 +11,6 @@ class GetSearchHistoryList @Inject constructor(
     private val searchRepository: SearchRepository
 ) : UseCase<Empty, List<History>>() {
     override suspend fun execute(parameters: Empty): List<History> {
-        return searchRepository.fetchSearchHistory()
+        return searchRepository.getSearchHistoryList()
     }
 }
