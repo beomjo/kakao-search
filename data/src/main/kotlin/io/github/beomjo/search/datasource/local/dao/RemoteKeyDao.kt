@@ -23,7 +23,7 @@ import androidx.room.Query
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 
 @Dao
-interface RemoteKeyDao {
+internal interface RemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertKey(remoteKey: RemoteKeyTable)
 
