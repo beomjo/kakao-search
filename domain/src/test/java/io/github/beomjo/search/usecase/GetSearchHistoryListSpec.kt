@@ -9,6 +9,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.coVerify
 import io.mockk.unmockkAll
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 
 class GetSearchHistoryListSpec : BehaviorSpec() {
 
@@ -20,14 +22,14 @@ class GetSearchHistoryListSpec : BehaviorSpec() {
 
             val expect = listOf(mockk<History>())
 
-            coEvery { searchRepository.getSearchHistoryList() } returns expect
+            coEvery { searchRepository.getSearchHistoryList() } returns flowOf(expect)
 
             When("invoke") {
                 val result = getSearchHistoryList.invoke(Empty)
 
                 Then("Should return a HistoryList") {
                     coVerify { searchRepository.getSearchHistoryList() }
-                    result shouldBe expect
+                    result.first() shouldBe expect
                 }
             }
         }
