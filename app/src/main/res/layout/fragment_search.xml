@@ -128,11 +128,11 @@
             android:id="@+id/search_history"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxHeight="150dp"
+            android:orientation="vertical"
             app:adapter="@{searchHistoryAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/search_layout"
+            app:layout_constraintHeight_max="250dp"
             app:layout_constraintStart_toStartOf="@id/search_layout"
             app:layout_constraintTop_toBottomOf="@id/search_layout"
             tools:listitem="@layout/search_history_item" />
