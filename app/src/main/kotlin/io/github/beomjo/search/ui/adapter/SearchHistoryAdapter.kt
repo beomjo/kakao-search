@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.ListAdapter
 import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.ui.adapter.viewholders.SearchHistoryViewHolder
 
-class SearchHistoryAdapter : ListAdapter<History, SearchHistoryViewHolder>(
+class SearchHistoryAdapter(
+    private val onClickHistory: (String) -> Unit
+) : ListAdapter<History, SearchHistoryViewHolder>(
     object : DiffUtil.ItemCallback<History>() {
         override fun areItemsTheSame(oldItem: History, newItem: History): Boolean {
             return false
@@ -39,6 +41,6 @@ class SearchHistoryAdapter : ListAdapter<History, SearchHistoryViewHolder>(
     }
 
     override fun onBindViewHolder(holder: SearchHistoryViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(currentList[position], onClickHistory)
     }
 }

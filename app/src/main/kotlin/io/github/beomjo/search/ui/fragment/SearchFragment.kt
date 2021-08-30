@@ -44,7 +44,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private val searchPagingAdapter: SearchPagingAdapter by lazy { SearchPagingAdapter() }
 
-    private val searchHistoryAdapter: SearchHistoryAdapter by lazy { SearchHistoryAdapter() }
+    private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
+        SearchHistoryAdapter {
+            searchViewModel.query.value = it
+            searchViewModel.search()
+        }
+    }
 
     override val viewModelProvideOwner: ViewModelStoreOwner
         get() = this.requireActivity()

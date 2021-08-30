@@ -26,8 +26,11 @@ class SearchHistoryViewHolder(
     private val binding: SearchHistoryItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(history: History) {
+    fun bind(history: History, onClickHistory: (String) -> Unit) {
         binding.history = history
+        binding.historyContainer.setOnClickListener {
+            onClickHistory(history.query)
+        }
         binding.executePendingBindings()
     }
 
