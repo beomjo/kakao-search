@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName
 
 internal data class DocumentListResponse<T>(
     @SerializedName("meta")
-    val meta: MetaReseponse,
+    val meta: MetaResponse,
     @SerializedName("documents")
     val documents: List<T>
 )

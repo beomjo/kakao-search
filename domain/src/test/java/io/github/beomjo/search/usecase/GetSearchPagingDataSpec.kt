@@ -24,11 +24,8 @@ import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.repository.SearchRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.mockk
+import io.mockk.*
 
-import io.mockk.coEvery
-import io.mockk.unmockkAll
-import io.mockk.coVerify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.first
 
@@ -48,13 +45,16 @@ class GetSearchPagingDataSpec : BehaviorSpec() {
             )
             val pagingData = mockk<PagingData<Document>>()
             coEvery { searchRepository.getDocumentPagingData(param) } returns flowOf(pagingData)
+            coEvery { searchRepository.insertSearchHistory(any()) } just Runs
 
             When("invoke") {
                 val resultFlow = getSearchPagingData.invoke(param)
 
                 Then("Return PagingData") {
-                    coVerify { searchRepository.getDocumentPagingData(eq(param)) }
                     resultFlow.first() shouldBe pagingData
+
+                    coVerify { searchRepository.getDocumentPagingData(eq(param)) }
+                    coVerify { searchRepository.insertSearchHistory(any()) }
                 }
             }
         }

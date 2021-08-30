@@ -18,7 +18,7 @@ package io.github.beomjo.search.model
 
 import com.google.gson.annotations.SerializedName
 
-internal data class MetaReseponse(
+internal data class MetaResponse(
     @SerializedName("is_end")
     val isEnd: Boolean,
     @SerializedName("pageable_count")

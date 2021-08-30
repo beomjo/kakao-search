@@ -32,12 +32,9 @@ import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.mockk.mockk
-import io.mockk.every
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.unmockkAll
+import io.mockk.*
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 
 @OptIn(ExperimentalPagingApi::class)
 internal class SearchRepositoryImplSpec : BehaviorSpec() {
@@ -143,7 +140,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 }
             )
 
-            coEvery { searchHistoryDao.getHistoryList() } returns searchTableList
+            every { searchHistoryDao.getHistoryList() } returns flowOf(searchTableList)
 
             val searchRepositoryImpl = SearchRepositoryImpl(
                 searchRemoteMediatorFactory,
@@ -155,8 +152,8 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 val result = searchRepositoryImpl.getSearchHistoryList()
 
                 Then("Should be stored in DB") {
-                    coVerify(inverse = false) { searchHistoryDao.getHistoryList() }
-                    result shouldBe searchTableList.map { it.toEntity() }
+                    verify { searchHistoryDao.getHistoryList() }
+                    result.first() shouldBe searchTableList.map { it.toEntity() }
                 }
             }
         }
