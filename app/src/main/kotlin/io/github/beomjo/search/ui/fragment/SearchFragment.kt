@@ -101,20 +101,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                 } else false
             }
 
-            searchHistoryAdapter = this@SearchFragment.searchHistoryAdapter.apply {
-                submitList(
-                    listOf(
-                        History(
-                            "aa",
-                            Date()
-                        ),
-                        History(
-                            "aa",
-                            Date()
-                        )
-                    )
-                )
-            }
+            searchHistoryAdapter = this@SearchFragment.searchHistoryAdapter
         }
     }
 
@@ -123,6 +110,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             lifecycleScope.launch {
                 searchPagingAdapter.submitData(it)
             }
+        })
+
+        searchViewModel.history.observe(viewLifecycleOwner, {
+            searchHistoryAdapter.submitList(it)
         })
     }
 
