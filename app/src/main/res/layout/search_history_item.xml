@@ -28,15 +28,14 @@
         android:id="@+id/history_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:background="?attr/colorOnPrimary">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/search_keyword"
+            android:id="@+id/search_history"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
             android:maxLines="1"
-            android:padding="8dp"
             android:text="@{history.query}"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="@android:color/darker_gray"
