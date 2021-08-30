@@ -4,6 +4,11 @@ build:
 style:
   ReturnCount:
     active: false
+  WildcardImport:
+    active: false
 complexity:
   LargeClass:
-    excludes: ['**/test/**']
+    excludes: [ '**/test/**' ]
+formatting:
+  NoWildcardImports:
+    active: false

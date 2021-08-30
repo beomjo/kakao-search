@@ -26,11 +26,12 @@ import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.datasource.local.AppDatabase
 import io.github.beomjo.search.datasource.local.dao.DocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
+import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
 import io.github.beomjo.search.datasource.remote.api.Urls
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
-import io.github.beomjo.search.repository.DocumentRepository
-import io.github.beomjo.search.repository.DocumentRepositoryImpl
+import io.github.beomjo.search.repository.SearchRepository
+import io.github.beomjo.search.repository.SearchRepositoryImpl
 import javax.inject.Singleton
 
 @Module(includes = [DataModule.DataBindModule::class])
@@ -64,10 +65,16 @@ internal object DataModule {
         return database.remoteKeyDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideSearchHistoryDao(database: AppDatabase): SearchHistoryDao {
+        return database.searchHistoryDao()
+    }
+
     @Module
     @InstallIn(SingletonComponent::class)
     abstract class DataBindModule {
         @Binds
-        abstract fun provideDocumentRepository(repository: DocumentRepositoryImpl): DocumentRepository
+        abstract fun provideDocumentRepository(repository: SearchRepositoryImpl): SearchRepository
     }
 }

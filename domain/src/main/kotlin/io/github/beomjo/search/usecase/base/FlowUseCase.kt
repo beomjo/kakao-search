@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.datasource.local.dao
+package io.github.beomjo.search.usecase.base
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
+import kotlinx.coroutines.flow.Flow
 
-@Dao
-internal interface RemoteKeyDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertKey(remoteKey: RemoteKeyTable)
+abstract class FlowUseCase<in P, R : Any> {
 
-    @Query("SELECT * FROM remote_key")
-    suspend fun getRemoteKeyTable(): Array<RemoteKeyTable>?
+    operator fun invoke(parameters: P): Flow<R> {
+        return execute(parameters)
+    }
 
-    @Query("DELETE FROM remote_key")
-    suspend fun clearRemoteKeys()
+    protected abstract fun execute(parameters: P): Flow<R>
 }

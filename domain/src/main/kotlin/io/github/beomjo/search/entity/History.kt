@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.model
+package io.github.beomjo.search.entity
 
-import com.google.gson.annotations.SerializedName
+import java.util.Date
 
-internal data class MetaReseponse(
-    @SerializedName("is_end")
-    val isEnd: Boolean,
-    @SerializedName("pageable_count")
-    val pageableCount: Int,
-    @SerializedName("total_count")
-    val totalCount: Int
+data class History(
+    val query: String,
+    val date: Date,
 )

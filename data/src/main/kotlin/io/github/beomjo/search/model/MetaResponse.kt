@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.repository
+package io.github.beomjo.search.model
 
-import androidx.paging.PagingData
-import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.usecase.SearchPagingParam
-import kotlinx.coroutines.flow.Flow
+import com.google.gson.annotations.SerializedName
 
-interface DocumentRepository {
-    fun fetchDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
-}
+internal data class MetaResponse(
+    @SerializedName("is_end")
+    val isEnd: Boolean,
+    @SerializedName("pageable_count")
+    val pageableCount: Int,
+    @SerializedName("total_count")
+    val totalCount: Int
+)

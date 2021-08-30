@@ -25,18 +25,18 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.beomjo.search.base.BaseViewModel
-import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.entity.SortType
-import io.github.beomjo.search.usecase.GetSearchPagingData
+import io.github.beomjo.search.entity.*
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.github.beomjo.search.ui.paging.SearchSeparatorFactory
+import io.github.beomjo.search.usecase.GetSearchHistoryList
+import io.github.beomjo.search.usecase.GetSearchPagingData
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getSearchPagingData: GetSearchPagingData,
+    private val getSearchHistoryList: GetSearchHistoryList,
     private val searchSeparatorFactory: SearchSeparatorFactory
 ) : BaseViewModel() {
 
@@ -49,11 +49,16 @@ class SearchViewModel @Inject constructor(
     private val _pager = MutableLiveData<SearchPagingParam>()
     val pager: LiveData<PagingData<SearchUiItem>> = _pager.switchMap(::getPager)
 
+    val history: LiveData<List<History>> = getSearchHistoryList(Empty).asLiveData()
+
+    val hasFocus = MutableLiveData<Boolean>()
+
     private val _isShowProgress = MutableLiveData(false)
     val isShowProgress: LiveData<Boolean> get() = _isShowProgress
 
     fun search() {
         if (!query.value.isNullOrEmpty()) {
+            hasFocus.value = false
             _pager.value = getSearchPagingParam(query.value!!)
         }
     }

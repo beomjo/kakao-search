@@ -17,13 +17,12 @@
 package io.github.beomjo.search.usecase
 
 import androidx.paging.PagingData
-import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.entity.DocumentType
-import io.github.beomjo.search.entity.Sort
-import io.github.beomjo.search.entity.SortType
-import io.github.beomjo.search.repository.DocumentRepository
+import io.github.beomjo.search.entity.*
+import io.github.beomjo.search.repository.SearchRepository
 import io.github.beomjo.search.usecase.base.PagingUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onStart
+import java.util.Date
 import javax.inject.Inject
 
 data class SearchPagingParam(
@@ -31,12 +30,21 @@ data class SearchPagingParam(
     val sortType: SortType,
     val query: String,
     val sort: Sort = Sort.ACCURACY,
+    val date: Date = Date()
 )
 
 class GetSearchPagingData @Inject constructor(
-    private val documentRepository: DocumentRepository
+    private val searchRepository: SearchRepository
 ) : PagingUseCase<SearchPagingParam, Document>() {
     override fun execute(parameters: SearchPagingParam): Flow<PagingData<Document>> {
-        return documentRepository.fetchDocumentPagingData(parameters)
+        return searchRepository.getDocumentPagingData(parameters)
+            .onStart {
+                searchRepository.insertSearchHistory(
+                    History(
+                        query = parameters.query,
+                        date = parameters.date
+                    )
+                )
+            }
     }
 }

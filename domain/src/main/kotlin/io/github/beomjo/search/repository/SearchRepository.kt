@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.datasource.local.dao
+package io.github.beomjo.search.repository
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
+import androidx.paging.PagingData
+import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.History
+import io.github.beomjo.search.usecase.SearchPagingParam
+import kotlinx.coroutines.flow.Flow
 
-@Dao
-internal interface RemoteKeyDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertKey(remoteKey: RemoteKeyTable)
+interface SearchRepository {
 
-    @Query("SELECT * FROM remote_key")
-    suspend fun getRemoteKeyTable(): Array<RemoteKeyTable>?
+    fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
 
-    @Query("DELETE FROM remote_key")
-    suspend fun clearRemoteKeys()
+    suspend fun insertSearchHistory(history: History)
+
+    fun getSearchHistoryList(): Flow<List<History>>
 }
