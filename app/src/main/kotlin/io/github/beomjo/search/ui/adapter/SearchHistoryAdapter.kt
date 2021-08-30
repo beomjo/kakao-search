@@ -33,7 +33,6 @@ class SearchHistoryAdapter(
         override fun areContentsTheSame(oldItem: History, newItem: History): Boolean {
             return false
         }
-
     }
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoryViewHolder {

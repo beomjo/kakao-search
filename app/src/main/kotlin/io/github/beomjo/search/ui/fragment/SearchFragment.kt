@@ -28,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentSearchBinding
-import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.ui.adapter.SearchControlMenuAdapter
 import io.github.beomjo.search.ui.adapter.SearchHistoryAdapter
 import io.github.beomjo.search.ui.adapter.SearchPagingAdapter

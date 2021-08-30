@@ -30,7 +30,6 @@ import io.github.beomjo.search.mapper.toEntity
 import io.github.beomjo.search.mapper.toTable
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.mockk

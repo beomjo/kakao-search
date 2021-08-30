@@ -51,7 +51,6 @@ class SearchViewModelSpec : BehaviorSpec() {
 
             every { searchHistoryListUseCase.invoke(Empty) } returns flowOf(historyList)
 
-
             When("Create a view model") {
                 val viewModel = SearchViewModel(
                     getSearchPagingUseCase,

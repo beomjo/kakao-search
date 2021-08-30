@@ -28,7 +28,6 @@ fun TextView.dateString(date: Date?) {
     text = DateHelper(context).convert(date)
 }
 
-
 @BindingAdapter("hasFocus")
 fun EditText.setFocusChanged(hasFocus: Boolean) {
     if (hasFocus) requestFocus()

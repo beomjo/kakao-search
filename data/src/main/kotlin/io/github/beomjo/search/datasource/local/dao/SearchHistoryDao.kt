@@ -15,5 +15,4 @@ internal interface SearchHistoryDao {
 
     @Query("SELECT * FROM search_history")
     fun getHistoryList(): Flow<List<SearchHistoryTable>>
-
 }

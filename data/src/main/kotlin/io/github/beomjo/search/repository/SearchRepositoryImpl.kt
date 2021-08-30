@@ -65,7 +65,6 @@ internal class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun insertSearchHistory(history: History) {
         return searchHistoryDao.insertHistory(history.toTable())
-
     }
 
     override fun getSearchHistoryList(): Flow<List<History>> {
