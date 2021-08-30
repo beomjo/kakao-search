@@ -68,7 +68,9 @@ internal class SearchRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun getSearchHistoryList(): List<History> {
-        return searchHistoryDao.getHistoryList()?.map { it.toEntity() } ?: listOf()
+    override fun getSearchHistoryList(): Flow<List<History>> {
+        return searchHistoryDao.getHistoryList().map { historyList ->
+            historyList.map { it.toEntity() }
+        }
     }
 }

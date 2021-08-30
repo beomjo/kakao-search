@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.repository
+package io.github.beomjo.search.usecase.base
 
-import androidx.paging.PagingData
-import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.entity.History
-import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 
-interface SearchRepository {
+abstract class FlowUseCase<in P, R : Any> {
 
-    fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>>
+    operator fun invoke(parameters: P): Flow<R> {
+        return execute(parameters)
+    }
 
-    suspend fun insertSearchHistory(history: History)
-
-    fun getSearchHistoryList(): Flow<List<History>>
+    protected abstract fun execute(parameters: P): Flow<R>
 }
