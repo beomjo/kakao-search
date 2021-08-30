@@ -58,7 +58,8 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@={viewModel.query}" />
+                android:text="@={viewModel.query}"
+                app:hasFocus="@={viewModel.hasFocus}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -130,6 +131,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:adapter="@{searchHistoryAdapter}"
+            app:isVisible="@{viewModel.hasFocus}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="@id/search_layout"
             app:layout_constraintHeight_max="250dp"

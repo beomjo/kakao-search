@@ -51,11 +51,14 @@ class SearchViewModel @Inject constructor(
 
     val history: LiveData<List<History>> = getSearchHistoryList(Empty).asLiveData()
 
+    val hasFocus = MutableLiveData<Boolean>()
+
     private val _isShowProgress = MutableLiveData(false)
     val isShowProgress: LiveData<Boolean> get() = _isShowProgress
 
     fun search() {
         if (!query.value.isNullOrEmpty()) {
+            hasFocus.value = false
             _pager.value = getSearchPagingParam(query.value!!)
         }
     }
