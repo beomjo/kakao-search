@@ -7,3 +7,6 @@ style:
 complexity:
   LargeClass:
     excludes: ['**/test/**']
+formatting:
+  NoWildcardImports:
+    active: false
