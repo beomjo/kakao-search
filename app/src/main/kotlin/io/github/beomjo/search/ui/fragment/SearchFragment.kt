@@ -22,6 +22,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +42,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private val searchViewModel: SearchViewModel by getViewModel()
 
-    private val searchPagingAdapter: SearchPagingAdapter by lazy { SearchPagingAdapter() }
+    private val searchPagingAdapter: SearchPagingAdapter by lazy {
+        SearchPagingAdapter {
+//            action_search_dest_to_detail_dest
+            SearchFragmentDirections.actionSearchDestToDetailDest().let {
+                findNavController().navigate(it)
+            }
+        }
+    }
 
     private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
         SearchHistoryAdapter {

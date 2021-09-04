@@ -18,11 +18,12 @@ import io.github.beomjo.search.R
 import java.util.ArrayDeque
 import java.util.Deque
 
-@Navigator.Name("bottom")
-class BottomNavigator(
+@Navigator.Name("custom")
+class CustomNavigator(
     @IdRes private val fragmentContainerId: Int,
     private val fragmentManager: FragmentManager
-) : Navigator<BottomNavigator.Destination>() {
+) : Navigator<CustomNavigator.Destination>() {
+    private val tabBackStack: Deque<String> = ArrayDeque()
     private val backStack: Deque<String> = ArrayDeque()
 
     override fun createDestination(): Destination = Destination(this)
@@ -36,12 +37,33 @@ class BottomNavigator(
         val className = destination.className ?: return null
         val tag = className.split('.').last()
 
-        if (backStack.peekLast() == tag) {
+        if (!isContainsTabs(tag)) {
+
+            if (backStack.peekLast() != tag) {
+                backStack.addLast(tag)
+            }
+
+            val current = fragmentManager.findFragmentByTag(tag)
+            fragmentManager.commit {
+                if (current == null) {
+                    val fragment = fragmentManager.fragmentFactory.instantiate(
+                        ClassLoader.getSystemClassLoader(),
+                        className
+                    )
+                    add(fragmentContainerId, fragment, tag)
+                }
+
+                hideAllTab()
+            }
+            return destination
+        }
+
+        if (tabBackStack.peekLast() == tag) {
             return null
         }
 
-        if (backStack.peekLast() != tag) {
-            backStack.addLast(tag)
+        if (tabBackStack.peekLast() != tag) {
+            tabBackStack.addLast(tag)
         }
 
         val current = fragmentManager.findFragmentByTag(tag)
@@ -62,9 +84,30 @@ class BottomNavigator(
         return destination
     }
 
+
     override fun popBackStack(): Boolean {
-        val tag = backStack.pollLast() ?: return true
-        val newCurrentTag = backStack.peekLast() ?: return true
+        val tags = backStack.pollLast()
+        if (tags != null) {
+            fragmentManager.commit {
+                fragmentManager.findFragmentByTag(tags)?.let {
+                    remove(it)
+                }
+            }
+            val newCurrentTags = backStack.peekLast()
+            if (newCurrentTags == null) {
+                val newCurrent = fragmentManager.findFragmentByTag(tabBackStack.peekLast())
+                fragmentManager.commit {
+                    newCurrent?.let {
+                        hideAllTab()
+                        show(it)
+                    }
+                }
+            }
+            return true
+        }
+
+        val tag = tabBackStack.pollLast() ?: return true
+        val newCurrentTag = tabBackStack.peekLast() ?: return true
         val newCurrent = fragmentManager.findFragmentByTag(newCurrentTag)
         fragmentManager.commit {
             newCurrent?.let {
@@ -75,26 +118,38 @@ class BottomNavigator(
         return true
     }
 
+    private fun isContainsTabs(
+        tag: String
+    ): Boolean {
+        return Tab.values().map { it.tag }.contains(tag)
+    }
+
     private fun FragmentTransaction.hideOthers(tag: String) {
         Tab.otherTab(exceptTag = tag)
             .mapNotNull { fragmentManager.findFragmentByTag(it.tag) }
             .forEach { hide(it) }
     }
 
+    private fun FragmentTransaction.hideAllTab() {
+        Tab.values()
+            .mapNotNull { fragmentManager.findFragmentByTag(it.tag) }
+            .forEach { hide(it) }
+    }
+
     override fun onSaveState(): Bundle {
-        return bundleOf(KEY_BACK_STACK to backStack.toTypedArray())
+        return bundleOf(KEY_BACK_STACK to tabBackStack.toTypedArray())
     }
 
     override fun onRestoreState(savedState: Bundle) {
         val savedBackStack = savedState.getStringArray(KEY_BACK_STACK)
         if (savedBackStack != null) {
-            backStack.clear()
-            backStack.addAll(savedBackStack)
+            tabBackStack.clear()
+            tabBackStack.addAll(savedBackStack)
         }
     }
 
     @NavDestination.ClassType(Fragment::class)
-    class Destination(navigator: BottomNavigator) : NavDestination(navigator) {
+    class Destination(navigator: CustomNavigator) : NavDestination(navigator) {
         internal var className: String? = null
             private set
 
@@ -102,9 +157,7 @@ class BottomNavigator(
         override fun onInflate(context: Context, attrs: AttributeSet) {
             super.onInflate(context, attrs)
             className = context.resources.obtainAttributes(attrs, R.styleable.BottomNavigator)
-                .use {
-                    it.getString(R.styleable.BottomNavigator_android_name)
-                }
+                .use { it.getString(R.styleable.BottomNavigator_android_name) }
         }
     }
 

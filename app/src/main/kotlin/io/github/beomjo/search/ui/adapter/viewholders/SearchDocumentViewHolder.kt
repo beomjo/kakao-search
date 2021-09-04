@@ -26,9 +26,12 @@ class SearchDocumentViewHolder(
     private val binding: SearchListDocumentItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(document: Document) {
-        binding.document = document
-        binding.executePendingBindings()
+    fun bind(document: Document, onClickItem: (Document) -> Unit) {
+        binding.apply {
+            this.document = document
+            documentContainer.setOnClickListener { onClickItem(document) }
+            executePendingBindings()
+        }
     }
 
     companion object {

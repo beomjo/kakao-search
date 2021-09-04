@@ -29,7 +29,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.databinding.ActivityMainBinding
-import io.github.beomjo.search.navigator.BottomNavigator
+import io.github.beomjo.search.navigator.CustomNavigator
 import java.lang.IllegalStateException
 
 @AndroidEntryPoint
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.apply {
             navigatorProvider.addNavigator(
-                BottomNavigator(
+                CustomNavigator(
                     R.id.nav_host_container_fragment,
                     supportFragmentManager
                 )
