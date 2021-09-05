@@ -16,10 +16,8 @@
 
 package io.github.beomjo.search.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,19 +26,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
+import io.github.beomjo.search.base.BaseActivity
 import io.github.beomjo.search.databinding.ActivityMainBinding
 import io.github.beomjo.search.navigator.CustomNavigator
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_main
-        )
-    }
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val navController: NavController by lazy {
         val navHostFragment =
