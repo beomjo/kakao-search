@@ -39,7 +39,7 @@ class CustomNavigator(
         return if (Tab.isContainsTag(tag)) {
             navigateToTab(tag, className, destination)
         } else {
-            navigateToOther(tag, className, destination)
+            navigateToOther(tag, className, destination, args)
         }
     }
 
@@ -74,11 +74,18 @@ class CustomNavigator(
     private fun navigateToOther(
         tag: String,
         className: String,
-        destination: Destination
+        destination: Destination,
+        args: Bundle?,
     ): Destination {
         fragmentManager.commit {
             hideAllTab()
-            add(fragmentContainerId, getFragmentFromClassName(className), tag)
+            add(
+                fragmentContainerId,
+                getFragmentFromClassName(className).apply {
+                    arguments = args
+                },
+                tag
+            )
 
             if (backStack.peekLast() != tag) {
                 backStack.addLast(tag)
