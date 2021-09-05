@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Kakaosearch">
+        android:theme="@style/Theme.KakaoSearch">
         <activity
             android:name="io.github.beomjo.search.ui.activity.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
@@ -35,7 +35,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.DetailActivity" />
+        <activity
+            android:name=".ui.activity.DetailActivity"
+            android:theme="@style/Theme.KakaoSearch.NoActionBar" />
     </application>
-
 </manifest>

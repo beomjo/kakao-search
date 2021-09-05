@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package io.github.beomjo.search.ui.activity
 
 import android.content.Context
@@ -31,7 +30,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(binding) {
+        bindLayout()
+    }
+
+    private fun bindLayout() {
+        binding {
             lifecycleOwner = this@DetailActivity
             document = intent.getParcelableExtra(KEY_DOCUMENT)
         }

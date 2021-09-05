@@ -15,7 +15,7 @@
     limitations under the License.
     -->
     <!-- Base application theme. -->
-    <style name="Theme.Kakaosearch" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.KakaoSearch" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/yellow_500</item>
         <item name="colorPrimaryVariant">@color/yellow_700</item>
@@ -27,5 +27,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.KakaoSearch.NoActionBar" parent="Theme.KakaoSearch">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>
