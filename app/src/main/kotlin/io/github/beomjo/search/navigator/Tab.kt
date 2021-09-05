@@ -11,12 +11,13 @@ enum class Tab(
     SEARCH(R.id.search_dest, SearchFragment.TAG),
     BOOKMARK(R.id.bookmark_dest, BookmarkFragment.TAG);
 
-    companion object {
-        fun from(itemId: Int): Tab? = values().firstOrNull { it.itemId == itemId }
-    }
+    companion object
 }
 
-fun Tab.Companion.otherTab(exceptTag: String): Sequence<Tab> =
-    Tab.values()
-        .asSequence()
-        .filter { it.tag != exceptTag }
+fun Tab.Companion.otherTab(exceptTag: String): Sequence<Tab> = Tab.values()
+    .asSequence()
+    .filter { it.tag != exceptTag }
+
+fun Tab.Companion.isContainsTag(tag: String): Boolean = Tab.values()
+    .map { it.tag }
+    .contains(tag)

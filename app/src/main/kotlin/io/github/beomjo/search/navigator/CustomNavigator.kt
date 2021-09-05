@@ -36,28 +36,18 @@ class CustomNavigator(
     ): NavDestination? {
         val className = destination.className ?: return null
         val tag = className.split('.').last()
-
-        if (!isContainsTabs(tag)) {
-
-            if (backStack.peekLast() != tag) {
-                backStack.addLast(tag)
-            }
-
-            val current = fragmentManager.findFragmentByTag(tag)
-            fragmentManager.commit {
-                if (current == null) {
-                    val fragment = fragmentManager.fragmentFactory.instantiate(
-                        ClassLoader.getSystemClassLoader(),
-                        className
-                    )
-                    add(fragmentContainerId, fragment, tag)
-                }
-
-                hideAllTab()
-            }
-            return destination
+        return if (Tab.isContainsTag(tag)) {
+            navigateToTab(tag, className, destination)
+        } else {
+            navigateToOther(tag, className, destination)
         }
+    }
 
+    private fun navigateToTab(
+        tag: String,
+        className: String,
+        destination: Destination
+    ): Destination? {
         if (tabBackStack.peekLast() == tag) {
             return null
         }
@@ -69,10 +59,7 @@ class CustomNavigator(
         val current = fragmentManager.findFragmentByTag(tag)
         fragmentManager.commit {
             if (current == null) {
-                val fragment = fragmentManager.fragmentFactory.instantiate(
-                    ClassLoader.getSystemClassLoader(),
-                    className
-                )
+                val fragment = getFragmentFromClassName(className)
                 add(fragmentContainerId, fragment, tag)
             } else {
                 show(current)
@@ -84,33 +71,37 @@ class CustomNavigator(
         return destination
     }
 
+    private fun navigateToOther(
+        tag: String,
+        className: String,
+        destination: Destination
+    ): Destination {
+        fragmentManager.commit {
+            hideAllTab()
+            add(fragmentContainerId, getFragmentFromClassName(className), tag)
+
+            if (backStack.peekLast() != tag) {
+                backStack.addLast(tag)
+            }
+        }
+        return destination
+    }
 
     override fun popBackStack(): Boolean {
-        val tags = backStack.pollLast()
-        if (tags != null) {
-            fragmentManager.commit {
-                fragmentManager.findFragmentByTag(tags)?.let {
-                    remove(it)
-                }
-            }
-            val newCurrentTags = backStack.peekLast()
-            if (newCurrentTags == null) {
-                val newCurrent = fragmentManager.findFragmentByTag(tabBackStack.peekLast())
-                fragmentManager.commit {
-                    newCurrent?.let {
-                        hideAllTab()
-                        show(it)
-                    }
-                }
-            }
-            return true
+        val tag = backStack.pollLast()
+        val hasOnlyTabBackStack = tag == null
+        return if (hasOnlyTabBackStack) {
+            popTabBackStack()
+        } else {
+            popOtherBackStack(tag)
         }
+    }
 
-        val tag = tabBackStack.pollLast() ?: return true
+    private fun popTabBackStack(): Boolean {
+        val tabTag = tabBackStack.pollLast() ?: return true
         val newCurrentTag = tabBackStack.peekLast() ?: return true
-        val newCurrent = fragmentManager.findFragmentByTag(newCurrentTag)
         fragmentManager.commit {
-            newCurrent?.let {
+            getFragmentByTag(newCurrentTag)?.let {
                 show(it)
                 hideOthers(newCurrentTag)
             }
@@ -118,10 +109,33 @@ class CustomNavigator(
         return true
     }
 
-    private fun isContainsTabs(
-        tag: String
-    ): Boolean {
-        return Tab.values().map { it.tag }.contains(tag)
+    private fun popOtherBackStack(tag: String?): Boolean {
+        fragmentManager.commit {
+            fragmentManager.findFragmentByTag(tag)?.let {
+                remove(it)
+            }
+        }
+        val newCurrentTag = backStack.peekLast()
+        if (newCurrentTag == null) {
+            fragmentManager.commit {
+                getFragmentByTag(tabBackStack.peekLast())?.let {
+                    hideAllTab()
+                    show(it)
+                }
+            }
+        }
+        return true
+    }
+
+    private fun getFragmentByTag(tag: String?): Fragment? {
+        return fragmentManager.findFragmentByTag(tag)
+    }
+
+    private fun getFragmentFromClassName(className: String): Fragment {
+        return fragmentManager.fragmentFactory.instantiate(
+            ClassLoader.getSystemClassLoader(),
+            className
+        )
     }
 
     private fun FragmentTransaction.hideOthers(tag: String) {
@@ -137,14 +151,20 @@ class CustomNavigator(
     }
 
     override fun onSaveState(): Bundle {
-        return bundleOf(KEY_BACK_STACK to tabBackStack.toTypedArray())
+        return bundleOf(
+            KEY_TAB_BACK_STACK to tabBackStack.toTypedArray(),
+            KEY_BACK_STACK to backStack.toTypedArray()
+        )
     }
 
     override fun onRestoreState(savedState: Bundle) {
-        val savedBackStack = savedState.getStringArray(KEY_BACK_STACK)
-        if (savedBackStack != null) {
+        savedState.getStringArray(KEY_TAB_BACK_STACK)?.let {
             tabBackStack.clear()
-            tabBackStack.addAll(savedBackStack)
+            tabBackStack.addAll(it)
+        }
+        savedState.getStringArray(KEY_BACK_STACK)?.let {
+            backStack.clear()
+            backStack.addAll(it)
         }
     }
 
@@ -162,6 +182,7 @@ class CustomNavigator(
     }
 
     companion object {
-        private const val KEY_BACK_STACK = "BottomNavigator.BackStack"
+        private const val KEY_TAB_BACK_STACK = "CustomNavigator.TabBackStack"
+        private const val KEY_BACK_STACK = "CustomNavigator.BackStack"
     }
 }
