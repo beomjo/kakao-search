@@ -16,8 +16,11 @@
 
 package io.github.beomjo.search.entity
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
+@Parcelize
 data class Document(
     val type: DocumentType,
     val url: String,
@@ -25,4 +28,4 @@ data class Document(
     val title: String,
     val content: String,
     val date: Date?,
-)
+) : Parcelable

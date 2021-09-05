@@ -18,6 +18,7 @@ plugins {
     `android-library`
     `kotlin-android`
     `detekt-setting`
+    id("kotlin-parcelize")
 }
 
 android {
