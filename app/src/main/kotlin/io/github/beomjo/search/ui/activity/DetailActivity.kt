@@ -17,28 +17,32 @@
 
 package io.github.beomjo.search.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
+import io.github.beomjo.search.base.BaseActivity
 import io.github.beomjo.search.databinding.ActivityDetailBinding
+import io.github.beomjo.search.entity.Document
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
-
-    private val binding: ActivityDetailBinding by lazy {
-        DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_detail
-        )
-    }
+class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_detail) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
             lifecycleOwner = this@DetailActivity
-            document
+            document = intent.getParcelableExtra(KEY_DOCUMENT)
+        }
+    }
+
+    companion object {
+        private const val KEY_DOCUMENT = "DetailActivity.Document"
+        fun action(context: Context, document: Document) {
+            Intent(context, DetailActivity::class.java)
+                .apply { putExtra(KEY_DOCUMENT, document) }
+                .let { context.startActivity(it) }
         }
     }
 }

@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentSearchBinding
+import io.github.beomjo.search.ui.activity.DetailActivity
 import io.github.beomjo.search.ui.adapter.SearchControlMenuAdapter
 import io.github.beomjo.search.ui.adapter.SearchHistoryAdapter
 import io.github.beomjo.search.ui.adapter.SearchPagingAdapter
@@ -43,10 +44,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private val searchViewModel: SearchViewModel by getViewModel()
 
     private val searchPagingAdapter: SearchPagingAdapter by lazy {
-        SearchPagingAdapter {
-            SearchFragmentDirections.actionSearchDestToDetailDest().let {
-                findNavController().navigate(it)
-            }
+        SearchPagingAdapter { document ->
+            DetailActivity.action(this@SearchFragment.requireActivity(), document)
         }
     }
 

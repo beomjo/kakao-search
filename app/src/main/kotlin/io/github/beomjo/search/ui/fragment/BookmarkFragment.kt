@@ -31,16 +31,7 @@ class BookmarkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentBookmarkBinding.inflate(layoutInflater)
-        setView(binding)
         return binding.root
-    }
-
-    private fun setView(binding: FragmentBookmarkBinding) {
-        binding.text.setOnClickListener {
-            BookmarkFragmentDirections.actionBookmarkDestToDetailDest().let {
-                findNavController().navigate(it)
-            }
-        }
     }
 
     companion object {

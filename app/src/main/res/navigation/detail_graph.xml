@@ -16,23 +16,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
-    app:startDestination="@id/search_dest">
+    android:id="@+id/detail_graph">
 
-    <custom
-        android:id="@+id/search_dest"
-        android:name="io.github.beomjo.search.ui.fragment.SearchFragment"
-        tools:layout="@layout/fragment_search">
-    </custom>
-
-    <custom
-        android:id="@+id/bookmark_dest"
-        android:name="io.github.beomjo.search.ui.fragment.BookmarkFragment"
-        tools:layout="@layout/fragment_bookmark">
-
-        <action
-            android:id="@+id/action_bookmark_dest_to_search_dest"
-            app:destination="@id/search_dest" />
-    </custom>
-
+    <activity
+        android:id="@+id/detail_dest"
+        android:name="io.github.beomjo.search.ui.activity.DetailActivity"
+        tools:layout="@layout/activity_detail" />
 </navigation>
