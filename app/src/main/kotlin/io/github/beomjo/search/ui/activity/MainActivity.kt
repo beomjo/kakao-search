@@ -60,6 +60,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
 
+        setCustomNavigator()
+
+        setupActionBar()
+
+        setupBottomNavMenu()
+
+        setupNavigationMenu()
+    }
+
+    private fun setCustomNavigator() {
         navController.apply {
             navigatorProvider.addNavigator(
                 CustomNavigator(
@@ -70,12 +80,6 @@ class MainActivity : AppCompatActivity() {
 
             setGraph(R.navigation.nav_graph)
         }
-
-        setupActionBar()
-
-        setupBottomNavMenu()
-
-        setupNavigationMenu()
     }
 
     private fun setupActionBar() {
