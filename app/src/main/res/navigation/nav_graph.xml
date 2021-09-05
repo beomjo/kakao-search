@@ -22,7 +22,6 @@
     <custom
         android:id="@+id/search_dest"
         android:name="io.github.beomjo.search.ui.fragment.SearchFragment"
-        android:label="@string/search_fragment_title"
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_search_dest_to_detail_dest"
@@ -32,7 +31,6 @@
     <custom
         android:id="@+id/bookmark_dest"
         android:name="io.github.beomjo.search.ui.fragment.BookmarkFragment"
-        android:label="@string/bookmark_fragment_title"
         tools:layout="@layout/fragment_bookmark">
 
         <action
