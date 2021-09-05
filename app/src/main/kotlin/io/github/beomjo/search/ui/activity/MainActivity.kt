@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
     }
+
     private val navController: NavController by lazy {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment)
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
 
-            setGraph(R.navigation.nav_graph)
+            setGraph(R.navigation.main_graph)
         }
     }
 

@@ -23,9 +23,6 @@
         android:id="@+id/search_dest"
         android:name="io.github.beomjo.search.ui.fragment.SearchFragment"
         tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_search_dest_to_detail_dest"
-            app:destination="@id/detail_dest" />
     </custom>
 
     <custom
@@ -34,19 +31,8 @@
         tools:layout="@layout/fragment_bookmark">
 
         <action
-            android:id="@+id/action_bookmark_dest_to_detail_dest"
-            app:destination="@id/detail_dest" />
-
-        <action
             android:id="@+id/action_bookmark_dest_to_search_dest"
             app:destination="@id/search_dest" />
     </custom>
-
-
-    <custom
-        android:id="@+id/detail_dest"
-        android:name="io.github.beomjo.search.ui.fragment.DetailFragment"
-        android:label="@string/detail_fragment_title"
-        tools:layout="@layout/fragment_detail" />
 
 </navigation>
