@@ -44,7 +44,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private val searchPagingAdapter: SearchPagingAdapter by lazy {
         SearchPagingAdapter {
-//            action_search_dest_to_detail_dest
             SearchFragmentDirections.actionSearchDestToDetailDest().let {
                 findNavController().navigate(it)
             }
