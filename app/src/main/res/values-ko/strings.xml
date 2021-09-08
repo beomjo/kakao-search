@@ -16,10 +16,10 @@
    limitations under the License.
    -->
     <string name="app_name">Kakao Search</string>
-    <string name="bookmark_fragment_title">Bookmark Fragment</string>
+    <string name="favorite_fragment_title">Favorite Fragment</string>
     <string name="search_fragment_title">Search Fragment</string>
     <string name="detail_fragment_title">Detail Fragment</string>
-    <string name="bookmark">북마크</string>
+    <string name="favorite">좋아하는</string>
     <string name="search">검색</string>
     <string name="search_hint">검색어를 입력하세요.</string>
     <string name="retry">재시도</string>
@@ -31,4 +31,5 @@
     <string name="date" formatted="true">%1$tY년 %1$tm월 %1$td일</string>
     <string name="date_month" formatted="true">%1$tY년 %1$tm월</string>
     <string name="no_results">결과가 존재하지 않습니다.</string>
+    <string name="go_detail">상세페이지로 이동</string>
 </resources>

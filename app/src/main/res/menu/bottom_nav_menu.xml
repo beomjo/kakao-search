@@ -20,7 +20,7 @@
         android:title="@string/search" />
 
     <item
-        android:id="@id/bookmark_dest"
-        android:icon="@drawable/ic_bookmark"
-        android:title="@string/bookmark" />
+        android:id="@id/favorite"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/favorite" />
 </menu>

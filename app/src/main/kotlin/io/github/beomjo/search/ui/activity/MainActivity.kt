@@ -42,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration(
-            setOf(R.id.bookmark_dest, R.id.search_dest),
+            setOf(R.id.favorite, R.id.search_dest),
             binding.drawerLayout
         )
     }
