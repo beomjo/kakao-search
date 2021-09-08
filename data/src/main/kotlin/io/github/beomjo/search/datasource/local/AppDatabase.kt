@@ -25,12 +25,19 @@ import io.github.beomjo.search.datasource.local.converter.DateConverter
 import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
+import io.github.beomjo.search.datasource.local.dao.VisitDao
 import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
+import io.github.beomjo.search.datasource.local.table.VisitTable
 
 @Database(
-    entities = [SearchDocumentTable::class, RemoteKeyTable::class, SearchHistoryTable::class],
+    entities = [
+        SearchDocumentTable::class,
+        RemoteKeyTable::class,
+        SearchHistoryTable::class,
+        VisitTable::class
+    ],
     version = 1,
     exportSchema = false
 )
@@ -42,6 +49,8 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun remoteKeyDao(): RemoteKeyDao
 
     abstract fun searchHistoryDao(): SearchHistoryDao
+
+    abstract fun visitDao(): VisitDao
 
     companion object {
 

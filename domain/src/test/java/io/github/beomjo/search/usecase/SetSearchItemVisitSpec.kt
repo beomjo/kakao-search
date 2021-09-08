@@ -15,13 +15,13 @@ class SetSearchItemVisitSpec : BehaviorSpec() {
             val url = "http://..."
             val useCase = SetSearchItemVisit(searchRepository)
             val slot = slot<Visit>()
-            coEvery { searchRepository.setVisit(capture(slot)) } just Runs
+            coEvery { searchRepository.insertVisit(capture(slot)) } just Runs
 
             When("Invoke") {
                 useCase.invoke(url)
 
                 Then("Should call setVisit of SearchRepository") {
-                    coEvery { searchRepository.setVisit(any()) }
+                    coEvery { searchRepository.insertVisit(any()) }
                     slot.captured.url shouldBe url
                 }
             }

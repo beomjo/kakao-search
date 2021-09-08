@@ -31,7 +31,7 @@ interface SearchRepository {
 
     fun getSearchHistoryList(): Flow<List<History>>
 
-    suspend fun setVisit(visit: Visit)
+    suspend fun insertVisit(visit: Visit)
 
     fun getVisit(url:String) :Flow<Visit>
 }

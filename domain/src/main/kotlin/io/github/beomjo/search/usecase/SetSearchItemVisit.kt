@@ -10,6 +10,6 @@ class SetSearchItemVisit @Inject constructor(
     private val searchRepository: SearchRepository
 ) : UseCase<String, Unit>() {
     override suspend fun execute(url: String) {
-        searchRepository.setVisit(Visit(Date(), url))
+        searchRepository.insertVisit(Visit(Date(), url))
     }
 }
