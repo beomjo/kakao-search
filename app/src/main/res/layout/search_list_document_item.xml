@@ -44,10 +44,10 @@
                 android:contentDescription="@android:string/untitled"
                 android:scaleType="fitCenter"
                 app:imageUrl="@{document.thumbnail}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/datetime"
                 app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/name" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/type"
@@ -72,8 +72,8 @@
                 android:layout_marginVertical="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                app:html="@{document.title}"
                 android:textAppearance="?attr/textAppearanceListItem"
+                app:html="@{document.title}"
                 app:layout_constraintBottom_toBottomOf="@id/type"
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toEndOf="@id/type"
@@ -88,8 +88,8 @@
                 android:layout_marginVertical="6dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                app:html="@{document.content}"
                 android:textAppearance="?attr/textAppearanceListItem"
+                app:html="@{document.content}"
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/type"
@@ -101,13 +101,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="6dp"
-                app:date="@{document.date}"
                 android:textAppearance="?attr/textAppearanceListItem"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:date="@{document.date}"
                 app:layout_constraintEnd_toStartOf="@id/image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/content"
                 tools:text="2021년 12월 30일" />
+
+            <ImageView
+                android:id="@+id/favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/selector_favorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datetime" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
