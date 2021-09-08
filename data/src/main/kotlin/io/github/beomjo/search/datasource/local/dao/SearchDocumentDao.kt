@@ -21,26 +21,26 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 
 @Dao
-internal interface DocumentDao {
+internal interface SearchDocumentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDocuments(documents: List<DocumentTable>)
+    suspend fun insertDocuments(documents: List<SearchDocumentTable>)
 
     @Query(
         "SELECT * FROM document_table " +
                 "WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' " +
                 "ORDER BY date DESC"
     )
-    fun getDocumentByDate(query: String): PagingSource<Int, DocumentTable>
+    fun getDocumentByDate(query: String): PagingSource<Int, SearchDocumentTable>
 
     @Query(
         "SELECT * FROM document_table " +
                 "WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' " +
                 "ORDER BY title ASC"
     )
-    fun getDocumentByTitle(query: String): PagingSource<Int, DocumentTable>
+    fun getDocumentByTitle(query: String): PagingSource<Int, SearchDocumentTable>
 
     @Query("DELETE from document_table")
     suspend fun clearAllDocuments()

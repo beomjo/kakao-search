@@ -24,7 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.datasource.local.AppDatabase
-import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
@@ -55,7 +55,7 @@ internal object DataModule {
 
     @Singleton
     @Provides
-    fun provideDocumentDao(database: AppDatabase): DocumentDao {
+    fun provideDocumentDao(database: AppDatabase): SearchDocumentDao {
         return database.documentDao()
     }
 

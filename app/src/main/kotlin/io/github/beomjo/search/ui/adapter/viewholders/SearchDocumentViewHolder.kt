@@ -20,16 +20,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.databinding.SearchListDocumentItemBinding
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
 
 class SearchDocumentViewHolder(
     private val binding: SearchListDocumentItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(document: Document, onClickItem: (Document) -> Unit) {
+    fun bind(searchDocument: SearchDocument, onClickItem: (SearchDocument) -> Unit) {
         binding.apply {
-            this.document = document
-            documentContainer.setOnClickListener { onClickItem(document) }
+            this.document = searchDocument
+            documentContainer.setOnClickListener { onClickItem(searchDocument) }
             executePendingBindings()
         }
     }

@@ -16,14 +16,16 @@
 
 package io.github.beomjo.search.entity
 
-data class DocumentList(
-    val hasMore: Boolean,
-    val documents: List<Document>
-) {
-    operator fun plus(other: DocumentList): DocumentList {
-        return DocumentList(
-            hasMore = this.hasMore || other.hasMore,
-            documents = this.documents + other.documents
-        )
-    }
-}
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.util.Date
+
+@Parcelize
+data class SearchDocument(
+    val type: DocumentType,
+    val url: String,
+    val thumbnail: String,
+    val title: String,
+    val content: String,
+    val date: Date?,
+) : Parcelable

@@ -20,14 +20,14 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.R
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.adapter.diff.DocumentDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
 import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel.SearchUiItem
 
 class SearchPagingAdapter(
-    private val onClickItem: (Document) -> Unit
+    private val onClickItem: (SearchDocument) -> Unit
 ) : PagingDataAdapter<SearchUiItem, RecyclerView.ViewHolder>(DocumentDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,7 +48,7 @@ class SearchPagingAdapter(
         getItem(position)?.let {
             when (it) {
                 is SearchUiItem.DocumentItem -> (holder as SearchDocumentViewHolder).bind(
-                    it.document,
+                    it.searchDocument,
                     onClickItem
                 )
                 is SearchUiItem.SeparatorItem -> (holder as SearchSeparatorViewHolder).bind(it.description)

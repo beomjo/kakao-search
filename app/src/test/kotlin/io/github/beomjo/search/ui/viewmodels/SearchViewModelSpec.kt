@@ -70,7 +70,7 @@ class SearchViewModelSpec : BehaviorSpec() {
             val query = "IU"
             val searchFilter = DocumentType.ALL
 
-            val pagingData = PagingData.from<Document>(
+            val pagingData = PagingData.from<SearchDocument>(
                 listOf(mockk())
             )
 

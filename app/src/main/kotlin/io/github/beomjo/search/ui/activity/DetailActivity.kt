@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseActivity
 import io.github.beomjo.search.databinding.ActivityDetailBinding
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
 
 @AndroidEntryPoint
 class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_detail) {
@@ -37,7 +37,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
     private fun bindLayout() {
         binding {
             lifecycleOwner = this@DetailActivity
-            val documentData = intent.getParcelableExtra<Document>(KEY_DOCUMENT)
+            val documentData = intent.getParcelableExtra<SearchDocument>(KEY_DOCUMENT)
             document = documentData
             toolBar.setNavigationOnClickListener {
                 onBackPressed()
@@ -53,9 +53,9 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
 
     companion object {
         private const val KEY_DOCUMENT = "DetailActivity.Document"
-        fun action(context: Context, document: Document) {
+        fun action(context: Context, searchDocument: SearchDocument) {
             Intent(context, DetailActivity::class.java)
-                .apply { putExtra(KEY_DOCUMENT, document) }
+                .apply { putExtra(KEY_DOCUMENT, searchDocument) }
                 .let { context.startActivity(it) }
         }
     }

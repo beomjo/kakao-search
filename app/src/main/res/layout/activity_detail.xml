@@ -21,7 +21,7 @@
 
         <variable
             name="document"
-            type="io.github.beomjo.search.entity.Document" />
+            type="io.github.beomjo.search.entity.SearchDocument" />
     </data>
 
 

@@ -19,9 +19,9 @@ package io.github.beomjo.search.repository
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
-import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
-import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
@@ -43,9 +43,9 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
 
     private val searchRemoteMediator = mockk<SearchRemoteMediator>(relaxed = true)
 
-    private val pagingSource = mockk<PagingSource<Int, DocumentTable>>(relaxed = true)
+    private val pagingSource = mockk<PagingSource<Int, SearchDocumentTable>>(relaxed = true)
 
-    private val documentDao = mockk<DocumentDao>(relaxed = true)
+    private val documentDao = mockk<SearchDocumentDao>(relaxed = true)
 
     private val searchHistoryDao = mockk<SearchHistoryDao>(relaxed = true)
 
@@ -73,7 +73,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 val resultFlow = searchRepositoryImpl.getDocumentPagingData(param)
 
                 Then("Returns PagingData sorted by TITLE") {
-                    resultFlow.first().shouldBeTypeOf<PagingData<Document>>()
+                    resultFlow.first().shouldBeTypeOf<PagingData<SearchDocument>>()
 
                     coVerify { documentDao.getDocumentByTitle(eq(param.query)) }
                     coVerify(inverse = true) { documentDao.getDocumentByDate(any()) }
@@ -103,7 +103,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 val resultFlow = searchRepositoryImpl.getDocumentPagingData(param)
 
                 Then("Returns PagingData sorted by DATE") {
-                    resultFlow.first().shouldBeTypeOf<PagingData<Document>>()
+                    resultFlow.first().shouldBeTypeOf<PagingData<SearchDocument>>()
 
                     coVerify(inverse = true) { documentDao.getDocumentByTitle(any()) }
                     coVerify { documentDao.getDocumentByDate(eq(param.query)) }
