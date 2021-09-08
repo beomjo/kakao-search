@@ -18,6 +18,7 @@ package io.github.beomjo.search.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
@@ -36,9 +37,16 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
     private fun bindLayout() {
         binding {
             lifecycleOwner = this@DetailActivity
-            document = intent.getParcelableExtra(KEY_DOCUMENT)
+            val documentData = intent.getParcelableExtra<Document>(KEY_DOCUMENT)
+            document = documentData
             toolBar.setNavigationOnClickListener {
                 onBackPressed()
+            }
+            moveWebviewBtn.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(documentData?.url)))
+            }
+            favoriteBtn.setOnClickListener {
+                favoriteBtn.isSelected = !favoriteBtn.isSelected
             }
         }
     }
