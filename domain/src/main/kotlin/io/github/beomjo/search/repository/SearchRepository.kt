@@ -19,6 +19,7 @@ package io.github.beomjo.search.repository
 import androidx.paging.PagingData
 import io.github.beomjo.search.entity.Document
 import io.github.beomjo.search.entity.History
+import io.github.beomjo.search.entity.Visit
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 
@@ -29,4 +30,8 @@ interface SearchRepository {
     suspend fun insertSearchHistory(history: History)
 
     fun getSearchHistoryList(): Flow<List<History>>
+
+    suspend fun setVisit(visit: Visit)
+
+    fun getVisit(url:String) :Flow<Visit>
 }
