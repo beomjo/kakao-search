@@ -37,6 +37,9 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
         binding {
             lifecycleOwner = this@DetailActivity
             document = intent.getParcelableExtra(KEY_DOCUMENT)
+            toolBar.setNavigationOnClickListener {
+                onBackPressed()
+            }
         }
     }
 
