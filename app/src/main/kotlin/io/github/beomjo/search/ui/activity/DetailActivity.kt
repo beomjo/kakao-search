@@ -25,9 +25,12 @@ import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseActivity
 import io.github.beomjo.search.databinding.ActivityDetailBinding
 import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.ui.viewmodels.DetailViewModel
 
 @AndroidEntryPoint
 class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_detail) {
+
+    private val detailViewModel: DetailViewModel by getViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +40,23 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
     private fun bindLayout() {
         binding {
             lifecycleOwner = this@DetailActivity
-            val documentData = intent.getParcelableExtra<SearchDocument>(KEY_DOCUMENT)
-            document = documentData
+            detailViewModel = this@DetailActivity.detailViewModel.apply {
+                init(intent.getParcelableExtra(KEY_DOCUMENT))
+            }
             toolBar.setNavigationOnClickListener {
                 onBackPressed()
             }
             moveWebviewBtn.setOnClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(documentData?.url)))
+                this@DetailActivity.detailViewModel.run {
+                    setVisit()
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(searchDocument.value?.url)
+                        )
+                    )
+                }
+
             }
             favoriteBtn.setOnClickListener {
                 favoriteBtn.isSelected = !favoriteBtn.isSelected

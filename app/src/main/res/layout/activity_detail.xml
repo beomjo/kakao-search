@@ -20,8 +20,8 @@
     <data>
 
         <variable
-            name="document"
-            type="io.github.beomjo.search.entity.SearchDocument" />
+            name="detailViewModel"
+            type="io.github.beomjo.search.ui.viewmodels.DetailViewModel" />
     </data>
 
 
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_arrow_back"
-                app:title="@{document.type.name()}" />
+                app:title="@{detailViewModel.searchDocument.type.name()}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -70,7 +70,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@android:string/untitled"
             android:scaleType="fitCenter"
-            app:imageUrl="@{document.thumbnail}"
+            app:imageUrl="@{detailViewModel.searchDocument.thumbnail}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintStart_toStartOf="@id/guide_start"
@@ -84,7 +84,7 @@
             android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{document.type.toString()}"
+            android:text="@{detailViewModel.searchDocument.type.toString()}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide_start"
@@ -99,7 +99,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:html="@{document.title}"
+            app:html="@{detailViewModel.searchDocument.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/name"
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:html="@{document.content}"
+            app:html="@{detailViewModel.searchDocument.content}"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/title"
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:date="@{document.date}"
+            app:date="@{detailViewModel.searchDocument.date}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/content"
@@ -136,7 +136,7 @@
             android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{document.url}"
+            android:text="@{detailViewModel.searchDocument.url}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide_start"
