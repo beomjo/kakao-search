@@ -19,6 +19,7 @@
     <color name="yellow_700">#FFA505</color>
     <color name="brown_200">#4F4E28</color>
     <color name="brown_700">#925F17</color>
+    <color name="gray">#C0C0C0</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
