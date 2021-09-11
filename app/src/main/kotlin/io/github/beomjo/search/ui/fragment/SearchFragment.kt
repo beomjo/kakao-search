@@ -30,21 +30,22 @@ import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentSearchBinding
 import io.github.beomjo.search.ui.activity.DetailActivity
-import io.github.beomjo.search.ui.adapter.SearchControlMenuAdapter
-import io.github.beomjo.search.ui.adapter.SearchHistoryAdapter
-import io.github.beomjo.search.ui.adapter.SearchPagingAdapter
-import io.github.beomjo.search.ui.adapter.SearchPagingLoadStateAdapter
+import io.github.beomjo.search.ui.adapter.*
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
     private val searchViewModel: SearchViewModel by getViewModel()
 
+    @Inject
+    lateinit var searchPagingAdapterFactory: SearchPagingAdapterFactory
+
     private val searchPagingAdapter: SearchPagingAdapter by lazy {
-        SearchPagingAdapter { document ->
+        searchPagingAdapterFactory.create(this) { document ->
             DetailActivity.action(this@SearchFragment.requireActivity(), document)
         }
     }
@@ -53,6 +54,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         SearchHistoryAdapter {
             searchViewModel.query.value = it
             searchViewModel.search()
+            defaultViewModelProviderFactory
         }
     }
 

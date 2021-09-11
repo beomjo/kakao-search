@@ -17,17 +17,25 @@
 package io.github.beomjo.search.ui.adapter
 
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.github.beomjo.search.R
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.adapter.diff.DocumentDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
 import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
+import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModelFactory
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel.SearchUiItem
+import javax.inject.Provider
 
-class SearchPagingAdapter(
-    private val onClickItem: (SearchDocument) -> Unit
+class SearchPagingAdapter @AssistedInject constructor(
+    @Assisted private val lifeCycleOwner: LifecycleOwner,
+    @Assisted private val onClickItem: (SearchDocument) -> Unit,
+    private val searchDocumentViewModelProvider: Provider<SearchDocumentViewModelFactory>
 ) : PagingDataAdapter<SearchUiItem, RecyclerView.ViewHolder>(DocumentDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,11 +56,20 @@ class SearchPagingAdapter(
         getItem(position)?.let {
             when (it) {
                 is SearchUiItem.DocumentItem -> (holder as SearchDocumentViewHolder).bind(
-                    it.searchDocument,
+                    lifeCycleOwner,
+                    searchDocumentViewModelProvider.get().create(it.searchDocument),
                     onClickItem
                 )
                 is SearchUiItem.SeparatorItem -> (holder as SearchSeparatorViewHolder).bind(it.description)
             }
         }
     }
+}
+
+@AssistedFactory
+interface SearchPagingAdapterFactory {
+    fun create(
+        lifeCycleOwner: LifecycleOwner,
+        onClickItem: (SearchDocument) -> Unit
+    ): SearchPagingAdapter
 }
