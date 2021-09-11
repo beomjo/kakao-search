@@ -25,7 +25,7 @@ import io.github.beomjo.search.datasource.local.converter.DateConverter
 import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
-import io.github.beomjo.search.datasource.local.dao.VisitDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
 import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
@@ -50,7 +50,7 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun searchHistoryDao(): SearchHistoryDao
 
-    abstract fun visitDao(): VisitDao
+    abstract fun searchDocumentVisitDao(): SearchDocumentVisitDao
 
     companion object {
 

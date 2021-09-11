@@ -8,7 +8,7 @@ import io.mockk.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 
-class GetSearchItemVisitSpec : BehaviorSpec() {
+class GetSearchDocumentVisitSpec : BehaviorSpec() {
 
     private val searchRepository = mockk<SearchRepository>()
 
@@ -18,7 +18,7 @@ class GetSearchItemVisitSpec : BehaviorSpec() {
             val visit = mockk<Visit> {
                 every { url } returns expectUrl
             }
-            val useCase = GetSearchItemVisit(searchRepository)
+            val useCase = GetSearchDocumentVisit(searchRepository)
             every { searchRepository.getVisit(expectUrl) } returns flowOf(visit)
 
             When("Invoke") {
@@ -26,7 +26,7 @@ class GetSearchItemVisitSpec : BehaviorSpec() {
 
                 Then("Should return a visit") {
                     verify { searchRepository.getVisit(eq(expectUrl)) }
-                    result.first().url shouldBe expectUrl
+                    result.first()?.url shouldBe expectUrl
                 }
             }
         }

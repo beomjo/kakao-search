@@ -9,7 +9,7 @@ import io.github.beomjo.search.entity.Visit
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface VisitDao {
+internal interface SearchDocumentVisitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertVisit(visit: VisitTable)
 

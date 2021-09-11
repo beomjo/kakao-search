@@ -6,7 +6,7 @@ import io.github.beomjo.search.usecase.base.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetSearchItemVisit @Inject constructor(
+class GetSearchDocumentVisit @Inject constructor(
     private val searchRepository: SearchRepository
 ) : FlowUseCase<String, Visit?>() {
     override fun execute(parameters: String): Flow<Visit?> {

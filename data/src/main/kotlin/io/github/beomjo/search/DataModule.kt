@@ -27,7 +27,7 @@ import io.github.beomjo.search.datasource.local.AppDatabase
 import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
-import io.github.beomjo.search.datasource.local.dao.VisitDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
 import io.github.beomjo.search.datasource.remote.api.Urls
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
@@ -74,8 +74,8 @@ internal object DataModule {
 
     @Singleton
     @Provides
-    fun provideVisitDao(database: AppDatabase): VisitDao {
-        return database.visitDao()
+    fun provideVisitDao(database: AppDatabase): SearchDocumentVisitDao {
+        return database.searchDocumentVisitDao()
     }
 
     @Module

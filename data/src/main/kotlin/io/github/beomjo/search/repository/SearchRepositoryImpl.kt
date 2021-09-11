@@ -23,7 +23,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
-import io.github.beomjo.search.datasource.local.dao.VisitDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
 import io.github.beomjo.search.entity.SearchDocument
@@ -43,7 +43,7 @@ internal class SearchRepositoryImpl @Inject constructor(
     private val searchRemoteMediatorFactory: SearchRemoteMediatorFactory,
     private val documentDao: SearchDocumentDao,
     private val searchHistoryDao: SearchHistoryDao,
-    private val visitDao: VisitDao
+    private val searchDocumentVisitDao: SearchDocumentVisitDao
 ) : SearchRepository {
     override fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<SearchDocument>> {
         @OptIn(ExperimentalPagingApi::class)
@@ -76,10 +76,10 @@ internal class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertVisit(visit: Visit) {
-        visitDao.insertVisit(visit = visit.toTable())
+        searchDocumentVisitDao.insertVisit(visit = visit.toTable())
     }
 
     override fun getVisit(url: String): Flow<Visit?> {
-        return visitDao.getVisit(url).map { it?.toEntity() }
+        return searchDocumentVisitDao.getVisit(url).map { it?.toEntity() }
     }
 }

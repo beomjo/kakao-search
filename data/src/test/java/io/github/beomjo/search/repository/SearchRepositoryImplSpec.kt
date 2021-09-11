@@ -21,7 +21,7 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
-import io.github.beomjo.search.datasource.local.dao.VisitDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
 import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
 import io.github.beomjo.search.datasource.local.table.VisitTable
@@ -51,7 +51,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
 
     private val searchHistoryDao = mockk<SearchHistoryDao>(relaxed = true)
 
-    private val visitDao = mockk<VisitDao>(relaxed = true)
+    private val searchDocumentVisitDao = mockk<SearchDocumentVisitDao>(relaxed = true)
 
     init {
 
@@ -71,7 +71,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRemoteMediatorFactory,
                 documentDao,
                 searchHistoryDao,
-                visitDao
+                searchDocumentVisitDao
             )
 
             When("invoke fetchPagingData") {
@@ -102,7 +102,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRemoteMediatorFactory,
                 documentDao,
                 searchHistoryDao,
-                visitDao
+                searchDocumentVisitDao
             )
 
             When("invoke fetchPagingData") {
@@ -127,7 +127,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRemoteMediatorFactory,
                 documentDao,
                 searchHistoryDao,
-                visitDao
+                searchDocumentVisitDao
             )
 
             When("When you call insert history to DB") {
@@ -153,7 +153,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRemoteMediatorFactory,
                 documentDao,
                 searchHistoryDao,
-                visitDao
+                searchDocumentVisitDao
             )
 
             When("get historyList from DB") {
@@ -176,14 +176,14 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRemoteMediatorFactory,
                 documentDao,
                 searchHistoryDao,
-                visitDao
+                searchDocumentVisitDao
             )
 
             When("insert visit to DB") {
                 searchRepositoryImpl.insertVisit(visit)
 
                 Then("Should be stored in DB") {
-                    coVerify { visitDao.insertVisit(eq(visit.toTable())) }
+                    coVerify { searchDocumentVisitDao.insertVisit(eq(visit.toTable())) }
                 }
             }
         }
@@ -196,20 +196,20 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 every { date } returns mockk()
             }
 
-            every { visitDao.getVisit(expectUrl) } returns flowOf(visitTable)
+            every { searchDocumentVisitDao.getVisit(expectUrl) } returns flowOf(visitTable)
 
             val searchRepositoryImpl = SearchRepositoryImpl(
                 searchRemoteMediatorFactory,
                 documentDao,
                 searchHistoryDao,
-                visitDao
+                searchDocumentVisitDao
             )
 
             When("get visit from DB") {
                 val result = searchRepositoryImpl.getVisit(expectUrl)
 
                 Then("Should bring on visit from DB") {
-                    verify { visitDao.getVisit(eq(expectUrl)) }
+                    verify { searchDocumentVisitDao.getVisit(eq(expectUrl)) }
                     result.first() shouldBe visitTable.toEntity()
                 }
             }

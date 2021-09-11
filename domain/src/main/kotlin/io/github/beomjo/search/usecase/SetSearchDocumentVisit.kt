@@ -6,10 +6,10 @@ import io.github.beomjo.search.usecase.base.UseCase
 import java.util.*
 import javax.inject.Inject
 
-class SetSearchItemVisit @Inject constructor(
+class SetSearchDocumentVisit @Inject constructor(
     private val searchRepository: SearchRepository
 ) : UseCase<String, Unit>() {
-    override suspend fun execute(url: String) {
-        searchRepository.insertVisit(Visit(Date(), url))
+    override suspend fun execute(parameters: String) {
+        searchRepository.insertVisit(Visit(Date(), parameters))
     }
 }

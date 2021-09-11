@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.beomjo.search.base.BaseViewModel
 import io.github.beomjo.search.entity.SearchDocument
-import io.github.beomjo.search.usecase.SetSearchItemVisit
+import io.github.beomjo.search.usecase.SetSearchDocumentVisit
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val setSearchItemVisit: SetSearchItemVisit
+    private val setSearchDocumentVisit: SetSearchDocumentVisit
 ) : BaseViewModel() {
 
     private val _searchDocument = MutableLiveData<SearchDocument>()
@@ -28,7 +28,7 @@ class DetailViewModel @Inject constructor(
 
     fun setVisit() {
         viewModelScope.launch {
-            setSearchItemVisit(searchDocument.value?.url ?: "")
+            setSearchDocumentVisit(searchDocument.value?.url ?: "")
         }
     }
 }
