@@ -9,6 +9,8 @@ style:
 complexity:
   LargeClass:
     excludes: [ '**/test/**' ]
+  TooManyFunctions:
+    active: false
 formatting:
   NoWildcardImports:
     active: false

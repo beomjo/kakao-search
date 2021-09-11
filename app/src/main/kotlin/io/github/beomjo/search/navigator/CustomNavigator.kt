@@ -121,7 +121,7 @@ class CustomNavigator(
     }
 
     private fun popTabBackStack(): Boolean {
-        val tabTag = tabBackStack.pollLast() ?: return true
+        tabBackStack.pollLast() ?: return true
         val newCurrentTag = tabBackStack.peekLast() ?: return true
         fragmentManager.commit {
             getFragmentByTag(newCurrentTag)?.let {

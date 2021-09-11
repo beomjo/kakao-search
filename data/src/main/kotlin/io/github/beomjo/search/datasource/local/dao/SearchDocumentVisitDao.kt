@@ -21,7 +21,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.github.beomjo.search.datasource.local.table.VisitTable
-import io.github.beomjo.search.entity.Visit
 import kotlinx.coroutines.flow.Flow
 
 @Dao

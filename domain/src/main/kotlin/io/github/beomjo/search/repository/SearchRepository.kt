@@ -33,5 +33,5 @@ interface SearchRepository {
 
     suspend fun insertVisit(visit: Visit)
 
-    fun getVisit(url:String) :Flow<Visit?>
+    fun getVisit(url: String): Flow<Visit?>
 }

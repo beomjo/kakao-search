@@ -43,4 +43,3 @@ class SearchDocumentViewModel @AssistedInject constructor(
 interface SearchDocumentViewModelFactory {
     fun create(searchDocument: SearchDocument): SearchDocumentViewModel
 }
-
