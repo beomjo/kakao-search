@@ -30,9 +30,9 @@ import kotlinx.coroutines.flow.flowOn
 
 class SearchDocumentViewModel @AssistedInject constructor(
     @Assisted val searchDocument: SearchDocument,
-    getSearchDocumentItemVisit: GetSearchDocumentVisit
+    getSearchDocumentVisit: GetSearchDocumentVisit
 ) {
-    val isVisit: LiveData<Boolean> = getSearchDocumentItemVisit(searchDocument.url)
+    val isVisit: LiveData<Boolean> = getSearchDocumentVisit(searchDocument.url)
         .distinctUntilChanged()
         .flowOn(Dispatchers.Main)
         .asLiveData()
