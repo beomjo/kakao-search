@@ -14,5 +14,5 @@ internal interface VisitDao {
     suspend fun insertVisit(visit: VisitTable)
 
     @Query("SELECT * FROM visit WHERE url == :url")
-    fun getVisit(url: String): Flow<VisitTable>
+    fun getVisit(url: String): Flow<VisitTable?>
 }

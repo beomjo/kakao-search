@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class GetSearchItemVisit @Inject constructor(
     private val searchRepository: SearchRepository
-) : FlowUseCase<String, Visit>() {
-    override fun execute(parameters: String): Flow<Visit> {
+) : FlowUseCase<String, Visit?>() {
+    override fun execute(parameters: String): Flow<Visit?> {
         return searchRepository.getVisit(parameters)
     }
 }

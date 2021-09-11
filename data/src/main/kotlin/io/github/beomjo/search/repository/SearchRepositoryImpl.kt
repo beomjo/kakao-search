@@ -50,8 +50,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = SearchRemoteMediator.PER_PAGE_SIZE,
-                prefetchDistance = 3
-
+                enablePlaceholders = false
             ),
             remoteMediator = searchRemoteMediatorFactory.create(param)
         ) {
@@ -80,7 +79,7 @@ internal class SearchRepositoryImpl @Inject constructor(
         visitDao.insertVisit(visit = visit.toTable())
     }
 
-    override fun getVisit(url: String): Flow<Visit> {
-        return visitDao.getVisit(url).map { it.toEntity() }
+    override fun getVisit(url: String): Flow<Visit?> {
+        return visitDao.getVisit(url).map { it?.toEntity() }
     }
 }
