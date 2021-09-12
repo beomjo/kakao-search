@@ -17,7 +17,7 @@
 package io.github.beomjo.search.navigator
 
 import io.github.beomjo.search.R
-import io.github.beomjo.search.ui.fragment.FavoriteFragment
+import io.github.beomjo.search.ui.fragment.BookmarkFragment
 import io.github.beomjo.search.ui.fragment.SearchFragment
 
 enum class Tab(
@@ -25,7 +25,7 @@ enum class Tab(
     val tag: String
 ) {
     SEARCH(R.id.search_dest, SearchFragment.TAG),
-    FAVORITE(R.id.favorite, FavoriteFragment.TAG);
+    BOOKMARK(R.id.bookmark_dest, BookmarkFragment.TAG);
 
     companion object
 }

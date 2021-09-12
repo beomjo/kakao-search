@@ -26,9 +26,9 @@
     </custom>
 
     <custom
-        android:id="@+id/favorite"
-        android:name="io.github.beomjo.search.ui.fragment.FavoriteFragment"
-        tools:layout="@layout/fragment_favorite">
+        android:id="@+id/bookmark_dest"
+        android:name="io.github.beomjo.search.ui.fragment.BookmarkFragment"
+        tools:layout="@layout/fragment_bookmark">
 
         <action
             android:id="@+id/action_bookmark_dest_to_search_dest"

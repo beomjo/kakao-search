@@ -21,19 +21,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.github.beomjo.search.databinding.FragmentFavoriteBinding
+import io.github.beomjo.search.databinding.FragmentBookmarkBinding
 
-class FavoriteFragment : Fragment() {
+class BookmarkFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentFavoriteBinding.inflate(layoutInflater)
+        val binding = FragmentBookmarkBinding.inflate(layoutInflater)
         return binding.root
     }
 
     companion object {
-        val TAG = FavoriteFragment::class.java.simpleName
+        val TAG = BookmarkFragment::class.java.simpleName
     }
 }
