@@ -21,11 +21,11 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-@Entity(tableName = "search_history")
-internal data class SearchHistoryTable(
+@Entity(tableName = "visit")
+internal data class VisitTable(
     @PrimaryKey
-    @field:SerializedName("query")
-    val query: String,
+    @field:SerializedName("url")
+    val url: String,
     @field:SerializedName("date")
-    val date: Date,
+    val date: Date?,
 )

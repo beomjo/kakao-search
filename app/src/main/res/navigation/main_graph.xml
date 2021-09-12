@@ -13,21 +13,26 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="io.github.beomjo.search.ui.fragment.DetailFragment">
+    android:id="@+id/main_graph"
+    app:startDestination="@id/search_dest">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="@string/detail_fragment_title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <custom
+        android:id="@+id/search_dest"
+        android:name="io.github.beomjo.search.ui.fragment.SearchFragment"
+        tools:layout="@layout/fragment_search">
+    </custom>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <custom
+        android:id="@+id/favorite"
+        android:name="io.github.beomjo.search.ui.fragment.FavoriteFragment"
+        tools:layout="@layout/fragment_favorite">
+
+        <action
+            android:id="@+id/action_bookmark_dest_to_search_dest"
+            app:destination="@id/search_dest" />
+    </custom>
+
+</navigation>

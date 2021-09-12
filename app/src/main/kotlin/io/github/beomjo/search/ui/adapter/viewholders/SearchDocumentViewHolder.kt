@@ -18,17 +18,27 @@ package io.github.beomjo.search.ui.adapter.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.databinding.SearchListDocumentItemBinding
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModel
 
 class SearchDocumentViewHolder(
     private val binding: SearchListDocumentItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(document: Document) {
-        binding.document = document
-        binding.executePendingBindings()
+    fun bind(
+        lifecycleOwner: LifecycleOwner,
+        searchDocumentViewModel: SearchDocumentViewModel,
+        onClickItem: (SearchDocument) -> Unit
+    ) {
+        binding.run {
+            this.lifecycleOwner = lifecycleOwner
+            viewModel = searchDocumentViewModel
+            documentContainer.setOnClickListener { onClickItem(searchDocumentViewModel.searchDocument) }
+            executePendingBindings()
+        }
     }
 
     companion object {

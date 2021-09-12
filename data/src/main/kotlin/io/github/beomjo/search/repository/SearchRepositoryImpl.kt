@@ -21,13 +21,15 @@ import androidx.paging.map
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.entity.SortType
+import io.github.beomjo.search.entity.Visit
 import io.github.beomjo.search.mapper.toEntity
 import io.github.beomjo.search.mapper.toTable
 import io.github.beomjo.search.usecase.SearchPagingParam
@@ -39,16 +41,16 @@ import javax.inject.Singleton
 @Singleton
 internal class SearchRepositoryImpl @Inject constructor(
     private val searchRemoteMediatorFactory: SearchRemoteMediatorFactory,
-    private val documentDao: DocumentDao,
-    private val searchHistoryDao: SearchHistoryDao
+    private val documentDao: SearchDocumentDao,
+    private val searchHistoryDao: SearchHistoryDao,
+    private val searchDocumentVisitDao: SearchDocumentVisitDao
 ) : SearchRepository {
-    override fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<Document>> {
+    override fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<SearchDocument>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = SearchRemoteMediator.PER_PAGE_SIZE,
-                prefetchDistance = 3
-
+                enablePlaceholders = false
             ),
             remoteMediator = searchRemoteMediatorFactory.create(param)
         ) {
@@ -71,5 +73,13 @@ internal class SearchRepositoryImpl @Inject constructor(
         return searchHistoryDao.getHistoryList().map { historyList ->
             historyList.map { it.toEntity() }
         }
+    }
+
+    override suspend fun insertVisit(visit: Visit) {
+        searchDocumentVisitDao.insertVisit(visit = visit.toTable())
+    }
+
+    override fun getVisit(url: String): Flow<Visit?> {
+        return searchDocumentVisitDao.getVisit(url).map { it?.toEntity() }
     }
 }

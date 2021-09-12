@@ -7,12 +7,12 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.R
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 import io.github.beomjo.search.util.DateHelper
 
 class SearchSeparatorGenerator @AssistedInject constructor(
-    @Assisted val pagingData: PagingData<Document>,
+    @Assisted val pagingData: PagingData<SearchDocument>,
     private val dateHelper: DateHelper
 ) {
 
@@ -21,13 +21,13 @@ class SearchSeparatorGenerator @AssistedInject constructor(
             .insertSeparators { before, after ->
                 if (after == null) return@insertSeparators null
                 if (before == null) return@insertSeparators SearchViewModel.SearchUiItem.SeparatorItem(
-                    "${after.document.title.first()}"
+                    "${after.searchDocument.title.first()}"
                 )
 
-                val beforeFirstWord = before.document.title.first()
-                val afterFirstWord = after.document.title.first()
+                val beforeFirstWord = before.searchDocument.title.first()
+                val afterFirstWord = after.searchDocument.title.first()
                 return@insertSeparators when (beforeFirstWord != afterFirstWord) {
-                    true -> SearchViewModel.SearchUiItem.SeparatorItem("${after.document.title.first()}")
+                    true -> SearchViewModel.SearchUiItem.SeparatorItem("${after.searchDocument.title.first()}")
                     else -> null
                 }
             }
@@ -38,11 +38,11 @@ class SearchSeparatorGenerator @AssistedInject constructor(
             .insertSeparators { before, after ->
                 if (after == null) return@insertSeparators null
                 if (before == null) return@insertSeparators SearchViewModel.SearchUiItem.SeparatorItem(
-                    dateHelper.convert(after.document.date)
+                    dateHelper.convert(after.searchDocument.date)
                 )
 
-                val beforeDate = before.document.date
-                val afterDate = after.document.date
+                val beforeDate = before.searchDocument.date
+                val afterDate = after.searchDocument.date
 
                 val beforeDateString = dateHelper.convert(beforeDate, R.string.date_month)
                 val afterDateString = dateHelper.convert(afterDate)
@@ -56,5 +56,5 @@ class SearchSeparatorGenerator @AssistedInject constructor(
 
 @AssistedFactory
 interface SearchSeparatorFactory {
-    fun create(pagingData: PagingData<Document>): SearchSeparatorGenerator
+    fun create(pagingData: PagingData<SearchDocument>): SearchSeparatorGenerator
 }

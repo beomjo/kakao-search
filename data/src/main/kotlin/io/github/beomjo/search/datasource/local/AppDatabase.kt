@@ -22,26 +22,35 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.github.beomjo.search.datasource.local.converter.DateConverter
-import io.github.beomjo.search.datasource.local.dao.DocumentDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
 import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
-import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
+import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
+import io.github.beomjo.search.datasource.local.table.VisitTable
 
 @Database(
-    entities = [DocumentTable::class, RemoteKeyTable::class, SearchHistoryTable::class],
+    entities = [
+        SearchDocumentTable::class,
+        RemoteKeyTable::class,
+        SearchHistoryTable::class,
+        VisitTable::class
+    ],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(DateConverter::class)
 internal abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun documentDao(): DocumentDao
+    abstract fun documentDao(): SearchDocumentDao
 
     abstract fun remoteKeyDao(): RemoteKeyDao
 
     abstract fun searchHistoryDao(): SearchHistoryDao
+
+    abstract fun searchDocumentVisitDao(): SearchDocumentVisitDao
 
     companion object {
 

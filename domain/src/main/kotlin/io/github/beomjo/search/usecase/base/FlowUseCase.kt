@@ -18,7 +18,7 @@ package io.github.beomjo.search.usecase.base
 
 import kotlinx.coroutines.flow.Flow
 
-abstract class FlowUseCase<in P, R : Any> {
+abstract class FlowUseCase<in P, R : Any?> {
 
     operator fun invoke(parameters: P): Flow<R> {
         return execute(parameters)

@@ -16,19 +16,32 @@
 
 package io.github.beomjo.search.datasource.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.github.beomjo.search.datasource.local.table.SearchHistoryTable
-import kotlinx.coroutines.flow.Flow
+import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 
 @Dao
-internal interface SearchHistoryDao {
-
+internal interface SearchDocumentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHistory(history: SearchHistoryTable)
+    suspend fun insertDocuments(documents: List<SearchDocumentTable>)
 
-    @Query("SELECT * FROM search_history")
-    fun getHistoryList(): Flow<List<SearchHistoryTable>>
+    @Query(
+        "SELECT * FROM document_table " +
+                "WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' " +
+                "ORDER BY date DESC"
+    )
+    fun getDocumentByDate(query: String): PagingSource<Int, SearchDocumentTable>
+
+    @Query(
+        "SELECT * FROM document_table " +
+                "WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' " +
+                "ORDER BY title ASC"
+    )
+    fun getDocumentByTitle(query: String): PagingSource<Int, SearchDocumentTable>
+
+    @Query("DELETE from document_table")
+    suspend fun clearAllDocuments()
 }

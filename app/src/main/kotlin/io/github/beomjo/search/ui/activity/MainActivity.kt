@@ -16,10 +16,8 @@
 
 package io.github.beomjo.search.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,19 +26,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
+import io.github.beomjo.search.base.BaseActivity
 import io.github.beomjo.search.databinding.ActivityMainBinding
-import io.github.beomjo.search.navigator.BottomNavigator
-import java.lang.IllegalStateException
+import io.github.beomjo.search.navigator.CustomNavigator
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_main
-        )
-    }
     private val navController: NavController by lazy {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_container_fragment)
@@ -50,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration(
-            setOf(R.id.bookmark_dest, R.id.search_dest),
+            setOf(R.id.favorite, R.id.search_dest),
             binding.drawerLayout
         )
     }
@@ -60,22 +52,26 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
 
-        navController.apply {
-            navigatorProvider.addNavigator(
-                BottomNavigator(
-                    R.id.nav_host_container_fragment,
-                    supportFragmentManager
-                )
-            )
-
-            setGraph(R.navigation.nav_graph)
-        }
+        setCustomNavigator()
 
         setupActionBar()
 
         setupBottomNavMenu()
 
         setupNavigationMenu()
+    }
+
+    private fun setCustomNavigator() {
+        navController.apply {
+            navigatorProvider.addNavigator(
+                CustomNavigator(
+                    R.id.nav_host_container_fragment,
+                    supportFragmentManager
+                )
+            )
+
+            setGraph(R.navigation.main_graph)
+        }
     }
 
     private fun setupActionBar() {

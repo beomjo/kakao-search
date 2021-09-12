@@ -85,7 +85,7 @@ class SearchViewModel @Inject constructor(
     }
 
     sealed class SearchUiItem {
-        data class DocumentItem(val document: Document) : SearchUiItem()
+        data class DocumentItem(val searchDocument: SearchDocument) : SearchUiItem()
         data class SeparatorItem(val description: String) : SearchUiItem()
     }
 }

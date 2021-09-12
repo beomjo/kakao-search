@@ -16,32 +16,18 @@
 
 package io.github.beomjo.search.datasource.local.dao
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.table.VisitTable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface DocumentDao {
+internal interface SearchDocumentVisitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDocuments(documents: List<DocumentTable>)
+    suspend fun insertVisit(visit: VisitTable)
 
-    @Query(
-        "SELECT * FROM document_table " +
-                "WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' " +
-                "ORDER BY date DESC"
-    )
-    fun getDocumentByDate(query: String): PagingSource<Int, DocumentTable>
-
-    @Query(
-        "SELECT * FROM document_table " +
-                "WHERE title Like '%'||:query||'%' or content Like '%'||:query||'%' " +
-                "ORDER BY title ASC"
-    )
-    fun getDocumentByTitle(query: String): PagingSource<Int, DocumentTable>
-
-    @Query("DELETE from document_table")
-    suspend fun clearAllDocuments()
+    @Query("SELECT * FROM visit WHERE url == :url")
+    fun getVisit(url: String): Flow<VisitTable?>
 }

@@ -23,7 +23,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import io.github.beomjo.search.data.R
 import io.github.beomjo.search.datasource.local.AppDatabase
-import io.github.beomjo.search.datasource.local.table.DocumentTable
+import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.datasource.local.table.RemoteKeyTable
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
@@ -59,7 +59,7 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
 
     private val database: AppDatabase = mockk(relaxUnitFun = true)
 
-    private val state = mockk<PagingState<Int, DocumentTable>>()
+    private val state = mockk<PagingState<Int, SearchDocumentTable>>()
 
     private val blogResponse = mockk<DocumentListResponse<BlogResponse>> {
         every { meta.isEnd } returns false
@@ -198,7 +198,7 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
                 sort = Sort.ACCURACY,
             )
 
-            val state = mockk<PagingState<Int, DocumentTable>>()
+            val state = mockk<PagingState<Int, SearchDocumentTable>>()
 
             val pageSize = SearchRemoteMediator.PER_PAGE_SIZE
 
@@ -893,7 +893,7 @@ internal class SearchRemoteMediatorSpec : BehaviorSpec() {
                 sort = Sort.ACCURACY,
             )
 
-            val state = mockk<PagingState<Int, DocumentTable>>()
+            val state = mockk<PagingState<Int, SearchDocumentTable>>()
 
             val allTypePageSize =
                 SearchRemoteMediator.PER_PAGE_SIZE / SearchRemoteMediator.DOCUMENT_TYPE_NUM

@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.ui.fragment
+package io.github.beomjo.search.entity
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import io.github.beomjo.search.R
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.util.Date
 
-class DetailFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
-    }
-}
+@Parcelize
+data class SearchDocument(
+    val type: DocumentType,
+    val url: String,
+    val thumbnail: String,
+    val title: String,
+    val content: String,
+    val date: Date?,
+) : Parcelable

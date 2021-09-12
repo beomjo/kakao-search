@@ -16,9 +16,9 @@
 
 package io.github.beomjo.search.mapper
 
-import io.github.beomjo.search.datasource.local.table.DocumentTable
-import io.github.beomjo.search.entity.Document
-import io.github.beomjo.search.entity.DocumentList
+import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.entity.SearchDocumentList
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.model.BlogResponse
 import io.github.beomjo.search.model.BookResponse
@@ -28,10 +28,10 @@ import io.github.beomjo.search.model.ImageResponse
 import io.github.beomjo.search.model.WebResponse
 import java.lang.IllegalStateException
 
-internal fun <T> DocumentListResponse<T>.toEntity(): DocumentList {
-    return DocumentList(
+internal fun <T> DocumentListResponse<T>.toEntity(): SearchDocumentList {
+    return SearchDocumentList(
         hasMore = !meta.isEnd,
-        documents = documents.map {
+        searchDocuments = documents.map {
             when (it) {
                 is BlogResponse -> it.toEntity()
                 is CafeResponse -> it.toEntity()
@@ -44,7 +44,7 @@ internal fun <T> DocumentListResponse<T>.toEntity(): DocumentList {
     )
 }
 
-internal fun BlogResponse.toEntity(): Document = Document(
+internal fun BlogResponse.toEntity(): SearchDocument = SearchDocument(
     type = DocumentType.BLOG,
     url = url,
     thumbnail = thumbnail,
@@ -53,7 +53,7 @@ internal fun BlogResponse.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun CafeResponse.toEntity(): Document = Document(
+internal fun CafeResponse.toEntity(): SearchDocument = SearchDocument(
     type = DocumentType.CAFE,
     url = url,
     thumbnail = thumbnail,
@@ -62,7 +62,7 @@ internal fun CafeResponse.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun ImageResponse.toEntity(): Document = Document(
+internal fun ImageResponse.toEntity(): SearchDocument = SearchDocument(
     type = DocumentType.IMAGE,
     url = docUrl,
     thumbnail = thumbnailUrl,
@@ -71,7 +71,7 @@ internal fun ImageResponse.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun WebResponse.toEntity(): Document = Document(
+internal fun WebResponse.toEntity(): SearchDocument = SearchDocument(
     type = DocumentType.WEB,
     url = url,
     thumbnail = "",
@@ -80,7 +80,7 @@ internal fun WebResponse.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun BookResponse.toEntity(): Document = Document(
+internal fun BookResponse.toEntity(): SearchDocument = SearchDocument(
     type = DocumentType.BOOK,
     url = url,
     thumbnail = thumbnail,
@@ -89,8 +89,8 @@ internal fun BookResponse.toEntity(): Document = Document(
     date = datetime,
 )
 
-internal fun Document.toTable(): DocumentTable {
-    return DocumentTable(
+internal fun SearchDocument.toTable(): SearchDocumentTable {
+    return SearchDocumentTable(
         type = this.type,
         url = this.url,
         thumbnail = this.thumbnail,
@@ -100,8 +100,8 @@ internal fun Document.toTable(): DocumentTable {
     )
 }
 
-internal fun DocumentTable.toEntity(): Document {
-    return Document(
+internal fun SearchDocumentTable.toEntity(): SearchDocument {
+    return SearchDocument(
         type = this.type,
         url = this.url,
         thumbnail = this.thumbnail,

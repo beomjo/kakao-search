@@ -14,11 +14,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     -->
-    <string name="app_name">kakao-search</string>
-    <string name="bookmark_fragment_title">Bookmark Fragment</string>
+    <string name="app_name">Kakao Search</string>
+    <string name="favorite_fragment_title">Favorite Fragment</string>
     <string name="search_fragment_title">Search Fragment</string>
     <string name="detail_fragment_title">Detail Fragment</string>
-    <string name="bookmark">Bookmark</string>
+    <string name="favorite">Favorite</string>
     <string name="search">Search</string>
     <string name="search_hint">Input Search Keyword</string>
     <string name="retry">RETRY</string>
@@ -30,4 +30,5 @@
     <string name="date" formatted="true">%1$tY-%1$tm-%1$td</string>
     <string name="date_month" formatted="true">%1$tY-%1$tm</string>
     <string name="no_results">The result does not exist.</string>
+    <string name="go_detail">Go Detail</string>
 </resources>

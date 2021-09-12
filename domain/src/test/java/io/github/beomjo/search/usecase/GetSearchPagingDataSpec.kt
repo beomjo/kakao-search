@@ -17,7 +17,7 @@
 package io.github.beomjo.search.usecase
 
 import androidx.paging.PagingData
-import io.github.beomjo.search.entity.Document
+import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.Sort
 import io.github.beomjo.search.entity.SortType
@@ -43,7 +43,7 @@ class GetSearchPagingDataSpec : BehaviorSpec() {
                 query = "IU",
                 sort = Sort.ACCURACY
             )
-            val pagingData = mockk<PagingData<Document>>()
+            val pagingData = mockk<PagingData<SearchDocument>>()
             coEvery { searchRepository.getDocumentPagingData(param) } returns flowOf(pagingData)
             coEvery { searchRepository.insertSearchHistory(any()) } just Runs
 

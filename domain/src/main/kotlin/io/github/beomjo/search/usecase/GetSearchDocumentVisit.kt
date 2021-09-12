@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.repository
+package io.github.beomjo.search.usecase
 
-import androidx.paging.PagingData
-import io.github.beomjo.search.entity.SearchDocument
-import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.entity.Visit
-import io.github.beomjo.search.usecase.SearchPagingParam
+import io.github.beomjo.search.repository.SearchRepository
+import io.github.beomjo.search.usecase.base.FlowUseCase
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-interface SearchRepository {
-
-    fun getDocumentPagingData(param: SearchPagingParam): Flow<PagingData<SearchDocument>>
-
-    suspend fun insertSearchHistory(history: History)
-
-    fun getSearchHistoryList(): Flow<List<History>>
-
-    suspend fun insertVisit(visit: Visit)
-
-    fun getVisit(url: String): Flow<Visit?>
+class GetSearchDocumentVisit @Inject constructor(
+    private val searchRepository: SearchRepository
+) : FlowUseCase<String, Visit?>() {
+    override fun execute(parameters: String): Flow<Visit?> {
+        return searchRepository.getVisit(parameters)
+    }
 }

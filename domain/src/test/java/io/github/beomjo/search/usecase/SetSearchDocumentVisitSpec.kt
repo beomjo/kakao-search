@@ -16,36 +16,29 @@
 
 package io.github.beomjo.search.usecase
 
-import io.github.beomjo.search.entity.Empty
-import io.github.beomjo.search.entity.History
+import io.github.beomjo.search.entity.Visit
 import io.github.beomjo.search.repository.SearchRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
-import io.mockk.mockk
-import io.mockk.coVerify
-import io.mockk.unmockkAll
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
+import io.mockk.*
 
-class GetSearchHistoryListSpec : BehaviorSpec() {
+class SetSearchDocumentVisitSpec : BehaviorSpec() {
 
     private val searchRepository = mockk<SearchRepository>()
 
     init {
-        Given("use case is ") {
-            val getSearchHistoryList = GetSearchHistoryList(searchRepository)
+        Given("Given a url") {
+            val url = "http://..."
+            val useCase = SetSearchDocumentVisit(searchRepository)
+            val slot = slot<Visit>()
+            coEvery { searchRepository.insertVisit(capture(slot)) } just Runs
 
-            val expect = listOf(mockk<History>())
+            When("Invoke") {
+                useCase.invoke(url)
 
-            coEvery { searchRepository.getSearchHistoryList() } returns flowOf(expect)
-
-            When("invoke") {
-                val result = getSearchHistoryList.invoke(Empty)
-
-                Then("Should return a HistoryList") {
-                    coVerify { searchRepository.getSearchHistoryList() }
-                    result.first() shouldBe expect
+                Then("Should call setVisit of SearchRepository") {
+                    coEvery { searchRepository.insertVisit(any()) }
+                    slot.captured.url shouldBe url
                 }
             }
         }

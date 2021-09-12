@@ -16,13 +16,14 @@
 
 package io.github.beomjo.search.entity
 
-import java.util.Date
-
-data class Document(
-    val type: DocumentType,
-    val url: String,
-    val thumbnail: String,
-    val title: String,
-    val content: String,
-    val date: Date?,
-)
+data class SearchDocumentList(
+    val hasMore: Boolean,
+    val searchDocuments: List<SearchDocument>
+) {
+    operator fun plus(other: SearchDocumentList): SearchDocumentList {
+        return SearchDocumentList(
+            hasMore = this.hasMore || other.hasMore,
+            searchDocuments = this.searchDocuments + other.searchDocuments
+        )
+    }
+}

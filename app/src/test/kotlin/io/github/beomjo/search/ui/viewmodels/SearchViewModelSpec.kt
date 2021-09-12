@@ -28,12 +28,7 @@ import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
-import io.mockk.mockk
-import io.mockk.every
-import io.mockk.slot
-import io.mockk.just
-import io.mockk.Runs
-import io.mockk.verify
+import io.mockk.*
 import kotlinx.coroutines.flow.flowOf
 
 class SearchViewModelSpec : BehaviorSpec() {
@@ -70,7 +65,7 @@ class SearchViewModelSpec : BehaviorSpec() {
             val query = "IU"
             val searchFilter = DocumentType.ALL
 
-            val pagingData = PagingData.from<Document>(
+            val pagingData = PagingData.from<SearchDocument>(
                 listOf(mockk())
             )
 
@@ -171,6 +166,10 @@ class SearchViewModelSpec : BehaviorSpec() {
                     }
                 }
             }
+        }
+
+        afterTest {
+            unmockkAll()
         }
     }
 }

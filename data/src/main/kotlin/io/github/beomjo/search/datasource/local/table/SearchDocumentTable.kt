@@ -23,7 +23,7 @@ import io.github.beomjo.search.entity.DocumentType
 import java.util.Date
 
 @Entity(tableName = "document_table")
-internal data class DocumentTable(
+internal data class SearchDocumentTable(
     @field:SerializedName("type")
     val type: DocumentType,
     @PrimaryKey
