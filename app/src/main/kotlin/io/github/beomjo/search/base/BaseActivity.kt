@@ -23,6 +23,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
+import com.beomjo.compilation.util.EventObserver
 import com.skydoves.bindables.BindingActivity
 
 abstract class BaseActivity<T : ViewDataBinding>(
@@ -53,10 +54,13 @@ abstract class BaseActivity<T : ViewDataBinding>(
     }
 
     private fun observeToast(vm: BaseViewModel) {
-        vm.toast.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { msg ->
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        vm.toast.observe(this, EventObserver { msg ->
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        })
+        vm.event.observe(this, EventObserver {
+            when (it) {
+                is BaseViewModel.Action.Finish -> onBackPressed()
             }
-        }
+        })
     }
 }

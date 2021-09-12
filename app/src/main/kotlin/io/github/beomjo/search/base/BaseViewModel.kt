@@ -27,6 +27,8 @@ import kotlinx.coroutines.launch
 abstract class BaseViewModel : BindingViewModel() {
     val toast = MutableLiveData<Event<String>>()
 
+    val event = MutableLiveData<Event<Action>>()
+
     fun launch(
         block: suspend () -> Unit,
     ): Job {
@@ -52,5 +54,9 @@ abstract class BaseViewModel : BindingViewModel() {
                 toast.value = Event(e.message ?: "Error")
             }
         }
+    }
+
+    sealed class Action {
+        object Finish : Action()
     }
 }

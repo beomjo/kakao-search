@@ -26,6 +26,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.beomjo.compilation.util.EventObserver
 import com.skydoves.bindables.BindingFragment
 
 abstract class BaseFragment<T : ViewDataBinding>(
@@ -64,10 +65,13 @@ abstract class BaseFragment<T : ViewDataBinding>(
     }
 
     private fun observeToast(vm: BaseViewModel) {
-        vm.toast.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { msg ->
-                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        vm.toast.observe(viewLifecycleOwner, EventObserver { msg ->
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        })
+        vm.event.observe(this, EventObserver {
+            when (it) {
+                is BaseViewModel.Action.Finish -> requireActivity().onBackPressed()
             }
-        }
+        })
     }
 }
