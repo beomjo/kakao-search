@@ -24,13 +24,17 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.beomjo.search.datasource.local.AppDatabase
-import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
+import io.github.beomjo.search.datasource.local.dao.*
+import io.github.beomjo.search.datasource.local.dao.BookmarkDao
 import io.github.beomjo.search.datasource.local.dao.RemoteKeyDao
-import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
+import io.github.beomjo.search.datasource.local.dao.SearchDocumentDao
 import io.github.beomjo.search.datasource.local.dao.SearchDocumentVisitDao
+import io.github.beomjo.search.datasource.local.dao.SearchHistoryDao
 import io.github.beomjo.search.datasource.remote.api.RetrofitAdapter
 import io.github.beomjo.search.datasource.remote.api.Urls
 import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
+import io.github.beomjo.search.repository.BookmarkRepository
+import io.github.beomjo.search.repository.BookmarkRepositoryImpl
 import io.github.beomjo.search.repository.SearchRepository
 import io.github.beomjo.search.repository.SearchRepositoryImpl
 import javax.inject.Singleton
@@ -78,10 +82,19 @@ internal object DataModule {
         return database.searchDocumentVisitDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideBookmarkDao(database: AppDatabase): BookmarkDao {
+        return database.bookmarkDao()
+    }
+
     @Module
     @InstallIn(SingletonComponent::class)
     abstract class DataBindModule {
         @Binds
-        abstract fun provideDocumentRepository(repository: SearchRepositoryImpl): SearchRepository
+        abstract fun provideSearchRepository(repository: SearchRepositoryImpl): SearchRepository
+
+        @Binds
+        abstract fun provideBookmarkRepository(repository: BookmarkRepositoryImpl): BookmarkRepository
     }
 }

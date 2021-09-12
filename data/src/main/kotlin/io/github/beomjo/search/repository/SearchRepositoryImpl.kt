@@ -31,7 +31,7 @@ import io.github.beomjo.search.entity.History
 import io.github.beomjo.search.entity.SortType
 import io.github.beomjo.search.entity.Visit
 import io.github.beomjo.search.mapper.toEntity
-import io.github.beomjo.search.mapper.toTable
+import io.github.beomjo.search.mapper.toDocumentTable
 import io.github.beomjo.search.usecase.SearchPagingParam
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -66,7 +66,7 @@ internal class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertSearchHistory(history: History) {
-        return searchHistoryDao.insertHistory(history.toTable())
+        return searchHistoryDao.insertHistory(history.toDocumentTable())
     }
 
     override fun getSearchHistoryList(): Flow<List<History>> {
@@ -76,7 +76,7 @@ internal class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertVisit(visit: Visit) {
-        searchDocumentVisitDao.insertVisit(visit = visit.toTable())
+        searchDocumentVisitDao.insertVisit(visit = visit.toDocumentTable())
     }
 
     override fun getVisit(url: String): Flow<Visit?> {

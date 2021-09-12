@@ -25,7 +25,7 @@ internal fun SearchHistoryTable.toEntity(): History {
     )
 }
 
-internal fun History.toTable(): SearchHistoryTable {
+internal fun History.toDocumentTable(): SearchHistoryTable {
     return SearchHistoryTable(
         query = query,
         date = date

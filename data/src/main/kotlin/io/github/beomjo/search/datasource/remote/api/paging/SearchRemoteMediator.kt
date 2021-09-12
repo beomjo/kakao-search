@@ -31,7 +31,7 @@ import io.github.beomjo.search.datasource.remote.api.service.DocumentsApi
 import io.github.beomjo.search.entity.SearchDocumentList
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.mapper.toEntity
-import io.github.beomjo.search.mapper.toTable
+import io.github.beomjo.search.mapper.toDocumentTable
 import io.github.beomjo.search.usecase.SearchPagingParam
 import retrofit2.HttpException
 import java.io.IOException
@@ -73,7 +73,7 @@ internal class SearchRemoteMediator @AssistedInject constructor(
                 val nextKey = if (documentList.hasMore) position + 1 else null
                 val keys = RemoteKeyTable(position = position, prevKey = prevKey, nextKey = nextKey)
 
-                database.documentDao().insertDocuments(documentList.searchDocuments.map { it.toTable() })
+                database.documentDao().insertDocuments(documentList.searchDocuments.map { it.toDocumentTable() })
                 database.remoteKeyDao().insertKey(keys)
             }
 

@@ -16,6 +16,7 @@
 
 package io.github.beomjo.search.mapper
 
+import io.github.beomjo.search.datasource.local.table.BookmarkTable
 import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.entity.SearchDocumentList
@@ -27,6 +28,7 @@ import io.github.beomjo.search.model.DocumentListResponse
 import io.github.beomjo.search.model.ImageResponse
 import io.github.beomjo.search.model.WebResponse
 import java.lang.IllegalStateException
+import java.util.*
 
 internal fun <T> DocumentListResponse<T>.toEntity(): SearchDocumentList {
     return SearchDocumentList(
@@ -89,7 +91,7 @@ internal fun BookResponse.toEntity(): SearchDocument = SearchDocument(
     date = datetime,
 )
 
-internal fun SearchDocument.toTable(): SearchDocumentTable {
+internal fun SearchDocument.toDocumentTable(): SearchDocumentTable {
     return SearchDocumentTable(
         type = this.type,
         url = this.url,
@@ -108,5 +110,28 @@ internal fun SearchDocumentTable.toEntity(): SearchDocument {
         title = this.title,
         content = this.content,
         date = this.date
+    )
+}
+
+internal fun SearchDocument.toBookmarkTable(): BookmarkTable {
+    return BookmarkTable(
+        type = this.type,
+        url = this.url,
+        thumbnail = this.thumbnail,
+        title = this.title,
+        content = this.content,
+        writeDate = this.date,
+        bookmarkedDate = Date()
+    )
+}
+
+internal fun BookmarkTable.toEntity(): SearchDocument {
+    return SearchDocument(
+        type = this.type,
+        url = this.url,
+        thumbnail = this.thumbnail,
+        title = this.title,
+        content = this.content,
+        date = this.writeDate
     )
 }

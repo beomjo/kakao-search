@@ -29,7 +29,7 @@ import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediator
 import io.github.beomjo.search.datasource.remote.api.paging.SearchRemoteMediatorFactory
 import io.github.beomjo.search.entity.*
 import io.github.beomjo.search.mapper.toEntity
-import io.github.beomjo.search.mapper.toTable
+import io.github.beomjo.search.mapper.toDocumentTable
 import io.github.beomjo.search.usecase.SearchPagingParam
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -134,7 +134,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRepositoryImpl.insertSearchHistory(history)
 
                 Then("Should be stored in DB") {
-                    coVerify { searchHistoryDao.insertHistory(eq(history.toTable())) }
+                    coVerify { searchHistoryDao.insertHistory(eq(history.toDocumentTable())) }
                 }
             }
         }
@@ -183,7 +183,7 @@ internal class SearchRepositoryImplSpec : BehaviorSpec() {
                 searchRepositoryImpl.insertVisit(visit)
 
                 Then("Should be stored in DB") {
-                    coVerify { searchDocumentVisitDao.insertVisit(eq(visit.toTable())) }
+                    coVerify { searchDocumentVisitDao.insertVisit(eq(visit.toDocumentTable())) }
                 }
             }
         }
