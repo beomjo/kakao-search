@@ -26,7 +26,7 @@ import javax.inject.Inject
 class GetSearchHistoryList @Inject constructor(
     private val searchRepository: SearchRepository
 ) : FlowUseCase<Empty, List<History>>() {
-    override fun execute(parameters: Empty): Flow<List<History>> {
+    override fun execute(param: Empty): Flow<List<History>> {
         return searchRepository.getSearchHistoryList()
     }
 }

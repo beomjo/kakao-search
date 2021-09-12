@@ -18,9 +18,9 @@ package io.github.beomjo.search.usecase.base
 
 abstract class UseCase<in P, R : Any> {
 
-    suspend operator fun invoke(parameters: P): R {
-        return execute(parameters)
+    suspend operator fun invoke(param: P): R {
+        return execute(param)
     }
 
-    protected abstract suspend fun execute(parameters: P): R
+    protected abstract suspend fun execute(param: P): R
 }

@@ -25,7 +25,7 @@ import javax.inject.Inject
 class SetSearchDocumentVisit @Inject constructor(
     private val searchRepository: SearchRepository
 ) : UseCase<String, Unit>() {
-    override suspend fun execute(parameters: String) {
-        searchRepository.insertVisit(Visit(Date(), parameters))
+    override suspend fun execute(param: String) {
+        searchRepository.insertVisit(Visit(Date(), param))
     }
 }

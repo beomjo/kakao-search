@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class FlowUseCase<in P, R : Any?> {
 
-    operator fun invoke(parameters: P): Flow<R> {
-        return execute(parameters)
+    operator fun invoke(param: P): Flow<R> {
+        return execute(param)
     }
 
-    protected abstract fun execute(parameters: P): Flow<R>
+    protected abstract fun execute(param: P): Flow<R>
 }

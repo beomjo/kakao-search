@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class PagingUseCase<in P, R : Any> {
 
-    operator fun invoke(parameters: P): Flow<PagingData<R>> {
-        return execute(parameters)
+    operator fun invoke(param: P): Flow<PagingData<R>> {
+        return execute(param)
     }
 
-    protected abstract fun execute(parameters: P): Flow<PagingData<R>>
+    protected abstract fun execute(param: P): Flow<PagingData<R>>
 }
