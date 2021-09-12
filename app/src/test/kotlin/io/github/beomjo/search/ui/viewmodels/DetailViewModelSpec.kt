@@ -58,7 +58,6 @@ class DetailViewModelSpec : BehaviorSpec() {
                 Then("Should to update searchDocument") {
                     verify(inverse = true) { searchDocumentObserver.onChanged(any()) }
                     verify { eventObserver.onChanged(any<Event<BaseViewModel.Action.Finish>>()) }
-
                 }
             }
         }
