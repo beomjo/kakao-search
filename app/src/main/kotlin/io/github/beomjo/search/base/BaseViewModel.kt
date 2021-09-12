@@ -56,6 +56,10 @@ abstract class BaseViewModel : BindingViewModel() {
         }
     }
 
+    fun finish() {
+        event.value = Event(Action.Finish)
+    }
+
     sealed class Action {
         object Finish : Action()
     }

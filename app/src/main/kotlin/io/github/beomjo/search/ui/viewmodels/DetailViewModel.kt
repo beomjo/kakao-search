@@ -22,13 +22,13 @@ class DetailViewModel @Inject constructor(
         searchDocument?.let {
             _searchDocument.value = it
         } ?: kotlin.run {
-            // TODO DO Back Activity
+            finish()
         }
     }
 
     fun setVisit() {
         viewModelScope.launch {
-            setSearchDocumentVisit(searchDocument.value?.url ?: "")
+            setSearchDocumentVisit(searchDocument.value?.url ?: return@launch)
         }
     }
 }
