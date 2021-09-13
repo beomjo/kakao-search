@@ -16,6 +16,7 @@
 
 package io.github.beomjo.search.usecase
 
+import androidx.paging.PagingData
 import io.github.beomjo.search.entity.Empty
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.repository.BookmarkRepository
@@ -25,22 +26,23 @@ import io.mockk.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 
-class GetBookmarkListSpec : BehaviorSpec() {
+class GetBookmarkPagingDataSpec : BehaviorSpec() {
 
     private val bookmarkRepository = mockk<BookmarkRepository>()
 
     init {
         Given("Given a Empty") {
             val searchDocumentList = listOf<SearchDocument>(mockk(), mockk())
-            val getBookmarkListUseCase = GetBookmarkList(bookmarkRepository)
-            every { bookmarkRepository.getBookmarkList() } returns flowOf(searchDocumentList)
+            val pagingData = PagingData.from(searchDocumentList)
+            val getBookmarkPagingDataUseCase = GetBookmarkPagingData(bookmarkRepository)
+            every { bookmarkRepository.getBookmarkList() } returns flowOf(pagingData)
 
             When("Call invoke") {
-                val bookmarkListFlow = getBookmarkListUseCase.invoke(Empty)
+                val bookmarkListFlow = getBookmarkPagingDataUseCase.invoke(Empty)
 
                 Then("Should return a bookmark list flow") {
+                    bookmarkListFlow.first() shouldBe pagingData
                     verify { bookmarkRepository.getBookmarkList() }
-                    bookmarkListFlow.first() shouldBe searchDocumentList
                 }
             }
         }

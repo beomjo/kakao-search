@@ -16,13 +16,11 @@
 
 package io.github.beomjo.search.datasource.local.dao
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.github.beomjo.search.datasource.local.table.BookmarkTable
-import io.github.beomjo.search.datasource.local.table.SearchDocumentTable
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -31,11 +29,11 @@ internal interface BookmarkDao {
     suspend fun insertBookmark(bookmark: BookmarkTable)
 
     @Query("DELETE FROM bookmark_table WHERE url == :url")
-    fun deleteBookmark(url: String)
+    suspend fun deleteBookmark(url: String)
 
     @Query("SELECT * FROM bookmark_table WHERE url == :url")
-    fun isBookmarked(url: String) : Flow<BookmarkTable?>
+    fun isBookmarked(url: String): Flow<BookmarkTable?>
 
-//    @Query("SELECT * FROM bookmark_table")
-//    fun getDocumentByDate(query: String): PagingSource<Int, SearchDocumentTable>
+    @Query("SELECT * FROM bookmark_table ORDER BY bookmarkedDate DESC LIMIT :limit OFFSET :offset")
+    suspend fun getBookmarks(offset: Int, limit: Int): List<BookmarkTable>
 }

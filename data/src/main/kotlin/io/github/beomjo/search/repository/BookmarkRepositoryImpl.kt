@@ -16,7 +16,11 @@
 
 package io.github.beomjo.search.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import io.github.beomjo.search.datasource.local.dao.BookmarkDao
+import io.github.beomjo.search.datasource.remote.api.paging.BookmarkPagingSource
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.mapper.toBookmarkTable
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +28,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class BookmarkRepositoryImpl @Inject constructor(
-    private val bookmarkDao: BookmarkDao
+    private val bookmarkDao: BookmarkDao,
+    private val bookmarkPagingSource: BookmarkPagingSource
 ) : BookmarkRepository {
     override suspend fun setBookmark(searchDocument: SearchDocument) {
         bookmarkDao.insertBookmark(searchDocument.toBookmarkTable())
@@ -38,7 +43,12 @@ internal class BookmarkRepositoryImpl @Inject constructor(
         return bookmarkDao.isBookmarked(searchDocument.url).map { it?.url != null }
     }
 
-    override fun getBookmarkList(): Flow<List<SearchDocument>> {
-        TODO("Not yet implemented")
+    override fun getBookmarkList(): Flow<PagingData<SearchDocument>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = BookmarkPagingSource.LIMIT,
+                enablePlaceholders = false
+            )
+        ) { bookmarkPagingSource }.flow
     }
 }

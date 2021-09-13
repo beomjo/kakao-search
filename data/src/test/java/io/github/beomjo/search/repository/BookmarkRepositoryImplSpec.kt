@@ -16,13 +16,16 @@
 
 package io.github.beomjo.search.repository
 
+import androidx.paging.PagingData
 import io.github.beomjo.search.datasource.local.dao.BookmarkDao
 import io.github.beomjo.search.datasource.local.table.BookmarkTable
+import io.github.beomjo.search.datasource.remote.api.paging.BookmarkPagingSource
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.mapper.toBookmarkTable
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -30,6 +33,8 @@ import kotlinx.coroutines.flow.flowOf
 class BookmarkRepositoryImplSpec : BehaviorSpec() {
 
     private val bookmarkDao = mockk<BookmarkDao>(relaxed = true)
+
+    private val bookmarkPagingSource = mockk<BookmarkPagingSource>(relaxed = true)
 
     init {
         Given("Given a SearchDocument for insertBookmark") {
@@ -42,7 +47,7 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
                 date = mockk()
             )
 
-            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao)
+            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
 
             val slot = slot<BookmarkTable>()
             coEvery { bookmarkDao.insertBookmark(capture(slot)) } just Runs
@@ -72,7 +77,7 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
                 date = mockk()
             )
 
-            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao)
+            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
 
             When("delete bookmark") {
                 repositoryImpl.removeBookmark(searchDocument)
@@ -93,12 +98,14 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
                 date = mockk()
             )
 
-            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao)
+            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
 
             When("delete bookmark") {
 
                 And("It is saved as a bookmark in the DB") {
-                    every { bookmarkDao.isBookmarked(searchDocument.url) } returns flowOf(searchDocument.toBookmarkTable())
+                    every { bookmarkDao.isBookmarked(searchDocument.url) } returns flowOf(
+                        searchDocument.toBookmarkTable()
+                    )
 
                     val result = repositoryImpl.isBookmarked(searchDocument)
 
@@ -117,6 +124,18 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
                         verify { bookmarkDao.isBookmarked(eq(searchDocument.url)) }
                         result.first() shouldBe false
                     }
+                }
+            }
+        }
+
+        Given("Given a bookmarkPagingSource") {
+            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
+
+            When("Call getBookmarkList") {
+                val result = repositoryImpl.getBookmarkList()
+
+                Then("Should return PagingData flow") {
+                    result.first().shouldBeTypeOf<PagingData<SearchDocument>>()
                 }
             }
         }
