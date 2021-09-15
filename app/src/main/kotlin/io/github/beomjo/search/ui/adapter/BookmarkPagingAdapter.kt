@@ -25,18 +25,21 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.R
 import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.ui.adapter.diff.SearchDocumentDiffUtil
 import io.github.beomjo.search.ui.adapter.diff.SearchUiItemDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
 import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModelFactory
-import io.github.beomjo.search.ui.viewmodels.SearchViewModel.SearchUiItem
+import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 import javax.inject.Provider
 
-class SearchPagingAdapter @AssistedInject constructor(
-    @Assisted private val lifeCycleOwner: LifecycleOwner,
-    @Assisted private val onClickItem: (SearchDocument) -> Unit,
-    private val searchDocumentViewModelProvider: Provider<SearchDocumentViewModelFactory>
-) : PagingDataAdapter<SearchUiItem, RecyclerView.ViewHolder>(SearchUiItemDiffUtil()) {
+class BookmarkPagingAdapter @AssistedInject constructor(
+    @Assisted
+    private val lifeCycleOwner: LifecycleOwner,
+    @Assisted
+    private val onClickItem: (SearchDocument) -> Unit,
+    private val factory: BookmarkPagingAdapterFactory
+) : PagingDataAdapter<SearchDocument, RecyclerView.ViewHolder>(SearchDocumentDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -45,31 +48,21 @@ class SearchPagingAdapter @AssistedInject constructor(
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
-            is SearchUiItem.DocumentItem -> R.layout.search_list_document_item
-            else -> R.layout.search_list_separator_item
-        }
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         getItem(position)?.let {
-            when (it) {
-                is SearchUiItem.DocumentItem -> (holder as SearchDocumentViewHolder).bind(
-                    lifeCycleOwner,
-                    searchDocumentViewModelProvider.get().create(it.searchDocument),
-                    onClickItem
-                )
-                is SearchUiItem.SeparatorItem -> (holder as SearchSeparatorViewHolder).bind(it.description)
-            }
+            (holder as SearchDocumentViewHolder).bind(
+                lifeCycleOwner,
+                factory.create(it),
+                onClickItem
+            )
         }
     }
 }
 
 @AssistedFactory
-interface SearchPagingAdapterFactory {
+interface BookmarkPagingAdapterFactory {
     fun create(
         lifeCycleOwner: LifecycleOwner,
         onClickItem: (SearchDocument) -> Unit
-    ): SearchPagingAdapter
+    ): BookmarkPagingAdapter
 }
