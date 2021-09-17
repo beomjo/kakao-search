@@ -23,6 +23,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.usecase.GetBookmark
 import io.github.beomjo.search.usecase.GetSearchDocumentVisit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -30,13 +31,18 @@ import kotlinx.coroutines.flow.flowOn
 
 class SearchDocumentViewModel @AssistedInject constructor(
     @Assisted val searchDocument: SearchDocument,
-    getSearchDocumentVisit: GetSearchDocumentVisit
+    getSearchDocumentVisit: GetSearchDocumentVisit,
+    getBookmark: GetBookmark,
 ) {
     val isVisit: LiveData<Boolean> = getSearchDocumentVisit(searchDocument.url)
         .distinctUntilChanged()
         .flowOn(Dispatchers.Main)
         .asLiveData()
         .map { it?.url != null }
+
+    val isBookmarked: LiveData<Boolean> = getBookmark(searchDocument)
+        .flowOn(Dispatchers.Main)
+        .asLiveData()
 }
 
 @AssistedFactory

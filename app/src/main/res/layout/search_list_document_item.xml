@@ -111,6 +111,7 @@
 
             <ImageView
                 android:id="@+id/bookmark_dest"
+                isSelected="@{viewModel.isBookmarked()}"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginHorizontal="10dp"
