@@ -27,6 +27,7 @@ import io.github.beomjo.search.R
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.adapter.diff.SearchDocumentDiffUtil
 import io.github.beomjo.search.ui.adapter.diff.SearchUiItemDiffUtil
+import io.github.beomjo.search.ui.adapter.viewholders.BookmarkViewHolder
 import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
 import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModelFactory
@@ -38,21 +39,18 @@ class BookmarkPagingAdapter @AssistedInject constructor(
     private val lifeCycleOwner: LifecycleOwner,
     @Assisted
     private val onClickItem: (SearchDocument) -> Unit,
-    private val factory: BookmarkPagingAdapterFactory
-) : PagingDataAdapter<SearchDocument, RecyclerView.ViewHolder>(SearchDocumentDiffUtil()) {
+    private val factory: Provider<SearchDocumentViewModelFactory>
+) : PagingDataAdapter<SearchDocument, BookmarkViewHolder>(SearchDocumentDiffUtil()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            R.layout.search_list_document_item -> SearchDocumentViewHolder.create(parent)
-            else -> SearchSeparatorViewHolder.create(parent)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
+        return BookmarkViewHolder.create(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
         getItem(position)?.let {
-            (holder as SearchDocumentViewHolder).bind(
+            holder.bind(
                 lifeCycleOwner,
-                factory.create(it),
+                factory.get().create(it),
                 onClickItem
             )
         }

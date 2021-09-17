@@ -57,8 +57,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
                     )
                 }
             }
-            favoriteBtn.setOnClickListener {
-                favoriteBtn.isSelected = !favoriteBtn.isSelected
+
+            bookmarkBtn.setOnClickListener {
+                bookmarkBtn.isSelected = !bookmarkBtn.isSelected
+                this@DetailActivity.detailViewModel.onClickBookmark(bookmarkBtn.isSelected)
             }
         }
     }

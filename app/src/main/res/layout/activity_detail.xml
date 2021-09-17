@@ -144,7 +144,7 @@
             tools:text="Url" />
 
         <ImageView
-            android:id="@+id/favorite_btn"
+            android:id="@+id/bookmark_btn"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -165,7 +165,7 @@
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guide_end"
-            app:layout_constraintStart_toEndOf="@id/favorite_btn" />
+            app:layout_constraintStart_toEndOf="@id/bookmark_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
