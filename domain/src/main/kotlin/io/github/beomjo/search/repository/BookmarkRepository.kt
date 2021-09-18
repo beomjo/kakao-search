@@ -11,5 +11,7 @@ interface BookmarkRepository {
 
     fun isBookmarked(searchDocument: SearchDocument): Flow<Boolean>
 
-    fun getBookmarkList(): Flow<PagingData<SearchDocument>>
+    fun getBookmarkPagingData(): Flow<PagingData<SearchDocument>>
+
+    fun getBookmarkList(): Flow<List<SearchDocument>>
 }

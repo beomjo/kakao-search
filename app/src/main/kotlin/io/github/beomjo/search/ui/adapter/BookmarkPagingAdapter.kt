@@ -19,19 +19,13 @@ package io.github.beomjo.search.ui.adapter
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.RecyclerView
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import io.github.beomjo.search.R
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.adapter.diff.SearchDocumentDiffUtil
-import io.github.beomjo.search.ui.adapter.diff.SearchUiItemDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.BookmarkViewHolder
-import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
-import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModelFactory
-import io.github.beomjo.search.ui.viewmodels.SearchViewModel
 import javax.inject.Provider
 
 class BookmarkPagingAdapter @AssistedInject constructor(
@@ -51,7 +45,7 @@ class BookmarkPagingAdapter @AssistedInject constructor(
             holder.bind(
                 lifeCycleOwner,
                 factory.get().create(it),
-                onClickItem
+                onClickItem,
             )
         }
     }
@@ -61,6 +55,6 @@ class BookmarkPagingAdapter @AssistedInject constructor(
 interface BookmarkPagingAdapterFactory {
     fun create(
         lifeCycleOwner: LifecycleOwner,
-        onClickItem: (SearchDocument) -> Unit
+        onClickItem: (SearchDocument) -> Unit,
     ): BookmarkPagingAdapter
 }

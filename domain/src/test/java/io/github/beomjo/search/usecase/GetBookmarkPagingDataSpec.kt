@@ -35,14 +35,14 @@ class GetBookmarkPagingDataSpec : BehaviorSpec() {
             val searchDocumentList = listOf<SearchDocument>(mockk(), mockk())
             val pagingData = PagingData.from(searchDocumentList)
             val getBookmarkPagingDataUseCase = GetBookmarkPagingData(bookmarkRepository)
-            every { bookmarkRepository.getBookmarkList() } returns flowOf(pagingData)
+            every { bookmarkRepository.getBookmarkPagingData() } returns flowOf(pagingData)
 
             When("Call invoke") {
                 val bookmarkListFlow = getBookmarkPagingDataUseCase.invoke(Empty)
 
                 Then("Should return a bookmark list flow") {
                     bookmarkListFlow.first() shouldBe pagingData
-                    verify { bookmarkRepository.getBookmarkList() }
+                    verify { bookmarkRepository.getBookmarkPagingData() }
                 }
             }
         }

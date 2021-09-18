@@ -22,12 +22,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.beomjo.search.base.BaseViewModel
 import io.github.beomjo.search.entity.Empty
 import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.usecase.GetBookmarkList
 import io.github.beomjo.search.usecase.GetBookmarkPagingData
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     private val getBookmarkPagingData: GetBookmarkPagingData,
+    private val getBookmarkList: GetBookmarkList,
 ) : BaseViewModel() {
 
     private val _pager = MutableLiveData<PagingData<SearchDocument>>()
@@ -43,6 +45,8 @@ class BookmarkViewModel @Inject constructor(
 
     private val _isRefresh = MutableLiveData(false)
     val isRefresh: LiveData<Boolean> get() = _isRefresh
+
+    val bookmarkList: LiveData<List<SearchDocument>> = getBookmarkList(Empty).asLiveData()
 
     fun init() {
         viewModelScope.launch {
@@ -55,5 +59,11 @@ class BookmarkViewModel @Inject constructor(
 
     fun refresh() {
         init()
+    }
+
+    fun removeBookmarkFromPagingData(bookmarkList: List<SearchDocument>) {
+        pager.value
+            ?.filter { bookmarkList.contains(it) }
+            ?.let { _pager.value = it }
     }
 }

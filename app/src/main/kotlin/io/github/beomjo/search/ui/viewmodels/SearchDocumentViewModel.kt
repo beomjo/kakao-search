@@ -19,20 +19,27 @@ package io.github.beomjo.search.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.usecase.GetBookmark
 import io.github.beomjo.search.usecase.GetSearchDocumentVisit
+import io.github.beomjo.search.usecase.RemoveBookmark
+import io.github.beomjo.search.usecase.SetBookmark
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 class SearchDocumentViewModel @AssistedInject constructor(
     @Assisted val searchDocument: SearchDocument,
     getSearchDocumentVisit: GetSearchDocumentVisit,
     getBookmark: GetBookmark,
+    private val setBookmark: SetBookmark,
+    private val removeBookmark: RemoveBookmark
 ) {
     val isVisit: LiveData<Boolean> = getSearchDocumentVisit(searchDocument.url)
         .distinctUntilChanged()
@@ -43,6 +50,16 @@ class SearchDocumentViewModel @AssistedInject constructor(
     val isBookmarked: LiveData<Boolean> = getBookmark(searchDocument)
         .flowOn(Dispatchers.Main)
         .asLiveData()
+
+    fun onClickBookmark() {
+        CoroutineScope(Dispatchers.Main).launch {
+            if (isBookmarked.value == false) {
+                setBookmark(searchDocument)
+            } else {
+                removeBookmark(searchDocument)
+            }
+        }
+    }
 }
 
 @AssistedFactory

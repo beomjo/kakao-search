@@ -16,18 +16,17 @@
 
 package io.github.beomjo.search.usecase
 
-import androidx.paging.PagingData
 import io.github.beomjo.search.entity.Empty
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.repository.BookmarkRepository
-import io.github.beomjo.search.usecase.base.PagingUseCase
+import io.github.beomjo.search.usecase.base.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetBookmarkPagingData @Inject constructor(
-    private val bookmarkRepository: BookmarkRepository
-) : PagingUseCase<Empty, SearchDocument>() {
-    override fun execute(param: Empty): Flow<PagingData<SearchDocument>> {
-        return bookmarkRepository.getBookmarkPagingData()
+class GetBookmarkList @Inject constructor(
+    private val bookmarkRepository: BookmarkRepository,
+) : FlowUseCase<Empty, List<SearchDocument>>() {
+    override fun execute(param: Empty): Flow<List<SearchDocument>> {
+        return bookmarkRepository.getBookmarkList()
     }
 }

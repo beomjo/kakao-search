@@ -110,7 +110,7 @@
                 tools:text="2021년 12월 30일" />
 
             <ImageView
-                android:id="@+id/bookmark_dest"
+                android:id="@+id/bookmark_btn"
                 isSelected="@{viewModel.isBookmarked()}"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

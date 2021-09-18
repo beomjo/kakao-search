@@ -21,8 +21,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import io.github.beomjo.search.databinding.BookmarkListItemBinding
-import io.github.beomjo.search.databinding.BookmarkListItemBindingImpl
-import io.github.beomjo.search.databinding.SearchListDocumentItemBinding
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModel
 
@@ -33,12 +31,15 @@ class BookmarkViewHolder(
     fun bind(
         lifecycleOwner: LifecycleOwner,
         searchDocumentViewModel: SearchDocumentViewModel,
-        onClickItem: (SearchDocument) -> Unit
+        onClickItem: (SearchDocument) -> Unit,
     ) {
         binding.run {
             this.lifecycleOwner = lifecycleOwner
             viewModel = searchDocumentViewModel
             documentContainer.setOnClickListener { onClickItem(searchDocumentViewModel.searchDocument) }
+            bookmarkBtn.setOnClickListener {
+                searchDocumentViewModel.onClickBookmark()
+            }
             executePendingBindings()
         }
     }

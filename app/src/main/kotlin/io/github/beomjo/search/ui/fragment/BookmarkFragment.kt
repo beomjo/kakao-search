@@ -28,7 +28,6 @@ import io.github.beomjo.search.ui.activity.DetailActivity
 import io.github.beomjo.search.ui.adapter.BookmarkPagingAdapter
 import io.github.beomjo.search.ui.adapter.BookmarkPagingAdapterFactory
 import io.github.beomjo.search.ui.viewmodels.BookmarkViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,9 +40,12 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
     lateinit var bookmarkPagingAdapterFactory: BookmarkPagingAdapterFactory
 
     private val bookmarkAdapter: BookmarkPagingAdapter by lazy {
-        bookmarkPagingAdapterFactory.create(this) { document ->
-            DetailActivity.action(requireActivity(), document)
-        }
+        bookmarkPagingAdapterFactory.create(
+            this,
+            onClickItem = { searchDocument ->
+                DetailActivity.action(requireActivity(), searchDocument)
+            },
+        )
     }
 
     override val viewModelProvideOwner: ViewModelStoreOwner
@@ -66,6 +68,12 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
         bookmarkViewModel.pager.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
                 bookmarkAdapter.submitData(it ?: return@launch)
+            }
+        }
+        bookmarkViewModel.bookmarkList.observe(viewLifecycleOwner) { bookmarkList ->
+            bookmarkViewModel.removeBookmarkFromPagingData(bookmarkList)
+            if (bookmarkAdapter.itemCount < bookmarkList.size) {
+                bookmarkViewModel.refresh()
             }
         }
     }

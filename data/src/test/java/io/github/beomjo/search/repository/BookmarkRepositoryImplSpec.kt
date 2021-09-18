@@ -132,7 +132,7 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
             val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
 
             When("Call getBookmarkList") {
-                val result = repositoryImpl.getBookmarkList()
+                val result = repositoryImpl.getBookmarkPagingData()
 
                 Then("Should return PagingData flow") {
                     result.first().shouldBeTypeOf<PagingData<SearchDocument>>()

@@ -36,4 +36,7 @@ internal interface BookmarkDao {
 
     @Query("SELECT * FROM bookmark_table ORDER BY bookmarkedDate DESC LIMIT :limit OFFSET :offset")
     suspend fun getBookmarks(offset: Int, limit: Int): List<BookmarkTable>
+
+    @Query("SELECT * FROM bookmark_table ORDER BY bookmarkedDate DESC")
+    fun getBookmarks(): Flow<List<BookmarkTable>>
 }

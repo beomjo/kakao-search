@@ -37,6 +37,9 @@ class SearchDocumentViewHolder(
             this.lifecycleOwner = lifecycleOwner
             viewModel = searchDocumentViewModel
             documentContainer.setOnClickListener { onClickItem(searchDocumentViewModel.searchDocument) }
+            bookmarkBtn.setOnClickListener {
+                searchDocumentViewModel.onClickBookmark()
+            }
             executePendingBindings()
         }
     }
