@@ -16,6 +16,9 @@
 
 package io.github.beomjo.search.ui.viewmodels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -25,14 +28,32 @@ import io.github.beomjo.search.entity.Empty
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.usecase.GetBookmarkPagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val getBookmarkPagingData: GetBookmarkPagingData
+    private val getBookmarkPagingData: GetBookmarkPagingData,
 ) : BaseViewModel() {
 
-    val pager: Flow<PagingData<SearchDocument>> = getBookmarkPagingData(Empty)
-        .cachedIn(viewModelScope)
+    private val _pager = MutableLiveData<PagingData<SearchDocument>>()
+    val pager: LiveData<PagingData<SearchDocument>> get() = _pager
 
+    private val _isRefresh = MutableLiveData(false)
+    val isRefresh: LiveData<Boolean> get() = _isRefresh
+
+    fun init() {
+        viewModelScope.launch {
+            getBookmarkPagingData(Empty)
+                .onEach { _isRefresh.value = false }
+                .cachedIn(viewModelScope)
+                .collect { _pager.value = it }
+        }
+    }
+
+    fun refresh() {
+        init()
+    }
 }

@@ -20,12 +20,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import io.github.beomjo.search.databinding.BookmarkListItemBinding
+import io.github.beomjo.search.databinding.BookmarkListItemBindingImpl
 import io.github.beomjo.search.databinding.SearchListDocumentItemBinding
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModel
 
 class BookmarkViewHolder(
-    private val binding: SearchListDocumentItemBinding,
+    private val binding: BookmarkListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
@@ -44,7 +46,7 @@ class BookmarkViewHolder(
     companion object {
         fun create(parent: ViewGroup): BookmarkViewHolder {
             return BookmarkViewHolder(
-                SearchListDocumentItemBinding.inflate(
+                BookmarkListItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

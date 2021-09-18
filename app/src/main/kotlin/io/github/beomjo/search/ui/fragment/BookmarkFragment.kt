@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentBookmarkBinding
+import io.github.beomjo.search.ui.activity.DetailActivity
 import io.github.beomjo.search.ui.adapter.BookmarkPagingAdapter
 import io.github.beomjo.search.ui.adapter.BookmarkPagingAdapterFactory
 import io.github.beomjo.search.ui.viewmodels.BookmarkViewModel
@@ -40,7 +41,8 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
     lateinit var bookmarkPagingAdapterFactory: BookmarkPagingAdapterFactory
 
     private val bookmarkAdapter: BookmarkPagingAdapter by lazy {
-        bookmarkPagingAdapterFactory.create(this) {
+        bookmarkPagingAdapterFactory.create(this) { document ->
+            DetailActivity.action(requireActivity(), document)
         }
     }
 
@@ -55,15 +57,15 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
 
     private fun bindLayout() {
         binding {
-            viewModel = bookmarkViewModel
+            viewModel = bookmarkViewModel.apply { init() }
             bookmarkAdapter = this@BookmarkFragment.bookmarkAdapter
         }
     }
 
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            bookmarkViewModel.pager.collect {
-                bookmarkAdapter.submitData(it)
+        bookmarkViewModel.pager.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                bookmarkAdapter.submitData(it ?: return@launch)
             }
         }
     }
