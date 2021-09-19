@@ -25,7 +25,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.R
 import io.github.beomjo.search.entity.SearchDocument
-import io.github.beomjo.search.ui.adapter.diff.DocumentDiffUtil
+import io.github.beomjo.search.ui.adapter.diff.SearchUiItemDiffUtil
 import io.github.beomjo.search.ui.adapter.viewholders.SearchDocumentViewHolder
 import io.github.beomjo.search.ui.adapter.viewholders.SearchSeparatorViewHolder
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModelFactory
@@ -36,7 +36,7 @@ class SearchPagingAdapter @AssistedInject constructor(
     @Assisted private val lifeCycleOwner: LifecycleOwner,
     @Assisted private val onClickItem: (SearchDocument) -> Unit,
     private val searchDocumentViewModelProvider: Provider<SearchDocumentViewModelFactory>
-) : PagingDataAdapter<SearchUiItem, RecyclerView.ViewHolder>(DocumentDiffUtil()) {
+) : PagingDataAdapter<SearchUiItem, RecyclerView.ViewHolder>(SearchUiItemDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

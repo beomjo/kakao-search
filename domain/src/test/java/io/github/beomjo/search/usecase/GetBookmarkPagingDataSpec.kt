@@ -16,36 +16,33 @@
 
 package io.github.beomjo.search.usecase
 
+import androidx.paging.PagingData
 import io.github.beomjo.search.entity.Empty
-import io.github.beomjo.search.entity.History
-import io.github.beomjo.search.repository.SearchRepository
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.repository.BookmarkRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
-import io.mockk.mockk
-import io.mockk.coVerify
-import io.mockk.unmockkAll
+import io.mockk.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 
-class GetSearchHistoryListSpec : BehaviorSpec() {
+class GetBookmarkPagingDataSpec : BehaviorSpec() {
 
-    private val searchRepository = mockk<SearchRepository>()
+    private val bookmarkRepository = mockk<BookmarkRepository>()
 
     init {
-        Given("Given nothing") {
-            val getSearchHistoryList = GetSearchHistoryList(searchRepository)
-
-            val expect = listOf(mockk<History>())
-
-            coEvery { searchRepository.getSearchHistoryList() } returns flowOf(expect)
+        Given("Given a Empty") {
+            val searchDocumentList = listOf<SearchDocument>(mockk(), mockk())
+            val pagingData = PagingData.from(searchDocumentList)
+            val getBookmarkPagingDataUseCase = GetBookmarkPagingData(bookmarkRepository)
+            every { bookmarkRepository.getBookmarkPagingData() } returns flowOf(pagingData)
 
             When("Call invoke") {
-                val result = getSearchHistoryList.invoke(Empty)
+                val bookmarkListFlow = getBookmarkPagingDataUseCase.invoke(Empty)
 
-                Then("Should return a HistoryList") {
-                    coVerify { searchRepository.getSearchHistoryList() }
-                    result.first() shouldBe expect
+                Then("Should return a bookmark list flow") {
+                    bookmarkListFlow.first() shouldBe pagingData
+                    verify { bookmarkRepository.getBookmarkPagingData() }
                 }
             }
         }

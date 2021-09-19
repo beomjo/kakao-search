@@ -14,3 +14,6 @@ complexity:
 formatting:
   NoWildcardImports:
     active: false
+exceptions:
+  TooGenericExceptionCaught:
+    active: false

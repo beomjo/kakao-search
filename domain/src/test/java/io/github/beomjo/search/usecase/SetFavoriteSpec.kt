@@ -16,29 +16,26 @@
 
 package io.github.beomjo.search.usecase
 
-import io.github.beomjo.search.entity.Visit
-import io.github.beomjo.search.repository.SearchRepository
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.repository.BookmarkRepository
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.*
 
-class SetSearchDocumentVisitSpec : BehaviorSpec() {
+class SetFavoriteSpec : BehaviorSpec() {
 
-    private val searchRepository = mockk<SearchRepository>()
+    private val bookmarkRepository = mockk<BookmarkRepository>()
 
     init {
-        Given("Given a url") {
-            val url = "http://..."
-            val useCase = SetSearchDocumentVisit(searchRepository)
-            val slot = slot<Visit>()
-            coEvery { searchRepository.insertVisit(capture(slot)) } just Runs
+        Given("Given a searchDocument") {
+            val searchDocument = mockk<SearchDocument>()
+            val setBookmarkUseCase = SetBookmark(bookmarkRepository)
+            coEvery { bookmarkRepository.setBookmark(searchDocument) } just Runs
 
             When("Call invoke") {
-                useCase.invoke(url)
+                setBookmarkUseCase.invoke(searchDocument)
 
-                Then("Should call setVisit of SearchRepository") {
-                    coEvery { searchRepository.insertVisit(any()) }
-                    slot.captured.url shouldBe url
+                Then("Should call the setBookmark function to save whether you like it or not.") {
+                    coVerify { bookmarkRepository.setBookmark(eq(searchDocument)) }
                 }
             }
         }

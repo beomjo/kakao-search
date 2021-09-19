@@ -29,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        app:isVisible="@{viewModel.isBookmarked()}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -111,7 +112,7 @@
 
             <ImageView
                 android:id="@+id/bookmark_btn"
-                isSelected="@{viewModel.isBookmarked()}"
+                app:isSelected="@{viewModel.isBookmarked()}"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginHorizontal="10dp"

@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.usecase.base
+package io.github.beomjo.search.usecase
 
+import io.github.beomjo.search.entity.Empty
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.repository.BookmarkRepository
+import io.github.beomjo.search.usecase.base.FlowUseCase
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-abstract class FlowUseCase<in P, R : Any?> {
-
-    operator fun invoke(param: P): Flow<R> {
-        return execute(param)
+class GetBookmarkList @Inject constructor(
+    private val bookmarkRepository: BookmarkRepository,
+) : FlowUseCase<Empty, List<SearchDocument>>() {
+    override fun execute(param: Empty): Flow<List<SearchDocument>> {
+        return bookmarkRepository.getBookmarkList()
     }
-
-    protected abstract fun execute(param: P): Flow<R>
 }

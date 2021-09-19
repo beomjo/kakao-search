@@ -20,18 +20,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import io.github.beomjo.search.databinding.SearchListDocumentItemBinding
+import io.github.beomjo.search.databinding.BookmarkListItemBinding
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.ui.viewmodels.SearchDocumentViewModel
 
-class SearchDocumentViewHolder(
-    private val binding: SearchListDocumentItemBinding,
+class BookmarkViewHolder(
+    private val binding: BookmarkListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
         lifecycleOwner: LifecycleOwner,
         searchDocumentViewModel: SearchDocumentViewModel,
-        onClickItem: (SearchDocument) -> Unit
+        onClickItem: (SearchDocument) -> Unit,
     ) {
         binding.run {
             this.lifecycleOwner = lifecycleOwner
@@ -45,9 +45,9 @@ class SearchDocumentViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup): SearchDocumentViewHolder {
-            return SearchDocumentViewHolder(
-                SearchListDocumentItemBinding.inflate(
+        fun create(parent: ViewGroup): BookmarkViewHolder {
+            return BookmarkViewHolder(
+                BookmarkListItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

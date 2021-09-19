@@ -105,6 +105,7 @@ dependencies {
     implementation(Dependency.AndroidX.MATERIAL)
     implementation(Dependency.AndroidX.APP_COMPAT)
     implementation(Dependency.AndroidX.CONSTRAINT_LAYOUT)
+    implementation(Dependency.AndroidX.SWIPE_REFRESH_LAYOUT)
 
     implementation(Dependency.KTX.CORE)
     implementation(Dependency.KTX.LIFECYCLE_LIVEDATA)

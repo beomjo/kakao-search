@@ -25,7 +25,7 @@ import javax.inject.Inject
 class GetSearchDocumentVisit @Inject constructor(
     private val searchRepository: SearchRepository
 ) : FlowUseCase<String, Visit?>() {
-    override fun execute(parameters: String): Flow<Visit?> {
-        return searchRepository.getVisit(parameters)
+    override fun execute(param: String): Flow<Visit?> {
+        return searchRepository.getVisit(param)
     }
 }

@@ -10,7 +10,7 @@ internal fun VisitTable.toEntity(): Visit {
     )
 }
 
-internal fun Visit.toTable(): VisitTable {
+internal fun Visit.toDocumentTable(): VisitTable {
     return VisitTable(
         url = url,
         date = date,

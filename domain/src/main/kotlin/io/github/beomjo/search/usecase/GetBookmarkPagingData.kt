@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.beomjo.search.usecase.base
+package io.github.beomjo.search.usecase
 
+import androidx.paging.PagingData
+import io.github.beomjo.search.entity.Empty
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.repository.BookmarkRepository
+import io.github.beomjo.search.usecase.base.PagingUseCase
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-abstract class FlowUseCase<in P, R : Any?> {
-
-    operator fun invoke(param: P): Flow<R> {
-        return execute(param)
+class GetBookmarkPagingData @Inject constructor(
+    private val bookmarkRepository: BookmarkRepository
+) : PagingUseCase<Empty, SearchDocument>() {
+    override fun execute(param: Empty): Flow<PagingData<SearchDocument>> {
+        return bookmarkRepository.getBookmarkPagingData()
     }
-
-    protected abstract fun execute(param: P): Flow<R>
 }

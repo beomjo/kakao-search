@@ -17,20 +17,65 @@
 package io.github.beomjo.search.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
+import io.github.beomjo.search.R
+import io.github.beomjo.search.base.BaseFragment
 import io.github.beomjo.search.databinding.FragmentBookmarkBinding
+import io.github.beomjo.search.ui.activity.DetailActivity
+import io.github.beomjo.search.ui.adapter.BookmarkPagingAdapter
+import io.github.beomjo.search.ui.adapter.BookmarkPagingAdapterFactory
+import io.github.beomjo.search.ui.viewmodels.BookmarkViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BookmarkFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = FragmentBookmarkBinding.inflate(layoutInflater)
-        return binding.root
+@AndroidEntryPoint
+class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment_bookmark) {
+
+    private val bookmarkViewModel: BookmarkViewModel by getViewModel()
+
+    @Inject
+    lateinit var bookmarkPagingAdapterFactory: BookmarkPagingAdapterFactory
+
+    private val bookmarkAdapter: BookmarkPagingAdapter by lazy {
+        bookmarkPagingAdapterFactory.create(
+            this,
+            onClickItem = { searchDocument ->
+                DetailActivity.action(requireActivity(), searchDocument)
+            },
+        )
+    }
+
+    override val viewModelProvideOwner: ViewModelStoreOwner
+        get() = this.requireActivity()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindLayout()
+        observeViewModel()
+    }
+
+    private fun bindLayout() {
+        binding {
+            viewModel = bookmarkViewModel.apply { init() }
+            bookmarkAdapter = this@BookmarkFragment.bookmarkAdapter
+        }
+    }
+
+    private fun observeViewModel() {
+        bookmarkViewModel.pager.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                bookmarkAdapter.submitData(it ?: return@launch)
+            }
+        }
+        bookmarkViewModel.bookmarkList.observe(viewLifecycleOwner) { bookmarkList ->
+            bookmarkViewModel.removeBookmarkFromPagingData(bookmarkList)
+            if (bookmarkAdapter.itemCount < bookmarkList.size) {
+                bookmarkViewModel.refresh()
+            }
+        }
     }
 
     companion object {

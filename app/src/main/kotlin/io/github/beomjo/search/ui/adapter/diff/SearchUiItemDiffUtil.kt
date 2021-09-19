@@ -19,7 +19,7 @@ package io.github.beomjo.search.ui.adapter.diff
 import androidx.recyclerview.widget.DiffUtil
 import io.github.beomjo.search.ui.viewmodels.SearchViewModel.SearchUiItem
 
-class DocumentDiffUtil : DiffUtil.ItemCallback<SearchUiItem>() {
+class SearchUiItemDiffUtil : DiffUtil.ItemCallback<SearchUiItem>() {
     override fun areItemsTheSame(
         oldItem: SearchUiItem,
         newItem: SearchUiItem

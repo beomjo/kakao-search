@@ -35,6 +35,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindLayout()
+        observeViewModel()
     }
 
     private fun bindLayout() {
@@ -57,9 +58,16 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
                     )
                 }
             }
-            favoriteBtn.setOnClickListener {
-                favoriteBtn.isSelected = !favoriteBtn.isSelected
+
+            bookmarkBtn.setOnClickListener {
+                this@DetailActivity.detailViewModel.onClickBookmark()
             }
+        }
+    }
+
+    private fun observeViewModel() {
+        detailViewModel.isBookmark.observe(this) { isBookmarked ->
+            binding.bookmarkBtn.isSelected = isBookmarked
         }
     }
 

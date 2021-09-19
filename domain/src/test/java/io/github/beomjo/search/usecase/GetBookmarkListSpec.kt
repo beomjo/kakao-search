@@ -17,35 +17,33 @@
 package io.github.beomjo.search.usecase
 
 import io.github.beomjo.search.entity.Empty
-import io.github.beomjo.search.entity.History
-import io.github.beomjo.search.repository.SearchRepository
+import io.github.beomjo.search.entity.SearchDocument
+import io.github.beomjo.search.repository.BookmarkRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
-import io.mockk.coVerify
 import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 
-class GetSearchHistoryListSpec : BehaviorSpec() {
+class GetBookmarkListSpec : BehaviorSpec() {
 
-    private val searchRepository = mockk<SearchRepository>()
+    private val bookmarkRepository = mockk<BookmarkRepository>()
 
     init {
-        Given("Given nothing") {
-            val getSearchHistoryList = GetSearchHistoryList(searchRepository)
-
-            val expect = listOf(mockk<History>())
-
-            coEvery { searchRepository.getSearchHistoryList() } returns flowOf(expect)
+        Given("Given a Empty") {
+            val bookmarkList = listOf<SearchDocument>(mockk(), mockk())
+            val getBookmarkListUseCase = GetBookmarkList(bookmarkRepository)
+            every { bookmarkRepository.getBookmarkList() } returns flowOf(bookmarkList)
 
             When("Call invoke") {
-                val result = getSearchHistoryList.invoke(Empty)
+                val bookmarkListFlow = getBookmarkListUseCase.invoke(Empty)
 
-                Then("Should return a HistoryList") {
-                    coVerify { searchRepository.getSearchHistoryList() }
-                    result.first() shouldBe expect
+                Then("Should return a bookmark list flow") {
+                    bookmarkListFlow.first() shouldBe bookmarkList
+                    verify { bookmarkRepository.getBookmarkList() }
                 }
             }
         }
