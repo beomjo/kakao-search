@@ -7,6 +7,12 @@
 </p>
 
 
+<p align="start">
+   Pageation was implemented using the Kakao search API, </br>
+  and examples of search, alignment, separator, and bookmark functions can be viewed.
+</p>
+
+
 ## Clone Project
 ```
 $ git clone --recursive https://github.com/beomjo/kakao-search.git
@@ -23,22 +29,24 @@ REST_KEY={YOUR_KEY}
 ## Download
 -
 
+<img src="https://user-images.githubusercontent.com/39984656/133936547-9751f4d6-e336-438b-b5ee-2238b36edc58.gif" align="right" width="50%"/>    
+
 ## Tech stack & Open-source libraries
 - Minimum SDK level 21
-- Coroutines, Flow for asynchronous.
-- LiveData - notify domain layer data to views.
-- Lifecycle - dispose of observing data when lifecycle state changes.
-- ViewModel - UI related data holder, lifecycle aware.
-- Room - Storing data in local database
-- Paging3 - Load and display data pages of large data sets from local storage or over a network
-- Dagger Hilt - Dependency Injection
-- Navigation Component - Move implementation between Fragment and Activity simply and reliably
-- Glide - loading images
-- Bindables - DataBinding kit for notifying data changes from Model layers to UI layers.
-- Material-Components - Material design components like ripple animation, cardView.
-- Testing
-    - kotest
-    - mockk
+- **Coroutines, Flow** for asynchronous.
+- **LiveData** - notify domain layer data to views.
+- **Lifecycle** - dispose of observing data when lifecycle state changes.
+- **ViewModel** - UI related data holder, lifecycle aware.
+- **Room** - Storing data in local database
+- **Paging3** - Load and display data pages of large data sets from local storage or over a network
+- **Dagger Hilt** - Dependency Injection
+- **Navigation Component** - Move implementation between Fragment and Activity simply and reliably
+- **Glide** - loading images
+- **Bindables** - DataBinding kit for notifying data changes from Model layers to UI layers.
+- **Material-Components** - Material design components like ripple animation, cardView.
+- **Testing**
+  - **kotest**
+  - **mockk**
 
 
 ## Architecture
