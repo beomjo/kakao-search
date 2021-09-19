@@ -47,7 +47,7 @@ class GetSearchPagingDataSpec : BehaviorSpec() {
             coEvery { searchRepository.getDocumentPagingData(param) } returns flowOf(pagingData)
             coEvery { searchRepository.insertSearchHistory(any()) } just Runs
 
-            When("invoke") {
+            When("Call invoke") {
                 val resultFlow = getSearchPagingData.invoke(param)
 
                 Then("Return PagingData") {

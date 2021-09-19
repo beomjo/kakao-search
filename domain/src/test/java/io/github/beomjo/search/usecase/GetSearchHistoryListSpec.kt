@@ -33,14 +33,14 @@ class GetSearchHistoryListSpec : BehaviorSpec() {
     private val searchRepository = mockk<SearchRepository>()
 
     init {
-        Given("use case is ") {
+        Given("Given nothing") {
             val getSearchHistoryList = GetSearchHistoryList(searchRepository)
 
             val expect = listOf(mockk<History>())
 
             coEvery { searchRepository.getSearchHistoryList() } returns flowOf(expect)
 
-            When("invoke") {
+            When("Call invoke") {
                 val result = getSearchHistoryList.invoke(Empty)
 
                 Then("Should return a HistoryList") {

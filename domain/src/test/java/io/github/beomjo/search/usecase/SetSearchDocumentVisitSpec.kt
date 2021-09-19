@@ -33,7 +33,7 @@ class SetSearchDocumentVisitSpec : BehaviorSpec() {
             val slot = slot<Visit>()
             coEvery { searchRepository.insertVisit(capture(slot)) } just Runs
 
-            When("Invoke") {
+            When("Call invoke") {
                 useCase.invoke(url)
 
                 Then("Should call setVisit of SearchRepository") {

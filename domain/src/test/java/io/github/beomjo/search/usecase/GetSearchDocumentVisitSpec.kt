@@ -37,7 +37,7 @@ class GetSearchDocumentVisitSpec : BehaviorSpec() {
             val useCase = GetSearchDocumentVisit(searchRepository)
             every { searchRepository.getVisit(expectUrl) } returns flowOf(visit)
 
-            When("Invoke") {
+            When("Call Invoke") {
                 val result = useCase.invoke(expectUrl)
 
                 Then("Should return a visit") {
