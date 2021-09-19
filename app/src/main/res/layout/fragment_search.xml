@@ -129,6 +129,7 @@
             android:id="@+id/search_history"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_history_list"
             android:orientation="vertical"
             app:adapter="@{searchHistoryAdapter}"
             app:isVisible="@{viewModel.hasFocus}"
