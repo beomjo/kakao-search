@@ -45,7 +45,7 @@ class SearchSeparatorGenerator @AssistedInject constructor(
                 val afterDate = after.searchDocument.date
 
                 val beforeDateString = dateHelper.convert(beforeDate, R.string.date_month)
-                val afterDateString = dateHelper.convert(afterDate)
+                val afterDateString = dateHelper.convert(afterDate, R.string.date_month)
                 return@insertSeparators when (beforeDateString != afterDateString) {
                     true -> SearchViewModel.SearchUiItem.SeparatorItem(description = afterDateString)
                     else -> null
