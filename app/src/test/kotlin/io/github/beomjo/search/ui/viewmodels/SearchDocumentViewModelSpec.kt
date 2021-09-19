@@ -19,7 +19,10 @@ package io.github.beomjo.search.ui.viewmodels
 import androidx.lifecycle.Observer
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.entity.Visit
+import io.github.beomjo.search.usecase.GetBookmarkState
 import io.github.beomjo.search.usecase.GetSearchDocumentVisit
+import io.github.beomjo.search.usecase.RemoveBookmark
+import io.github.beomjo.search.usecase.SetBookmark
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*
 import kotlinx.coroutines.flow.flowOf
@@ -28,7 +31,15 @@ class SearchDocumentViewModelSpec : BehaviorSpec() {
 
     private val getSearchDocumentVisit = mockk<GetSearchDocumentVisit>(relaxed = true)
 
+    private val getBookmarkState = mockk<GetBookmarkState>(relaxed = true)
+
+    private val setBookmark = mockk<SetBookmark>(relaxed = true)
+
+    private val removeBookmark = mockk<RemoveBookmark>(relaxed = true)
+
     private val isVisitObserver = mockk<Observer<Boolean>>(relaxed = true)
+
+    private val isBookmarkedObserver = mockk<Observer<Boolean>>(relaxed = true)
 
     init {
         Given("Give a SearchDocument") {
@@ -46,7 +57,10 @@ class SearchDocumentViewModelSpec : BehaviorSpec() {
             When("Create a ViewModel") {
                 val viewModel = SearchDocumentViewModel(
                     searchDocument,
-                    getSearchDocumentVisit
+                    getSearchDocumentVisit,
+                    getBookmarkState,
+                    setBookmark,
+                    removeBookmark
                 )
                 viewModel.isVisit.observeForever(isVisitObserver)
 
@@ -59,7 +73,7 @@ class SearchDocumentViewModelSpec : BehaviorSpec() {
             }
         }
 
-        Given("There is no search document") {
+        Given("SearchDocument Content is given as null") {
             val documentUrl = "http://"
             val searchDocument = mockk<SearchDocument> {
                 every { url } returns documentUrl
@@ -70,7 +84,10 @@ class SearchDocumentViewModelSpec : BehaviorSpec() {
             When("Create a ViewModel") {
                 val viewModel = SearchDocumentViewModel(
                     searchDocument,
-                    getSearchDocumentVisit
+                    getSearchDocumentVisit,
+                    getBookmarkState,
+                    setBookmark,
+                    removeBookmark
                 )
                 viewModel.isVisit.observeForever(isVisitObserver)
 
@@ -79,6 +96,120 @@ class SearchDocumentViewModelSpec : BehaviorSpec() {
                         getSearchDocumentVisit.invoke(eq(documentUrl))
                         isVisitObserver.onChanged(eq(false))
                     }
+                }
+            }
+        }
+
+        Given("Given a SearchDocument") {
+            val documentUrl = "http://"
+            val searchDocument = mockk<SearchDocument> {
+                every { url } returns documentUrl
+                every { date } returns mockk()
+            }
+
+            And("Returns the bookmarked status") {
+                every { getBookmarkState.invoke(searchDocument) } returns flowOf(true)
+
+                When("Create a ViewModel") {
+                    val viewModel = SearchDocumentViewModel(
+                        searchDocument,
+                        getSearchDocumentVisit,
+                        getBookmarkState,
+                        setBookmark,
+                        removeBookmark
+                    )
+                    viewModel.isBookmarked.observeForever(isBookmarkedObserver)
+
+                    Then("isBookmarked value needs to be updated, true") {
+                        verify {
+                            getBookmarkState.invoke(eq(searchDocument))
+                            isBookmarkedObserver.onChanged(eq(true))
+                        }
+                    }
+                }
+            }
+
+            And("Returns the not bookmarked status") {
+                every { getBookmarkState.invoke(searchDocument) } returns flowOf(false)
+
+                When("Create a ViewModel") {
+                    val viewModel = SearchDocumentViewModel(
+                        searchDocument,
+                        getSearchDocumentVisit,
+                        getBookmarkState,
+                        setBookmark,
+                        removeBookmark
+                    )
+                    viewModel.isBookmarked.observeForever(isBookmarkedObserver)
+
+                    Then("isBookmarked value needs to be updated, true") {
+                        verify {
+                            getBookmarkState.invoke(eq(searchDocument))
+                            isBookmarkedObserver.onChanged(eq(false))
+                        }
+                    }
+                }
+            }
+        }
+
+        Given("Given a not bookmarked") {
+            val documentUrl = "http://"
+            val searchDocument = mockk<SearchDocument> {
+                every { url } returns documentUrl
+                every { date } returns mockk()
+            }
+
+            every { getBookmarkState.invoke(any()) } returns flowOf(false)
+
+            val viewModel = SearchDocumentViewModel(
+                searchDocument,
+                getSearchDocumentVisit,
+                getBookmarkState,
+                setBookmark,
+                removeBookmark
+            )
+            viewModel.isBookmarked.observeForever(isBookmarkedObserver)
+
+            When("Call onClickBookmark") {
+                viewModel.onClickBookmark()
+
+                Then("Should set a bookmark") {
+                    verify {
+                        isBookmarkedObserver.onChanged(eq(false))
+                        getBookmarkState.invoke(eq(searchDocument))
+                    }
+                    coVerify { setBookmark(eq(searchDocument)) }
+                }
+            }
+        }
+
+        Given("Given a bookmarked") {
+            val documentUrl = "http://"
+            val searchDocument = mockk<SearchDocument> {
+                every { url } returns documentUrl
+                every { date } returns mockk()
+            }
+
+            every { getBookmarkState.invoke(any()) } returns flowOf(true)
+
+            val viewModel = SearchDocumentViewModel(
+                searchDocument,
+                getSearchDocumentVisit,
+                getBookmarkState,
+                setBookmark,
+                removeBookmark
+            )
+            viewModel.isBookmarked.observeForever(isBookmarkedObserver)
+
+            When("Call onClickBookmark") {
+                viewModel.onClickBookmark()
+
+                Then("Should set a bookmark") {
+                    verify {
+                        isBookmarkedObserver.onChanged(eq(true))
+                        getBookmarkState.invoke(eq(searchDocument))
+                    }
+                    coVerify { removeBookmark(eq(searchDocument)) }
                 }
             }
         }

@@ -16,27 +16,40 @@
 
 package io.github.beomjo.search.usecase
 
+import io.github.beomjo.search.entity.Empty
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.repository.BookmarkRepository
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.unmockkAll
+import io.mockk.verify
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 
-class GetBookmarkSpec : BehaviorSpec() {
+class GetBookmarkListSpec : BehaviorSpec() {
 
     private val bookmarkRepository = mockk<BookmarkRepository>()
 
     init {
-        Given("Given a searchDocument") {
-            val searchDocument = mockk<SearchDocument>()
-            val getBookmarkUseCase = GetBookmarkState(bookmarkRepository)
+        Given("Given a Empty") {
+            val bookmarkList = listOf<SearchDocument>(mockk(), mockk())
+            val getBookmarkListUseCase = GetBookmarkList(bookmarkRepository)
+            every { bookmarkRepository.getBookmarkList() } returns flowOf(bookmarkList)
 
             When("Call invoke") {
-                getBookmarkUseCase.invoke(searchDocument)
+                val bookmarkListFlow = getBookmarkListUseCase.invoke(Empty)
 
-                Then("Should return whether or not it has been bookmarked") {
-
+                Then("Should return a bookmark list flow") {
+                    bookmarkListFlow.first() shouldBe bookmarkList
+                    verify { bookmarkRepository.getBookmarkList() }
                 }
             }
+        }
+
+        afterTest {
+            unmockkAll()
         }
     }
 }

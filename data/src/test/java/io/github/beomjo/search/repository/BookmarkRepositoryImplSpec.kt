@@ -23,6 +23,7 @@ import io.github.beomjo.search.datasource.remote.api.paging.BookmarkPagingSource
 import io.github.beomjo.search.entity.DocumentType
 import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.mapper.toBookmarkTable
+import io.github.beomjo.search.mapper.toEntity
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
@@ -128,14 +129,40 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
             }
         }
 
-        Given("Given a bookmarkPagingSource") {
+        Given("Given a nothing") {
             val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
 
-            When("Call getBookmarkList") {
+            When("Call getBookmarkPagingData") {
                 val result = repositoryImpl.getBookmarkPagingData()
 
                 Then("Should return PagingData flow") {
                     result.first().shouldBeTypeOf<PagingData<SearchDocument>>()
+                }
+            }
+        }
+
+
+        Given("Given a nothing") {
+            val bookmarkTable = listOf(
+                BookmarkTable(
+                    type = DocumentType.BOOK,
+                    url = "http://",
+                    title = "fqf",
+                    content = "fafa",
+                    writeDate = mockk(),
+                    bookmarkedDate = mockk(),
+                    thumbnail = "http://"
+                )
+            )
+            val repositoryImpl = BookmarkRepositoryImpl(bookmarkDao, bookmarkPagingSource)
+
+            every { bookmarkDao.getBookmarks() } returns flowOf(bookmarkTable)
+
+            When("Call getBookmarkList") {
+                val result = repositoryImpl.getBookmarkList()
+
+                Then("Should return flow") {
+                    result.first() shouldBe bookmarkTable.map { it.toEntity() }
                 }
             }
         }

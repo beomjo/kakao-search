@@ -22,7 +22,7 @@ import io.github.beomjo.search.usecase.base.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetBookmark @Inject constructor(
+class GetBookmarkState @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : FlowUseCase<SearchDocument, Boolean>() {
     override fun execute(param: SearchDocument): Flow<Boolean> {

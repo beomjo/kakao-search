@@ -19,12 +19,11 @@ package io.github.beomjo.search.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.github.beomjo.search.entity.SearchDocument
-import io.github.beomjo.search.usecase.GetBookmark
+import io.github.beomjo.search.usecase.GetBookmarkState
 import io.github.beomjo.search.usecase.GetSearchDocumentVisit
 import io.github.beomjo.search.usecase.RemoveBookmark
 import io.github.beomjo.search.usecase.SetBookmark
@@ -37,7 +36,7 @@ import kotlinx.coroutines.launch
 class SearchDocumentViewModel @AssistedInject constructor(
     @Assisted val searchDocument: SearchDocument,
     getSearchDocumentVisit: GetSearchDocumentVisit,
-    getBookmark: GetBookmark,
+    getBookmarkState: GetBookmarkState,
     private val setBookmark: SetBookmark,
     private val removeBookmark: RemoveBookmark
 ) {
@@ -47,7 +46,7 @@ class SearchDocumentViewModel @AssistedInject constructor(
         .asLiveData()
         .map { it?.url != null }
 
-    val isBookmarked: LiveData<Boolean> = getBookmark(searchDocument)
+    val isBookmarked: LiveData<Boolean> = getBookmarkState(searchDocument)
         .flowOn(Dispatchers.Main)
         .asLiveData()
 
