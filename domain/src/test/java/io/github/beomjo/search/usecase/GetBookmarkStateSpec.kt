@@ -20,10 +20,11 @@ import io.github.beomjo.search.entity.SearchDocument
 import io.github.beomjo.search.repository.BookmarkRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.mockk
+import io.mockk.verify
 
-class GetBookmarkSpec : BehaviorSpec() {
+class GetBookmarkStateSpec : BehaviorSpec() {
 
-    private val bookmarkRepository = mockk<BookmarkRepository>()
+    private val bookmarkRepository = mockk<BookmarkRepository>(relaxed = true)
 
     init {
         Given("Given a searchDocument") {
@@ -34,6 +35,9 @@ class GetBookmarkSpec : BehaviorSpec() {
                 getBookmarkUseCase.invoke(searchDocument)
 
                 Then("Should return whether or not it has been bookmarked") {
+                    verify {
+                        bookmarkRepository.isBookmarked(eq(searchDocument))
+                    }
                 }
             }
         }
