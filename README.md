@@ -46,6 +46,9 @@ REST_KEY={YOUR_KEY}
 - MVVM Architecture (View - DataBinding - ViewModel - Model)
 
 ## MAD STORE
+![summary](https://user-images.githubusercontent.com/39984656/133936190-2808b53b-1fea-4729-bc44-55aebe845ea5.png)
+![kotlin](https://user-images.githubusercontent.com/39984656/133936194-ce21ad52-70c9-4a61-be71-c62e748468e3.png)
+![jetpack](https://user-images.githubusercontent.com/39984656/133936197-cbfefd7d-51bc-48d1-8cba-ac983b4fe44f.png)
 
 
 ## LICENSE
