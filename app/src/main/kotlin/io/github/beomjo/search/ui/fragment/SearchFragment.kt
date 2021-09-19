@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.beomjo.search.R
 import io.github.beomjo.search.base.BaseFragment
@@ -113,6 +114,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             }
 
             searchHistoryAdapter = this@SearchFragment.searchHistoryAdapter
+            searchHistory.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
     }
 
