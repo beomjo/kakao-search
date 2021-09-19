@@ -43,7 +43,6 @@ class DetailViewModelSpec : BehaviorSpec() {
 
     private val isBookmarkedObserver = mockk<Observer<Boolean>>(relaxed = true)
 
-
     init {
         Given("Given a searchDocument") {
             val searchDocument = mockk<SearchDocument>()

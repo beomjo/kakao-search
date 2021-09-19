@@ -34,7 +34,6 @@ class GetBookmarkSpec : BehaviorSpec() {
                 getBookmarkUseCase.invoke(searchDocument)
 
                 Then("Should return whether or not it has been bookmarked") {
-
                 }
             }
         }

@@ -141,7 +141,6 @@ class BookmarkRepositoryImplSpec : BehaviorSpec() {
             }
         }
 
-
         Given("Given a nothing") {
             val bookmarkTable = listOf(
                 BookmarkTable(
