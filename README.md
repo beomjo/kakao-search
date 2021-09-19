@@ -20,6 +20,34 @@ in your local.properties
 REST_KEY={YOUR_KEY}
 ```  
 
+## Download
+-
+
+## Tech stack & Open-source libraries
+- Minimum SDK level 21
+- Coroutines, Flow for asynchronous.
+- LiveData - notify domain layer data to views.
+- Lifecycle - dispose of observing data when lifecycle state changes.
+- ViewModel - UI related data holder, lifecycle aware.
+- Room - Storing data in local database
+- Paging3 - Load and display data pages of large data sets from local storage or over a network
+- Dagger Hilt - Dependency Injection
+- Navigation Component - Move implementation between Fragment and Activity simply and reliably
+- Glide - loading images
+- Bindables - DataBinding kit for notifying data changes from Model layers to UI layers.
+- Material-Components - Material design components like ripple animation, cardView.
+- Testing
+    - kotest
+    - mockk
+
+
+## Architecture
+- Clean Architecture
+- MVVM Architecture (View - DataBinding - ViewModel - Model)
+
+## MAD STORE
+
+
 ## LICENSE
 ```xml
 Designed and developed by 2021 beomjo
@@ -35,4 +63,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-```
