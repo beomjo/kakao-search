@@ -7,6 +7,12 @@
 </p>
 
 
+<p align="start">
+   Pageation was implemented using the Kakao search API, </br>
+  and examples of search, alignment, separator, and bookmark functions can be viewed.
+</p>
+
+
 ## Clone Project
 ```
 $ git clone --recursive https://github.com/beomjo/kakao-search.git
@@ -19,6 +25,39 @@ in your local.properties
 ```
 REST_KEY={YOUR_KEY}
 ```  
+
+## Download
+-
+
+<img src="https://user-images.githubusercontent.com/39984656/133936547-9751f4d6-e336-438b-b5ee-2238b36edc58.gif" align="right" width="50%"/>    
+
+## Tech stack & Open-source libraries
+- Minimum SDK level 21
+- **Coroutines, Flow** for asynchronous.
+- **LiveData** - notify domain layer data to views.
+- **Lifecycle** - dispose of observing data when lifecycle state changes.
+- **ViewModel** - UI related data holder, lifecycle aware.
+- **Room** - Storing data in local database
+- **Paging3** - Load and display data pages of large data sets from local storage or over a network
+- **Dagger Hilt** - Dependency Injection
+- **Navigation Component** - Move implementation between Fragment and Activity simply and reliably
+- **Glide** - loading images
+- **Bindables** - DataBinding kit for notifying data changes from Model layers to UI layers.
+- **Material-Components** - Material design components like ripple animation, cardView.
+- **Testing**
+  - **kotest**
+  - **mockk**
+
+
+## Architecture
+- Clean Architecture
+- MVVM Architecture (View - DataBinding - ViewModel - Model)
+
+## MAD STORE
+![summary](https://user-images.githubusercontent.com/39984656/133936190-2808b53b-1fea-4729-bc44-55aebe845ea5.png)
+![kotlin](https://user-images.githubusercontent.com/39984656/133936194-ce21ad52-70c9-4a61-be71-c62e748468e3.png)
+![jetpack](https://user-images.githubusercontent.com/39984656/133936197-cbfefd7d-51bc-48d1-8cba-ac983b4fe44f.png)
+
 
 ## LICENSE
 ```xml
@@ -35,4 +74,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-```
