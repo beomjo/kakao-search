@@ -51,6 +51,10 @@ REST_KEY={YOUR_KEY}
 
 ## Architecture
 - Clean Architecture
+    - Structure 
+    ![image](https://user-images.githubusercontent.com/39984656/134216164-4018a2a8-ffcc-4150-b566-cf3fd8155def.png)
+    - Dependency diagram between layers
+    ![image](https://user-images.githubusercontent.com/39984656/134216107-72e31ff1-e265-486d-a512-4f8bd0dbbcaf.png)
 - MVVM Architecture (View - DataBinding - ViewModel - Model)
 
 ## MAD STORE
