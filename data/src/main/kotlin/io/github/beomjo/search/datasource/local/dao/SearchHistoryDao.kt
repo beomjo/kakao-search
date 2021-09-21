@@ -29,6 +29,6 @@ internal interface SearchHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHistory(history: SearchHistoryTable)
 
-    @Query("SELECT * FROM search_history")
+    @Query("SELECT * FROM search_history ORDER BY date DESC")
     fun getHistoryList(): Flow<List<SearchHistoryTable>>
 }
