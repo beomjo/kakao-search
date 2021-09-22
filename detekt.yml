@@ -1,0 +1,19 @@
+build:
+  maxIssues: 0
+
+style:
+  ReturnCount:
+    active: false
+  WildcardImport:
+    active: false
+complexity:
+  LargeClass:
+    excludes: [ '**/test/**' ]
+  TooManyFunctions:
+    active: false
+formatting:
+  NoWildcardImports:
+    active: false
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
