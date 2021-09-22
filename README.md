@@ -27,7 +27,7 @@ REST_KEY={YOUR_KEY}
 ```  
 
 ## Download
--
+- [Link](https://github.com/beomjo/kakao-search/releases)
 
 <img src="https://user-images.githubusercontent.com/39984656/133936547-9751f4d6-e336-438b-b5ee-2238b36edc58.gif" align="right" width="50%"/>    
 
