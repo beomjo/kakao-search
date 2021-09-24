@@ -1,4 +1,4 @@
-<h1 align="start">kakao-search</h1>
+<h1 align="start">🔍 kakao-search</h1>
 
 <p align="start">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
@@ -27,7 +27,7 @@ REST_KEY={YOUR_KEY}
 ```  
 
 ## Download
--
+- [Link](https://github.com/beomjo/kakao-search/releases)
 
 <img src="https://user-images.githubusercontent.com/39984656/133936547-9751f4d6-e336-438b-b5ee-2238b36edc58.gif" align="right" width="50%"/>    
 
