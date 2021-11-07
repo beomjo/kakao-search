@@ -41,7 +41,7 @@ REST_KEY={YOUR_KEY}
 - **Paging3** - Load and display data pages of large data sets from local storage or over a network
 - **Dagger Hilt** - Dependency Injection
 - **Navigation Component** - Move implementation between Fragment and Activity simply and reliably
-- **Glide** - loading images
+- **Glide** - Loading images
 - **Bindables** - DataBinding kit for notifying data changes from Model layers to UI layers.
 - **Material-Components** - Material design components like ripple animation, cardView.
 - **Testing**
